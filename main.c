@@ -73,7 +73,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
     }
 }
 
-void previewVague(Jeu* jeu){
+void previewVagues(Jeu* jeu){
     if (jeu->etudiants == NULL){
         printf("Pas de vague.\n");
         return;
@@ -140,5 +140,16 @@ void loadFichier(Jeu* jeu, const char* _niveau){
 
 
 int main(int argc, char *argv[]){
+    if (argc <2) {
+        printf("Aucun fichier donné.\n");
+        return 1;
+    }
+
+    for(int i=1; i<argc; i++){
+        Jeu* jeu = malloc(sizeof(Jeu));
+        loadFichier(jeu, argv[i]);
+        previewVagues(jeu);
+
+    }
     return 0;
 }
