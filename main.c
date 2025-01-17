@@ -21,7 +21,7 @@ typedef struct etudiant {
     int tour;
     struct etudiant* next; //on va utiliser ça pour l'étudiant suivant de la même ligne
     struct etudiant* next_line; //prochain de la ligne d'après
-    struct etudiant* prev_line; //premier de la ligne d'avant
+    struct etudiant* prev_line; //William : premier de la ligne d'avant, mais je pense pas qu'on l'utilisera
 } Etudiant;
 
 typedef struct {
@@ -29,7 +29,8 @@ typedef struct {
     Etudiant* etudiants;
     int cagnotte;
     int tour;
-    int toursMax;
+    int lastTour;
+    int lastLigne;
 } Jeu;
 
 void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
@@ -40,7 +41,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
     }
     etu->type = _type;
     etu->ligne = _ligne;
-    etu->position = ZONE_SAFE;
+    etu->position = 0;
     etu->tour = _tour;
 
     if (_type == 'Z') {
@@ -56,7 +57,59 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
     etu->next_line = NULL;
     etu->prev_line = NULL;
 
-    etu->type = _type;
+    if (jeu->etudiants == NULL){
+        jeu->etudiants = etu;
+    }
+    else {
+        Etudiant* precedent = jeu->etudiants;
+        while (precedent->next != NULL){
+            precedent = precedent->next;
+        }
+        precedent->next = etu;
+
+        if (precedent->ligne < etu->ligne){
+            precedent->next_line = etu;
+        }
+    }
+}
+
+void previewVague(Jeu* jeu){
+    if (jeu->etudiants == NULL){
+        printf("Pas de vague.\n");
+        return;
+    }
+    char preview[jeu->lastTour][jeu->lastLigne];
+
+    for (int i=0; i<jeu->lastTour; i++){
+        for(int j=0; j<jeu->lastLigne; j++){
+            preview[i][j]='.';
+        }
+    }
+    
+    int ligne = 1;
+    Etudiant* etu = jeu->etudiants;
+
+    while (etu != NULL){
+        while (ligne < jeu->lastLigne){
+            if (etu->ligne == ligne){
+                    preview[etu->tour][ligne] = etu->type;
+                }
+                etu = etu->next;
+            }
+            ligne++;
+    }
+
+    printf("Preview de la vague\n");
+
+    for (int i=0; i<jeu->lastTour; i++){
+        printf("%d|\t", i+1);
+
+        for(int j=0; j<jeu->lastLigne; j++){
+            printf("%c\t", preview[i][j]);
+        }
+        printf("\n");
+    }
+
 }
 
 void loadFichier(Jeu* jeu, const char* _niveau){
@@ -72,13 +125,20 @@ void loadFichier(Jeu* jeu, const char* _niveau){
 
     fscanf(niveau, "%d", &jeu->cagnotte);
     int tour, ligne, type;
+    int hauteur = 0;
 
     while (fscanf(niveau, "%d %d %c", &tour, &ligne, &type) == 3) {
-
+        if (ligne > hauteur)
+            hauteur = ligne;
+        addEtudiant(jeu, tour, ligne, type);
     }
+    jeu->lastTour = tour;
+    fclose(niveau);
 
 }
 
-int main(){
+
+
+int main(int argc, char *argv[]){
     return 0;
 }
