@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define ZONE_SAFE 6
 
@@ -113,6 +114,8 @@ void previewVagues(Jeu* jeu){
 }
 
 void loadFichier(Jeu* jeu, const char* _niveau){
+    printf("Chargement du niveau %s", _niveau);
+
     char niveauTexte[64];
     strcpy(niveauTexte, _niveau);
     strcat(niveauTexte, ".txt"); //pour ajouter .txt
@@ -124,8 +127,9 @@ void loadFichier(Jeu* jeu, const char* _niveau){
     }
 
     fscanf(niveau, "%d", &jeu->cagnotte);
-    int tour, ligne, type;
+    int tour, ligne;
     int hauteur = 0;
+    char type;
 
     while (fscanf(niveau, "%d %d %c", &tour, &ligne, &type) == 3) {
         if (ligne > hauteur)
@@ -146,10 +150,13 @@ int main(int argc, char *argv[]){
     }
 
     for(int i=1; i<argc; i++){
+        printf("%s\n", argv[i]);
+
         Jeu* jeu = malloc(sizeof(Jeu));
         loadFichier(jeu, argv[i]);
         previewVagues(jeu);
-
+        free(jeu);
     }
+    printf("fin");
     return 0;
 }
