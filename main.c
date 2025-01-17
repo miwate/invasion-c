@@ -34,12 +34,25 @@ typedef struct {
     int lastLigne;
 } Jeu;
 
-void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
+void initJeu(Jeu* jeu) {
+    jeu->tourelles = NULL;
+    jeu->etudiants = NULL;
+    jeu->cagnotte = 0;
+    jeu->tour = 0;
+    jeu->lastTour = 0;
+    jeu->lastLigne = 0;
+}
+
+
+void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
     Etudiant* etu = malloc(sizeof(Etudiant));
     if (etu == NULL) {
         printf("Impossible d'ajouter l'étudiant %d %d %d.\n", _tour, _ligne, _type);
         return;
     }
+
+    printf("Ajout du zombie %d %d %c\n", _tour, _ligne, _type); //degub
+    
     etu->type = _type;
     etu->ligne = _ligne;
     etu->position = 0;
@@ -49,7 +62,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
         etu->pointsDeVie = 3;
         etu->vitesse = 1;
     }
-    else {
+    else { // on va ajouter d'autres types de zombies
         etu->pointsDeVie = 1;
         etu->vitesse = 1;
     }
@@ -59,6 +72,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
     etu->prev_line = NULL;
 
     if (jeu->etudiants == NULL){
+        //printf("si ça marche pas je pète un câble\n"); //debug
         jeu->etudiants = etu;
     }
     else {
@@ -72,6 +86,9 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const int _type){
             precedent->next_line = etu;
         }
     }
+
+    printf("Zombie %d %d %c ajouté\n", _tour, _ligne, _type); //degub
+    
 }
 
 void previewVagues(Jeu* jeu){
@@ -84,7 +101,7 @@ void previewVagues(Jeu* jeu){
 
     for (int i=0; i<jeu->lastTour; i++){
         for(int j=0; j<jeu->lastLigne; j++){
-            preview[i][j]='.';
+            preview[i][j]='0';
         }
     }
     
@@ -109,31 +126,38 @@ void previewVagues(Jeu* jeu){
 }
 
 void loadFichier(Jeu* jeu, const char* _niveau){
-    printf("Chargement du niveau %s", _niveau);
 
-    char niveauTexte[64];
-    strcpy(niveauTexte, _niveau);
-    strcat(niveauTexte, ".txt"); //pour ajouter .txt
+    FILE* niveau = fopen(_niveau, "r");
 
-    FILE* niveau = fopen(niveauTexte, "r");
     if (niveau == NULL) {
         printf("Niveau %s introuvable.\n", _niveau);
         return;
     }
 
+    printf("Lecture de %s\n", _niveau);
     fscanf(niveau, "%d", &jeu->cagnotte);
+    
+    printf("Cagnotte %d\n", jeu->cagnotte); //debug
+
     int tour, ligne;
     int hauteur = 0;
     char type;
 
     while (fscanf(niveau, "%d %d %c", &tour, &ligne, &type) == 3) {
-        if (ligne > hauteur)
+
+        printf("%d %d %c \n", tour, ligne, type);//debug
+
+        if (ligne > hauteur){
             hauteur = ligne;
+        }
         addEtudiant(jeu, tour, ligne, type);
     }
+
+    jeu->lastLigne = hauteur;
     jeu->lastTour = tour;
+
     fclose(niveau);
-    printf("Chargement du niveau %s terminé", _niveau);
+    printf("Lecture de %s terminée\n", _niveau);
 
 }
 
@@ -149,6 +173,12 @@ int main(int argc, char *argv[]){
         printf("%s\n", argv[i]);
 
         Jeu* jeu = malloc(sizeof(Jeu));
+        if (jeu == NULL) {
+            printf("Erreur : Jeu\n");
+            return 1;
+        }
+
+        initJeu(jeu);
         loadFichier(jeu, argv[i]);
         previewVagues(jeu);
         free(jeu);
