@@ -79,6 +79,7 @@ void previewVagues(Jeu* jeu){
         printf("Pas de vague.\n");
         return;
     }
+
     char preview[jeu->lastTour][jeu->lastLigne];
 
     for (int i=0; i<jeu->lastTour; i++){
@@ -87,17 +88,11 @@ void previewVagues(Jeu* jeu){
         }
     }
     
-    int ligne = 1;
     Etudiant* etu = jeu->etudiants;
 
     while (etu != NULL){
-        while (ligne < jeu->lastLigne){
-            if (etu->ligne == ligne){
-                    preview[etu->tour][ligne] = etu->type;
-                }
-                etu = etu->next;
-            }
-            ligne++;
+        preview[etu->tour][etu->ligne] = etu->type;
+        etu = etu->next;
     }
 
     printf("Preview de la vague\n");
@@ -138,6 +133,7 @@ void loadFichier(Jeu* jeu, const char* _niveau){
     }
     jeu->lastTour = tour;
     fclose(niveau);
+    printf("Chargement du niveau %s terminé", _niveau);
 
 }
 
