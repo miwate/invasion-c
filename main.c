@@ -5,16 +5,15 @@
 #define ZONE_SAFE 6
 
 typedef struct tourelle {
-    int type;
     int pointsDeVie;
     int ligne;
     int position;
     int prix;
     struct tourelle* next;
+    char type;
 } Tourelle;
 
 typedef struct etudiant {
-    int type;
     int pointsDeVie;
     int ligne;
     int position;
@@ -22,7 +21,8 @@ typedef struct etudiant {
     int tour;
     struct etudiant* next; //on va utiliser ça pour l'étudiant suivant de la même ligne
     struct etudiant* next_line; //prochain de la ligne d'après
-    struct etudiant* prev_line; //William : premier de la ligne d'avant, mais je pense pas qu'on l'utilisera
+    struct etudiant* prev_line; //remier de la ligne d'avant, mais je pense pas qu'on l'utilisera
+    char type;
 } Etudiant;
 
 typedef struct {
@@ -47,11 +47,11 @@ void initJeu(Jeu* jeu) {
 void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
     Etudiant* etu = malloc(sizeof(Etudiant));
     if (etu == NULL) {
-        printf("Impossible d'ajouter l'étudiant %d %d %d.\n", _tour, _ligne, _type);
+        printf("Impossible d'ajouter l'étudiant %d %d %c.\n", _tour, _ligne, _type);
         return;
     }
 
-    printf("Ajout du zombie %d %d %c\n", _tour, _ligne, _type); //degub
+    //printf("Ajout du zombie %d %d %c\n", _tour, _ligne, _type); //degub
     
     etu->type = _type;
     etu->ligne = _ligne;
@@ -87,7 +87,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
         }
     }
 
-    printf("Zombie %d %d %c ajouté\n", _tour, _ligne, _type); //degub
+    //printf("Zombie %d %d %c ajouté\n", _tour, _ligne, _type); //degub
     
 }
 
@@ -96,34 +96,45 @@ void previewVagues(Jeu* jeu){
         printf("Pas de vague.\n");
         return;
     }
+    int H, L;
+    H = jeu->lastLigne;
+    L = jeu->lastTour;
+    printf("H%d, L%d\n", H, L); //debug
 
-    char preview[jeu->lastTour][jeu->lastLigne];
-
-    for (int i=0; i<jeu->lastTour; i++){
-        for(int j=0; j<jeu->lastLigne; j++){
-            preview[i][j]='0';
+    char** preview = (char**)malloc(H*sizeof(char*));
+    for (int i=0; i<H; i++){
+        preview[i] = (char*)malloc(L*sizeof(char));
+    }
+    for (int i=0; i<H; i++){
+        for (int j=0; j<L; j++){
+            preview[i][j] = '.';
         }
     }
-    
     Etudiant* etu = jeu->etudiants;
-
     while (etu != NULL){
-        preview[etu->tour][etu->ligne] = etu->type;
+        if (etu->ligne<=H && etu->tour<=L) {
+            preview[etu->ligne-1][etu->tour-1] = etu->type;
+        }
+        //printf("%c", etu->type); //debgub
         etu = etu->next;
     }
 
     printf("Preview de la vague\n");
 
-    for (int i=0; i<jeu->lastTour; i++){
+    for(int i=0; i<=H; i++){
         printf("%d|\t", i+1);
-
-        for(int j=0; j<jeu->lastLigne; j++){
+        for (int j=0; j<=L; j++) {
             printf("%c\t", preview[i][j]);
         }
         printf("\n");
     }
 
+    for (int i = 0; i < H; i++) {
+        free(preview[i]);
+    }
+    free(preview);
 }
+
 
 void loadFichier(Jeu* jeu, const char* _niveau){
 
@@ -137,7 +148,7 @@ void loadFichier(Jeu* jeu, const char* _niveau){
     printf("Lecture de %s\n", _niveau);
     fscanf(niveau, "%d", &jeu->cagnotte);
     
-    printf("Cagnotte %d\n", jeu->cagnotte); //debug
+    //printf("Cagnotte %d\n", jeu->cagnotte); //debug
 
     int tour, ligne;
     int hauteur = 0;
@@ -145,7 +156,7 @@ void loadFichier(Jeu* jeu, const char* _niveau){
 
     while (fscanf(niveau, "%d %d %c", &tour, &ligne, &type) == 3) {
 
-        printf("%d %d %c \n", tour, ligne, type);//debug
+        //printf("%d %d %c \n", tour, ligne, type);//debug
 
         if (ligne > hauteur){
             hauteur = ligne;
@@ -157,7 +168,7 @@ void loadFichier(Jeu* jeu, const char* _niveau){
     jeu->lastTour = tour;
 
     fclose(niveau);
-    printf("Lecture de %s terminée\n", _niveau);
+    //printf("Lecture de %s terminée\n", _niveau);
 
 }
 
