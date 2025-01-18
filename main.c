@@ -121,7 +121,7 @@ void previewVagues(Jeu* jeu){
 
     printf("Preview de la vague\n");
 
-    for(int i=0; i<=H; i++){
+    for(int i=0; i<H; i++){
         printf("%d|\t", i+1);
         for (int j=0; j<=L; j++) {
             printf("%c\t", preview[i][j]);
@@ -129,7 +129,7 @@ void previewVagues(Jeu* jeu){
         printf("\n");
     }
 
-    for (int i = 0; i < H; i++) {
+    for (int i=0; i<H; i++) {
         free(preview[i]);
     }
     free(preview);
