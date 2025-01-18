@@ -59,7 +59,7 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
     etu->tour = _tour;
 
     if (_type == 'Z') {
-        etu->pointsDeVie = 3;
+        etu->pointsDeVie = 5;
         etu->vitesse = 1;
     }
     else { // on va ajouter d'autres types de zombies
@@ -119,6 +119,8 @@ void previewVagues(Jeu* jeu){
         etu = etu->next;
     }
 
+    printf("\033[2J"); // on efface tout
+    printf("\033[0;0H"); // on se place en haut à gauche
     printf("Preview de la vague\n");
 
     for(int i=0; i<H; i++){
