@@ -62,26 +62,59 @@ void previewVagues(Jeu* jeu){
 
 /* Affiche l'état actuel du jeu */
 void renderFrameJeu(Jeu* jeu){
+
+    if (jeu == NULL){
+        printf("Jeu vide.\n");
+        return;
+    }
+
+    /* Affichage du numéro du tour */
+    printf("Tour %d\n", jeu->tour);
     
     /* Hauteur et Largeur de la double liste */
     int H = jeu->lastLigne;
     int L = SPAWN_AREA;
 
     /* On se sert d'une double liste pour afficher la vague ensuite*/
-    char** preview = (char**)malloc(H * sizeof(char*));
+    char** render = (char**)malloc(H * sizeof(char*));
 
     /* Remplissage de la double liste avec des points '.' */
     for (int i = 0; i < H; i++){
-        preview[i] = (char*)malloc(L * sizeof(char));
+        render[i] = (char*)malloc(L * sizeof(char));
 
         for (int j = 0; j < L; j++){
-            preview[i][j] = '.';
+            render[i][j] = '.';
         }
     }
 
-
     /* Récupération des tourelles avec la file */
     Tourelle* barney = jeu->tourelles;
+
+    /* On récupère tous les Barney grâce à la liste chaînée */
+    while (barney != NULL){
+        if (barney->ligne <= H && barney->position <= L) {
+
+            /* Modifie les points '.' de la double liste par le type de Barney */
+            render[barney->ligne - 1][barney->position - 1] = barney->type;
+        }
+        barney = barney->next;
+    }
+
+/* Affiche le rendu selon la liste*/
+    for (int i = 0; i < H; i++){
+        printf("%d|\t", i + 1);
+
+        for (int j = 0; j < L; j++) {
+            printf("%c\t", render[i][j]);
+        }
+        printf("\n");
+    }
+
+/* Libération de la mémoire */
+    for (int i = 0; i < H; i++) {
+        free(render[i]);
+    }
+    free(render);
 
 }
 
