@@ -16,6 +16,15 @@ void initJeu(Jeu* jeu){
 
 void refreshJeu(Jeu* jeu){
 
+    /* Vague vide */
+    if (jeu->etudiants == NULL){
+        printf("Pas de vague.\n");
+        return;
+    }
+
+    /* Incrémentation du tour */
+    jeu->tour += 1;
+
     Etudiant* etu = malloc(sizeof(Etudiant));
 
     if (etu == NULL) {
