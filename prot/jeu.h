@@ -1,5 +1,6 @@
 #ifndef JEU_H
     #define JEU_H
+    #define SPAWN_AREA 15
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -7,6 +8,7 @@
 /* -- Définitions des structures -- */
     typedef struct tourelle{
         int pointsDeVie;
+        int degats;
         int ligne;
         int position;
         int prix;
@@ -43,6 +45,12 @@
 
     /* Ajoute un étudiant dans la file en fonction de son type*/
     void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type);
+
+    /* Ajoute une tourelle dans la file */
+    void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type);
+
+    /* Affiche l'état actuel du jeu (tourelles + étudiants)*/
+    void renderFrameJeu(Jeu* jeu);
 
     /* Prévualise la vague d'étudiants dans le terminal*/
     void previewVagues(Jeu* jeu);
