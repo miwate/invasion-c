@@ -52,12 +52,12 @@ void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _ty
 
     /* Différents types de tourelles */
     if (_type == 'T'){ // T pour Tourelle
+        barney->degats = 2;
+        barney->pointsDeVie = 2;
+    }
+    else if (_type == 'D'){ // B pour Defective
         barney->degats = 1;
         barney->pointsDeVie = 1;
-    }
-    else if (_type == 'B'){ // B pour Barney
-        barney->degats = 2;
-        barney->pointsDeVie =2;
     }
     else {
         barney->degats = 1;
