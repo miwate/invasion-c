@@ -18,6 +18,5 @@ int main(int argc, char* argv[]) {
         previewVagues(jeu);
         free(jeu);
     }
-    printf("fin\n");
     return 0;
 }

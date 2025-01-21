@@ -14,6 +14,77 @@ void initJeu(Jeu* jeu){
     jeu->lastLigne = 0;
 }
 
+void refreshJeu(Jeu* jeu){
+
+    Etudiant* etu = malloc(sizeof(Etudiant));
+
+    if (etu == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        return;
+    }
+
+    etu = jeu->etudiants;
+
+    while(etu != NULL){
+        etu->position -= etu->vitesse;
+    }
+
+/* UNFINISHED IL FAUT AJOUTER LES TOURELLES D'abord */
+
+
+}
+
+
+/* Ajoute une tourelle dans le jeu en fonction de la ligne et de la position */
+void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type){
+
+    /* Barney pour le nom générique des tourelles en référence à Half life (côté sympa des tourelles)*/
+    Tourelle* barney = malloc(sizeof(Tourelle));
+
+    if (barney == NULL){
+        printf("Impossible d'ajouter la tourelle %d %c.\n", _ligne, _type);
+        return;
+    }
+
+    barney->type = _type;
+    barney->ligne = _ligne;
+    barney->position = _position;
+
+    /* Différents types de tourelles */
+    if (_type == 'T'){ // T pour Tourelle
+        barney->degats = 1;
+        barney->pointsDeVie = 1;
+    }
+    else if (_type == 'B'){ // B pour Barney
+        barney->degats = 2;
+        barney->pointsDeVie =2;
+    }
+    else {
+        barney->degats = 1;
+        barney->pointsDeVie =2;     
+    }
+
+    barney->next = NULL;
+
+
+    /* Cas : première tourelle */
+    if (jeu->tourelles == NULL){
+        jeu->tourelles = barney;
+    }
+
+    /* Cas : il y a déjà des tourelles, donc on met la tourelle en fin de liste */
+    else {
+        Tourelle* precedent = jeu->tourelles;
+
+        while (precedent->next != NULL){
+            precedent = precedent->next;
+        }
+        precedent->next = barney;
+
+    }
+
+}
+
 
 /* Fonction prenant en paramètres le jeu, le tour, la ligne et le type d'un étudiant */
 /* Ajoute un étudiant dans la file */
@@ -28,13 +99,17 @@ void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
 
     etu->type = _type;
     etu->ligne = _ligne;
-    etu->position = 0;
+    etu->position = SPAWN_AREA;
     etu->tour = _tour;
     etu->vitesse = 1;
 
 /* Met à jour les caractéristiques d'un étudiant selon son type */
-    if (_type == 'Z') {
+    if (_type == 'Z') { // Z pour Zombie
         etu->pointsDeVie = 5;
+        etu->vitesse = 1;
+    }
+    else if (_type == 'H'){ // C pour Headcrab
+        etu->pointsDeVie = 1;
         etu->vitesse = 1;
     }
 

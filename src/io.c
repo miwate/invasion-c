@@ -2,10 +2,8 @@
 
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal et affichage) -- */
 
-
-/* Fonction prenant en paramètre le jeu*/
 /* Affiche une prévualisation de la vague d'étudiants */
-void previewVagues(Jeu* jeu) {
+void previewVagues(Jeu* jeu){
 
     /* Vague vide */
     if (jeu->etudiants == NULL){
@@ -62,6 +60,30 @@ void previewVagues(Jeu* jeu) {
     free(preview);
 }
 
+/* Affiche l'état actuel du jeu */
+void renderFrameJeu(Jeu* jeu){
+    
+    /* Hauteur et Largeur de la double liste */
+    int H = jeu->lastLigne;
+    int L = SPAWN_AREA;
+
+    /* On se sert d'une double liste pour afficher la vague ensuite*/
+    char** preview = (char**)malloc(H * sizeof(char*));
+
+    /* Remplissage de la double liste avec des points '.' */
+    for (int i = 0; i < H; i++){
+        preview[i] = (char*)malloc(L * sizeof(char));
+
+        for (int j = 0; j < L; j++){
+            preview[i][j] = '.';
+        }
+    }
+
+
+    /* Récupération des tourelles avec la file */
+    Tourelle* barney = jeu->tourelles;
+
+}
 
 
 /* Charge un fichier contenant un niveau spécifique et met à jour les attributs du jeu donné en paramètres */
