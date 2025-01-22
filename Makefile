@@ -19,16 +19,24 @@ all: $(TARGET)
 
 # Création de l'exécutable
 $(TARGET): $(OBJS)
-\t$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
 # Compilation des fichiers .c en .o
 %.o: %.c
-\t$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Nettoyage
 clean:
-\trm -f $(SRC_DIR)/*.o $(TARGET)
+	rm -f $(SRC_DIR)/*.o $(TARGET)
 
 # Réinitialisation complète
 mrproper: clean
-\trm -f $(TARGET)
+	rm -f $(TARGET)
+
+# Exécution avec un fichier spécifique
+facile:
+	./$(TARGET) levels/facile.txt
+
+meatshield:
+	./$(TARGET) levels/meatshield.txt
+
