@@ -1,42 +1,40 @@
-# Nom de l'exécutable
 TARGET = jeu
 
-# Répertoires
 SRC_DIR = src
 PROT_DIR = prot
+BUILD_DIR = build
+LEVELS_DIR = levels
 
 # Fichiers source et objets
 SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
-# Options de compilation
+# Compilation
 CC = gcc
 CFLAGS = -I$(PROT_DIR) -Wall
-LDFLAGS = 
-
-# Règle par défaut
+LDFLAGS = -lSDL2
 all: $(TARGET)
 
 # Création de l'exécutable
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) -o $(BUILD_DIR)/$(TARGET) $(LDFLAGS)
 
-# Compilation des fichiers .c en .o
-%.o: %.c
+# Compilation (encore)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Nettoyage
 clean:
-	rm -f $(SRC_DIR)/*.o $(TARGET)
+	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/$(TARGET)
 
 # Réinitialisation complète
-mrproper: clean
-	rm -f $(TARGET)
+cleanAll: clean
+	rm -f $(BUILD_DIR)/$(TARGET)
 
 # Exécution avec un fichier spécifique
 facile:
-	./$(TARGET) levels/facile.txt
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/facile.txt
 
 meatshield:
-	./$(TARGET) levels/meatshield.txt
-
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/meatshield.txt

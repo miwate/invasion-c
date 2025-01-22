@@ -1,6 +1,6 @@
 #include "../prot/jeu.h"
 
-/* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal et affichage) -- */
+/* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
 
 /* Affiche une prévualisation de la vague d'étudiants */
 void prevualisationVagues(Jeu* jeu){
@@ -60,6 +60,8 @@ void prevualisationVagues(Jeu* jeu){
     free(preview);
 }
 
+
+
 /* Affiche l'état actuel du jeu -*/
 void renduActuelJeu(Jeu* jeu){
 
@@ -100,8 +102,8 @@ void renduActuelJeu(Jeu* jeu){
         barney = barney->next;
     }
 
-    /* Efface le terminal puis retour à la ligne */
-    printf("\033[2J\033[0;0HTour %d\n", jeu->tour);
+    /* Efface le terminal puis retour à la ligne + Affiche le numéro du tour et la CAgnotte*/
+    printf("\033[2J\033[0;0HTour %d - Cagnotte : $%d\n", jeu->tour, jeu->cagnotte);
 
     /* Affiche le rendu selon la liste*/
     for (int i = 0; i < H; i++){
