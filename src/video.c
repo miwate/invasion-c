@@ -12,7 +12,7 @@ SDL_Window* initSDL() {
         return NULL;
     }
 
-    SDL_Window* fenetre = SDL_CreateWindow("Jeu Vague d'Etudiants", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
+    SDL_Window* fenetre = SDL_CreateWindow("INVASION !!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
     
     if (!fenetre){
         printf("La fenêtre SDL n'existe pas %s\n", SDL_GetError());
