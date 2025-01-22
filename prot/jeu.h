@@ -1,6 +1,7 @@
 #ifndef JEU_H
     #define JEU_H
     #define SPAWN_AREA 15
+    #define REPOS 5
 
     #include <stdio.h>
     #include <stdlib.h>
