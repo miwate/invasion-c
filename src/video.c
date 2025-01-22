@@ -1,79 +1,90 @@
 #include "video.h"
 #include <stdio.h>
 
-/* Fonction pour initialiser SDL et créer la fenêtre */
+/* Initialise la fenêtre et crée la frenêtre SDL */
 SDL_Window* initSDL() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("Erreur SDL: %s\n", SDL_GetError());
+
+    if (SDL_Init(SDL_INIT_VIDEO) < 0){
+        printf("La fenêtre SDL ne s'initialise pas %s\n", SDL_GetError());
         return NULL;
     }
-    SDL_Window* window = SDL_CreateWindow("Jeu Vague d'Etudiants",
-                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                          LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
-    if (!window) {
-        printf("Erreur de création de fenêtre: %s\n", SDL_GetError());
+
+    SDL_Window* fenetre = SDL_CreateWindow("Jeu Vague d'Etudiants", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
+    
+    if (!fenetre){
+        printf("La fenêtre SDL n'existe pas %s\n", SDL_GetError());
         SDL_Quit();
         return NULL;
+
     }
-    return window;
+    return fenetre;
 }
 
-/* Fonction pour dessiner la grille et les étudiants */
-void dessinGrille(SDL_Renderer* renderer, Jeu* jeu) {
-    int H = jeu->lastLigne;
-    int L = jeu->lastTour;
-
-    // Dessiner la grille
-    for (int i = 0; i < H; i++) {
-        for (int j = 0; j < L; j++) {
-            SDL_Rect case_ = { j * TAILLE_CASE, i * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE };
-            // Colorier les cases en blanc
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderFillRect(renderer, &case_);
-
-            // Dessiner une bordure
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderDrawRect(renderer, &case_);
-        }
+void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* renderer) {
+    if (jeu->etudiants == NULL){
+        printf("Pas de vague.\n");
+        return;
     }
 
-    // Dessiner les étudiants dans la grille
+    int H = jeu->lastLigne;
+    int L = jeu->lastTour;
+    int largeurCase = LARGEUR_JEU / L;
+    int hauteurCase = HAUTEUR_JEU / H;
+
+    /* Efface l'écran */
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Noir
+    SDL_RenderClear(renderer);
+
     Etudiant* etu = jeu->etudiants;
+
     while (etu != NULL) {
         if (etu->ligne <= H && etu->tour <= L) {
-            SDL_Rect case_ = { (etu->tour - 1) * TAILLE_CASE, (etu->ligne - 1) * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE };
-            if (etu->type == 'A') { // Exemple : type 'A' pour un étudiant particulier
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Rouge
-            } else {
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);  // Vert
-            }
-            SDL_RenderFillRect(renderer, &case_);
+            /* Position et couleur */
+            int x = (etu->tour - 1) * largeurCase;
+            int y = (etu->ligne - 1) * hauteurCase;
+
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Rouge pour les étudiants
+            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+            SDL_RenderFillRect(renderer, &rect);
         }
         etu = etu->next;
     }
+
+    /* Affiche les changements */
+    SDL_RenderPresent(renderer);
 }
 
-/* Fonction pour gérer les événements et afficher la fenêtre */
-void afficherGrille(SDL_Window* window, SDL_Renderer* renderer, Jeu* jeu) {
-    int quitter = 0;
-    SDL_Event event;
 
-    while (!quitter) {
-        // Gestion des événements
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                quitter = 1;
-            }
-        }
-
-        // Effacer l'écran
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Noir
-        SDL_RenderClear(renderer);
-
-        // Dessiner la grille et les étudiants
-        dessinGrille(renderer, jeu);
-
-        // Mettre à jour l'écran
-        SDL_RenderPresent(renderer);
+void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* renderer) {
+    if (jeu == NULL) {
+        printf("Jeu vide.\n");
+        return;
     }
+
+    int H = jeu->lastLigne;
+    int L = SPAWN_AREA;  // Remplacez par la valeur appropriée
+    int largeurCase = LARGEUR_JEU / L;
+    int hauteurCase = HAUTEUR_JEU / H;
+
+    /* Efface l'écran */
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Noir
+    SDL_RenderClear(renderer);
+
+    Tourelle* barney = jeu->tourelles;
+
+    while (barney != NULL) {
+        if (barney->ligne <= H && barney->position <= L) {
+            /* Position et couleur */
+            int x = (barney->position - 1) * largeurCase;
+            int y = (barney->ligne - 1) * hauteurCase;
+
+            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);  // Vert pour les tourelles
+            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+            SDL_RenderFillRect(renderer, &rect);
+        }
+        barney = barney->next;
+    }
+
+    /* Affiche les changements */
+    SDL_RenderPresent(renderer);
 }

@@ -41,7 +41,7 @@ void prevualisationVagues(Jeu* jeu){
     }
 
     /* Efface le terminal puis retour à la ligne */
-    printf("\033[2J\033[0;0HPreview de la vague\n");
+    printf("\033[2J\033[0;0HVoici ce qui vous attend ! Préparez-vous...\n");
 
     /* Affiche la vague d'étudiants selon la liste*/
     for (int i = 0; i < H; i++){

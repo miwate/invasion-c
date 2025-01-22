@@ -16,10 +16,10 @@
     /* Crée la fenêtre SDL */
     SDL_Window* initSDL();
 
-    /* Fonction pour dessiner la grille et les étudiants */
-    void dessinGrille(SDL_Renderer* renderer, Jeu* jeu);
+    /* Affiche une prévualisation des vagues d'étudiants mais avec SDL*/
+    void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* renderer);
 
-    /* Fonction pour gérer les événements et afficher la fenêtre */
-    void afficherGrille(SDL_Window* window, SDL_Renderer* renderer, Jeu* jeu);
+    /* Affiche l'état actuel du jeu mais avec SDL*/
+    void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* renderer);
 
 #endif
