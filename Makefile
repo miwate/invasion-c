@@ -12,7 +12,7 @@ OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 # Compilation
 CC = gcc
 CFLAGS = -I$(PROT_DIR) -Wall
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lSDL2_image
 all: $(TARGET)
 
 # Création de l'exécutable

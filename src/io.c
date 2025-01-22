@@ -1,6 +1,7 @@
 #include "../prot/jeu.h"
 
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
+/* La partie graphique ayant été ajoutée par la suite, certaines fonctions d'affichage serviront pour debug */
 
 /* Affiche une prévualisation de la vague d'étudiants */
 void prevualisationVagues(Jeu* jeu){
@@ -40,8 +41,8 @@ void prevualisationVagues(Jeu* jeu){
         etu = etu->next;
     }
 
-    /* Efface le terminal puis retour à la ligne */
-    printf("\033[2J\033[0;0HVoici ce qui vous attend ! Préparez-vous...\n");
+    /* Efface le terminal puis retour à la ligne et affichage de la cagnotte */
+    printf("\033[2J\033[0;0HVoici ce qui vous attend ! Cagnotte : %d€\n", jeu->cagnotte);
 
     /* Affiche la vague d'étudiants selon la liste*/
     for (int i = 0; i < H; i++){

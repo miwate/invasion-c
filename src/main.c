@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "../prot/jeu.h"
 #include "video.h"
 
@@ -35,38 +36,46 @@ int main(int argc, char* argv[]) {
     }
 
     for (int i = 1; i < argc; i++){
-        printf("Traitement du fichier : %s\n", argv[i]);
-
-        // Allocation de la mémoire pour un nouveau jeu
-        Jeu* jeu = malloc(sizeof(Jeu));
-        if (jeu == NULL) {
-            printf("Erreur : Allocation mémoire pour Jeu\n");
-            return 1;
-        }
-
-        // Initialisation du jeu
+        /* INitialisation du jeu*/
         initJeu(jeu);
 
-        // Chargement des données depuis le fichier
+        /* Chargement du niveau */
+        printf("Traitement du fichier : %s\n", argv[i]);
         chargerFichier(jeu, argv[i]);
 
         /* Prévisualisation des vagues */
-        printf("Prévisualisation des vagues\n");
+        printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
         prevualisationVagues(jeu);
         prevualisationVagues_v(jeu, renderer);
 
-        printf("Appuyez sur Entrée pour jouer...\n");
-        getchar();
+        /* Début d'un compteur pour la prévualisation */
+        int compteur = 5;
+        printf("Début du jeu dans %d...\n", compteur);
+
+        while (compteur > 0){
+            printf("%d\n", compteur);
+            sleep(1);
+            compteur -= 1;
+        }
+
+        
+        ajoutTourelle(jeu, 1,2,'T');
 
         printf("Affichage de l'état actuel du jeu\n");
-        renduActuelJeu_v(jeu, renderer);  // Assurez-vous que `renderer` est correctement initialisé ici
+        renduActuelJeu_v(jeu, renderer);
 
-        // Libération de la mémoire allouée pour le jeu
-        free(jeu);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
+
+        printf("Appuyez sur Entrée pour terminer...\n");
+        getchar();
+
+
+
     }
+    // Libération de la mémoire allouée pour le jeu
+    free(jeu);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 
     printf("Fin du traitement des fichiers.\n");
     return 0;
