@@ -100,6 +100,9 @@ void renderFrameJeu(Jeu* jeu){
         barney = barney->next;
     }
 
+    /* Efface le terminal puis retour à la ligne */
+    printf("\033[2J\033[0;0HTour %d\n", jeu->tour);
+
 /* Affiche le rendu selon la liste*/
     for (int i = 0; i < H; i++){
         printf("%d|\t", i + 1);
