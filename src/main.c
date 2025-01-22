@@ -14,8 +14,15 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         initJeu(jeu);
-        loadFichier(jeu, argv[i]);
-        previewVagues(jeu);
+        chargerFichier(jeu, argv[i]);
+
+        prevualisationVagues(jeu);
+
+        printf("Appuyez sur Entrée pour jouer...\n");
+        getchar();
+
+        renduActuelJeu(jeu);
+
         free(jeu);
     }
     return 0;

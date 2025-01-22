@@ -14,7 +14,7 @@ void initJeu(Jeu* jeu){
     jeu->lastLigne = 0;
 }
 
-void refreshJeu(Jeu* jeu){
+void rafraichirJeu(Jeu* jeu){
 
     /* Vague vide */
     if (jeu->etudiants == NULL){
@@ -45,7 +45,7 @@ void refreshJeu(Jeu* jeu){
 
 
 /* Ajoute une tourelle dans le jeu en fonction de la ligne et de la position */
-void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type){
+void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type){
 
     /* Barney pour le nom générique des tourelles en référence à Half life (côté sympa des tourelles)*/
     Tourelle* barney = malloc(sizeof(Tourelle));
@@ -97,7 +97,7 @@ void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _ty
 
 /* Fonction prenant en paramètres le jeu, le tour, la ligne et le type d'un étudiant */
 /* Ajoute un étudiant dans la file */
-void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
+void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
 
     Etudiant* etu = malloc(sizeof(Etudiant));
 
