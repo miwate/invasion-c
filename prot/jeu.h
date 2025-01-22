@@ -42,20 +42,23 @@
 
     /* Initialise un jeu vide*/
     void initJeu(Jeu* jeu);
+    
+    /* Rafraîchit le jeu pour un tour suivant */
+    void rafraichirJeu(Jeu* jeu);
 
     /* Ajoute un étudiant dans la file en fonction de son type*/
-    void addEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type);
+    void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type);
 
     /* Ajoute une tourelle dans la file */
-    void addTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type);
+    void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type);
 
     /* Affiche l'état actuel du jeu (tourelles + étudiants)*/
-    void renderFrameJeu(Jeu* jeu);
+    void renduActuelJeu(Jeu* jeu);
 
     /* Prévualise la vague d'étudiants dans le terminal*/
-    void previewVagues(Jeu* jeu);
+    void prevualisationVagues(Jeu* jeu);
 
     /* Charge un fichier contenant un niveau spécifique et met à jour les attributs du jeu*/
-    void loadFichier(Jeu* jeu, const char* _niveau);
+    void chargerFichier(Jeu* jeu, const char* _niveau);
 
 #endif

@@ -3,7 +3,7 @@
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal et affichage) -- */
 
 /* Affiche une prévualisation de la vague d'étudiants */
-void previewVagues(Jeu* jeu){
+void prevualisationVagues(Jeu* jeu){
 
     /* Vague vide */
     if (jeu->etudiants == NULL){
@@ -43,7 +43,7 @@ void previewVagues(Jeu* jeu){
     /* Efface le terminal puis retour à la ligne */
     printf("\033[2J\033[0;0HPreview de la vague\n");
 
-/* Affiche la vague d'étudiants selon la liste*/
+    /* Affiche la vague d'étudiants selon la liste*/
     for (int i = 0; i < H; i++){
         printf("%d|\t", i + 1);
 
@@ -53,15 +53,15 @@ void previewVagues(Jeu* jeu){
         printf("\n");
     }
 
-/* Libération de la mémoire */
+    /* Libération de la mémoire */
     for (int i = 0; i < H; i++) {
         free(preview[i]);
     }
     free(preview);
 }
 
-/* Affiche l'état actuel du jeu */
-void renderFrameJeu(Jeu* jeu){
+/* Affiche l'état actuel du jeu -*/
+void renduActuelJeu(Jeu* jeu){
 
     if (jeu == NULL){
         printf("Jeu vide.\n");
@@ -103,7 +103,7 @@ void renderFrameJeu(Jeu* jeu){
     /* Efface le terminal puis retour à la ligne */
     printf("\033[2J\033[0;0HTour %d\n", jeu->tour);
 
-/* Affiche le rendu selon la liste*/
+    /* Affiche le rendu selon la liste*/
     for (int i = 0; i < H; i++){
         printf("%d|\t", i + 1);
 
@@ -113,7 +113,7 @@ void renderFrameJeu(Jeu* jeu){
         printf("\n");
     }
 
-/* Libération de la mémoire */
+    /* Libération de la mémoire */
     for (int i = 0; i < H; i++) {
         free(render[i]);
     }
@@ -123,7 +123,7 @@ void renderFrameJeu(Jeu* jeu){
 
 
 /* Charge un fichier contenant un niveau spécifique et met à jour les attributs du jeu donné en paramètres */
-void loadFichier(Jeu* jeu, const char* _niveau) {
+void chargerFichier(Jeu* jeu, const char* _niveau) {
 
     FILE* niveau = fopen(_niveau, "r");
 
@@ -139,10 +139,10 @@ void loadFichier(Jeu* jeu, const char* _niveau) {
     int tour, ligne, hauteur = 0;
     char type;
 
-/* Lecture de la vague*/
+    /* Lecture de la vague*/
     while (fscanf(niveau, "%d %d %c", &tour, &ligne, &type) == 3){
         if (ligne > hauteur) hauteur = ligne;
-        addEtudiant(jeu, tour, ligne, type);
+        ajoutEtudiant(jeu, tour, ligne, type);
     }
     
     /* On en aura besoin pour la preview */
