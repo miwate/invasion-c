@@ -18,12 +18,12 @@
     SDL_Window* initSDL();
 
     /* Affiche une prévualisation des vagues d'étudiants mais avec SDL*/
-    void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* renderer);
+    void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu);
 
     /* Affiche l'état actuel du jeu mais avec SDL*/
-    void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* renderer);
+    void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu);
 
     /* Charge une texture */
-    SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* renderer);
+    SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* rendu);
 
 #endif

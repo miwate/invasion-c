@@ -17,9 +17,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        printf("Erreur de création de renderer: %s\n", SDL_GetError());
+    SDL_Renderer* rendu = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!rendu) {
+        printf("Erreur de création de rendu: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
         SDL_Quit();
         return 1;
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     Jeu* jeu = malloc(sizeof(Jeu));
     if (jeu == NULL) {
         printf("Erreur d'allocation mémoire pour le jeu\n");
-        SDL_DestroyRenderer(renderer);
+        SDL_DestroyRenderer(rendu);
         SDL_DestroyWindow(window);
         SDL_Quit();
         return 1;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         /* Prévisualisation des vagues */
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
         prevualisationVagues(jeu);
-        prevualisationVagues_v(jeu, renderer);
+        prevualisationVagues_v(jeu, rendu);
 
         /* Début d'un compteur pour la prévualisation */
         int compteur = 5;
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
         ajoutTourelle(jeu, 1,2,'T');
 
         printf("Affichage de l'état actuel du jeu\n");
-        renduActuelJeu_v(jeu, renderer);
+        renduActuelJeu_v(jeu, rendu);
 
 
         printf("Appuyez sur Entrée pour terminer...\n");
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     }
     // Libération de la mémoire allouée pour le jeu
     free(jeu);
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(rendu);
     SDL_DestroyWindow(window);
     SDL_Quit();
 
