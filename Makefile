@@ -36,5 +36,12 @@ cleanAll: clean
 facile:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/facile.txt
 
+normal:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/normal.txt
+
+expert:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/expert.txt
+
+
 meatshield:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/meatshield.txt
