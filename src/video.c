@@ -1,7 +1,7 @@
 #include "video.h"
 #include <stdio.h>
 
-/* -- Ce fichier contient les fonctions utilisées pour afficher graphiquement l'état du jeu, à l'aide de SDL il complète le fichier io.c --*/
+/* -- Ce fichier contient les fonctions utilisées pour afficher graphiquement l'état du jeu à l'aide de SDL, il complète le fichier io.c --*/
 
 
 /* Initialise la fenêtre et crée la frenêtre SDL */
@@ -67,7 +67,7 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
     /* Efface l'écran */
     SDL_RenderClear(rendu);
 
-    // Affiche les tuiles du fond (tilemap)
+    /* Affiche le fond */
     for (int y = 0; y < HAUTEUR_JEU; y += fondHauteur){
 
         for (int x = 0; x < LARGEUR_JEU; x += fondLargeur) {
@@ -106,6 +106,20 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
 
     /* Affiche les changements */
     SDL_RenderPresent(rendu);
+}
+
+/* Affiche les étudiants */
+void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Texture* pointVieTexture, int x, int y, int largeurCase, int hauteurCase, int pointsDeVie) {
+    // Afficher l'étudiant
+    SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+    SDL_RenderCopy(rendu, etudiantTexture, NULL, &rect);
+
+    // Affichage des points de vie (une seule fois)
+    if (pointsDeVie > 0 && pointsDeVie <= 9) {
+
+        SDL_Rect pointRect = {x, y - hauteurCase, largeurCase / 2, hauteurCase};
+        SDL_RenderCopy(rendu, pointVieTexture, NULL, &pointRect);
+    }
 }
 
 
@@ -168,25 +182,26 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     Etudiant* etu = jeu->etudiants;
 
     /* Actualisation des textures pour les étudiants */
-
-     PROBLEME ICI les zombies là
-
     while (etu != NULL) {
-
-        if (etu->ligne <= H && etu->tour <= L) {
+    
+        if (etu->tour <= L){
  
-            int x = (etu->tour - 1) * largeurCase;
+            int x = (etu->position - 1) * largeurCase;
             int y = (etu->ligne - 1) * hauteurCase;
 
-            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+            /* Selon le type, affichage des textures et des points de vie */
+            char pvTex[32];
+            snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", etu->pointsDeVie);
+            SDL_Texture* pvTexture = chargerTexture(pvTex, rendu);
+            
+            if (etu->type == 'Z') {
+                afficherEtudiant(rendu, zTexture, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
+            }
 
-            /* Selon le type */
-            if (etu->type == 'Z'){
-                SDL_RenderCopy(rendu, zTexture, NULL, &rect);
-            }
             else {
-                SDL_RenderCopy(rendu, zombie, NULL, &rect);
+                afficherEtudiant(rendu, zombie, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
             }
+
             
         }
         etu = etu->next;
