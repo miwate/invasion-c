@@ -5,6 +5,7 @@
 #include "../prot/jeu.h"
 #include "video.h"
 
+/* Lance une partie */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         printf("Aucun fichier donné.\n");
@@ -60,15 +61,17 @@ int main(int argc, char* argv[]) {
 
         
         ajoutTourelle(jeu, 1,2,'T');
-
-        printf("Affichage de l'état actuel du jeu\n");
-        rafraichirJeu(jeu);
-        rafraichirJeu(jeu);
-        rafraichirJeu(jeu);
-        
-        renduActuelJeu(jeu);
         renduActuelJeu_v(jeu, rendu);
+        sleep(1);
 
+        while(1){
+            printf("Affichage de l'état actuel du jeu\n");
+
+            rafraichirJeu(jeu);
+            renduActuelJeu_v(jeu, rendu);
+            sleep(1);
+
+        }
 
         printf("Appuyez sur Entrée pour terminer...\n");
         getchar();
