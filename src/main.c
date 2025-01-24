@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Jeu et initialisation
+    /* Jeu et initialisation */
     Jeu* jeu = malloc(sizeof(Jeu));
     if (jeu == NULL) {
         printf("Erreur d'allocation mémoire pour le jeu\n");
