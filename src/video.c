@@ -125,6 +125,24 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     SDL_SetRenderDrawColor(rendu, 0, 0, 0, 255);  // Noir
     SDL_RenderClear(rendu);
 
+
+    SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
+
+    int fondLargeur, fondHauteur;
+    SDL_QueryTexture(fondTexture, NULL, NULL, &fondLargeur, &fondHauteur);
+
+    // Affiche les tuiles du fond (tilemap)
+    for (int y = 0; y < HAUTEUR_JEU; y += fondHauteur){
+
+        for (int x = 0; x < LARGEUR_JEU; x += fondLargeur) {
+
+            SDL_Rect fondRect = {x, y, fondLargeur, fondHauteur};
+            SDL_RenderCopy(rendu, fondTexture, NULL, &fondRect);
+
+        }
+
+    }
+
     Tourelle* barney = jeu->tourelles;
 
     while (barney != NULL){
