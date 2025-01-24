@@ -103,6 +103,17 @@ void renduActuelJeu(Jeu* jeu){
         barney = barney->next;
     }
 
+    /* On récupère tous les étudiants grâce à la liste chaînée */
+    Etudiant* etu = jeu->etudiants;
+    while (etu != NULL){
+        if (etu->position <= SPAWN_AREA && etu->tour <= jeu->tour) {
+
+            /* Modifie les points '.' de la double liste par le type de l'étudiant */
+            render[etu->ligne - 1][etu->position - 1] = etu->type;
+        }
+        etu = etu->next;
+    }
+
     /* Efface le terminal puis retour à la ligne + Affiche le numéro du tour et la CAgnotte*/
     printf("\033[2J\033[0;0HTour %d - Cagnotte : $%d\n", jeu->tour, jeu->cagnotte);
 

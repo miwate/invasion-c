@@ -62,6 +62,11 @@ int main(int argc, char* argv[]) {
         ajoutTourelle(jeu, 1,2,'T');
 
         printf("Affichage de l'état actuel du jeu\n");
+        rafraichirJeu(jeu);
+        rafraichirJeu(jeu);
+        rafraichirJeu(jeu);
+        
+        renduActuelJeu(jeu);
         renduActuelJeu_v(jeu, rendu);
 
 

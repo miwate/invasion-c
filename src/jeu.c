@@ -14,6 +14,8 @@ void initJeu(Jeu* jeu){
     jeu->lastLigne = 0;
 }
 
+
+/* Rafraichit l'état du jeu (faire tirer les tourelles, faire avancer les ennemis)*/
 void rafraichirJeu(Jeu* jeu){
 
     /* Vague vide */
@@ -22,23 +24,36 @@ void rafraichirJeu(Jeu* jeu){
         return;
     }
 
-    /* Incrémentation du tour */
-    jeu->tour += 1;
+    Etudiant* etu = jeu->etudiants;
+    int finTour = 1;
 
-    Etudiant* etu = malloc(sizeof(Etudiant));
-
-    if (etu == NULL) {
-        printf("Erreur d'allocation mémoire.\n");
-        return;
+    /* Les étudiants sont-ils tous éliminés ? */
+    while (etu != NULL){
+        if (etu->tour == jeu->tour && etu->pointsDeVie > 0){
+            finTour = 0;
+        }
+        etu = etu->next;
     }
 
+    /* Incrémentation du tour si les ennemis du tour sont morts */
+    if (finTour != 1){
+        jeu->tour += 1;
+    }
+
+    /* Faire avancer les étudiants */
     etu = jeu->etudiants;
-
-    while(etu != NULL){
+    while (etu != NULL){
+        printf("d");
         etu->position -= etu->vitesse;
+        etu = etu->next;
     }
 
-/* UNFINISHED IL FAUT AJOUTER LES TOURELLES D'abord */
+    /* Faire tirer les Barney (tourelles pour rappel)*/
+    Tourelle* barney = jeu->tourelles;
+
+    while (barney != NULL){
+        return; // pas fini
+    }
 
 
 }
@@ -112,7 +127,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     etu->tour = _tour;
     etu->vitesse = 1;
 
-/* Met à jour les caractéristiques d'un étudiant selon son type */
+    /* Met à jour les caractéristiques d'un étudiant selon son type */
     if (_type == 'Z') { // Z pour Zombie
         etu->pointsDeVie = 5;
         etu->vitesse = 1;
