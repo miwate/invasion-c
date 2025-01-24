@@ -52,7 +52,41 @@ void rafraichirJeu(Jeu* jeu){
     Tourelle* barney = jeu->tourelles;
 
     while (barney != NULL){
-        return; // pas fini
+        
+        etu = jeu->etudiants;
+        Etudiant* etu_prec = NULL;
+
+        while (etu != NULL){
+            if (etu->ligne == barney->ligne){
+
+                etu->pointsDeVie -= barney->degats;
+
+                /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
+                if (etu->pointsDeVie){
+
+                    /* ENleve l'étudiant de la liste */
+                    if (etu_prec == NULL) {
+                        jeu->etudiants = etu->next;
+                    }
+                    
+                    else {
+                        etu_prec->next = etu->next;
+                    }
+
+                    /* Libération de mémoire */
+                    Etudiant* q = etu;
+                    etu = etu->next;
+                    free(q);
+
+                    continue; 
+                }
+
+            }
+            etu_prec = etu;
+
+            etu = etu->next;
+        }
+        barney = barney->next;
     }
 
 

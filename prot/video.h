@@ -26,4 +26,7 @@
     /* Charge une texture */
     SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* rendu);
 
+    /* Affiche les étudiants*/
+    void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Texture* pointVieTexture, int x, int y, int largeurCase, int hauteurCase, int pointsDeVie);
+
 #endif
