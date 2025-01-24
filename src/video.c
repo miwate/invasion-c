@@ -117,21 +117,24 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     }
 
     int H = jeu->lastLigne;
-    int L = SPAWN_AREA;  // Remplacez par la valeur appropriée
+    int L = SPAWN_AREA;
     int largeurCase = LARGEUR_JEU / L;
     int hauteurCase = HAUTEUR_JEU / H;
 
     /* Efface l'écran */
-    SDL_SetRenderDrawColor(rendu, 0, 0, 0, 255);  // Noir
     SDL_RenderClear(rendu);
 
 
     SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
+    SDL_Texture* tourelleTexture = chargerTexture("tex/turret.png", rendu);
+    SDL_Texture* zTexture = chargerTexture("tex/Z.png", rendu);
+    SDL_Texture* zombie = chargerTexture("tex/zombie.png", rendu);
+
 
     int fondLargeur, fondHauteur;
     SDL_QueryTexture(fondTexture, NULL, NULL, &fondLargeur, &fondHauteur);
 
-    // Affiche les tuiles du fond (tilemap)
+    /* Affiche le fond */
     for (int y = 0; y < HAUTEUR_JEU; y += fondHauteur){
 
         for (int x = 0; x < LARGEUR_JEU; x += fondLargeur) {
@@ -143,6 +146,8 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
     }
 
+
+    /* Affiche les tourelles */
     Tourelle* barney = jeu->tourelles;
 
     while (barney != NULL){
@@ -153,11 +158,38 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             int x = (barney->position - 1) * largeurCase;
             int y = (barney->ligne - 1) * hauteurCase;
 
-            SDL_SetRenderDrawColor(rendu, 0, 255, 0, 255);  // Vert pour les tourelles
             SDL_Rect rect = {x, y, largeurCase, hauteurCase};
-            SDL_RenderFillRect(rendu, &rect);
+            SDL_RenderCopy(rendu, tourelleTexture, NULL, &rect);
         }
         barney = barney->next;
+
+    }
+
+    Etudiant* etu = jeu->etudiants;
+
+    /* Actualisation des textures pour les étudiants */
+
+     PROBLEME ICI les zombies là
+
+    while (etu != NULL) {
+
+        if (etu->ligne <= H && etu->tour <= L) {
+ 
+            int x = (etu->tour - 1) * largeurCase;
+            int y = (etu->ligne - 1) * hauteurCase;
+
+            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+
+            /* Selon le type */
+            if (etu->type == 'Z'){
+                SDL_RenderCopy(rendu, zTexture, NULL, &rect);
+            }
+            else {
+                SDL_RenderCopy(rendu, zombie, NULL, &rect);
+            }
+            
+        }
+        etu = etu->next;
 
     }
 
