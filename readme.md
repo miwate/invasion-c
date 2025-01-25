@@ -1,6 +1,26 @@
 # INVASION !!
 Projet de C
 
+## Git
+Avant de push, assure-toi de faire
+``
+git status
+``
+pour voir ta branche et les modifications que t'as apportées
+
+Ensuite
+``
+git add .
+``
+pour ajouter tes modifications que tu pourras commit
+``
+git commit -a -m "description de tes modifs"
+``
+et finalement
+``
+git push
+``
+
 ## Dépendances
 Installation des dépendances
 
