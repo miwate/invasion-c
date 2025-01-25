@@ -62,7 +62,7 @@ void rafraichirJeu(Jeu* jeu){
                 etu->pointsDeVie -= barney->degats;
 
                 /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
-                if (etu->pointsDeVie){
+                if (etu->pointsDeVie <= 0){
 
                     /* ENleve l'étudiant de la liste */
                     if (etu_prec == NULL) {
@@ -166,9 +166,21 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         etu->pointsDeVie = 5;
         etu->vitesse = 1;
     }
-    else if (_type == 'H'){ // C pour Headcrab
+    else if (_type == 'A'){ // A pour alien
         etu->pointsDeVie = 1;
         etu->vitesse = 1;
+    }
+    else if (_type == 'C'){ // C pour colosse
+        etu->pointsDeVie = 9;
+        etu->vitesse = 1;
+    }
+    else if (_type == 'P'){ // P pour pacman
+        etu->pointsDeVie = 1;
+        etu->vitesse = 3;
+    }
+    else if (_type == 'R'){ // R pour Roi
+        etu->pointsDeVie = 3;
+        etu->vitesse = 2;
     }
 
     /* Valeurs par défaut*/

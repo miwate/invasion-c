@@ -79,14 +79,14 @@ void renduActuelJeu(Jeu* jeu){
     int L = SPAWN_AREA;
 
     /* On se sert d'une double liste pour afficher la vague ensuite*/
-    char** render = (char**)malloc(H * sizeof(char*));
+    char*** render = (char***)malloc(H * sizeof(char**));
 
     /* Remplissage de la double liste avec des points '.' */
     for (int i = 0; i < H; i++){
-        render[i] = (char*)malloc(L * sizeof(char));
+        render[i] = (char**)malloc(L * sizeof(char*));
 
         for (int j = 0; j < L; j++){
-            render[i][j] = '.';
+            render[i][j] = strdup(".");
         }
     }
 
@@ -97,8 +97,19 @@ void renduActuelJeu(Jeu* jeu){
     while (barney != NULL){
         if (barney->ligne <= H && barney->position <= L) {
 
-            /* Modifie les points '.' de la double liste par le type de Barney */
-            render[barney->ligne - 1][barney->position - 1] = barney->type;
+            /* Modifie les points '.' de la double liste par le type de Barney et ses pv*/
+            char type[3];
+            /*
+            type[0] = barney->pointsDeVie;
+            type[1] = barney->type;
+            type[2] = '\0';
+            */
+            snprintf(type, sizeof(type), "%d%c", barney->pointsDeVie, barney->type);
+            /* Libère l'espace pour réécrire dessus*/
+            free(render[barney->ligne - 1][barney->position - 1]);
+
+            /* MOdifie la liste*/
+            render[barney->ligne - 1][barney->position - 1] = strdup(type);
         }
         barney = barney->next;
     }
@@ -109,7 +120,12 @@ void renduActuelJeu(Jeu* jeu){
         if (etu->position <= SPAWN_AREA && etu->tour <= jeu->tour) {
 
             /* Modifie les points '.' de la double liste par le type de l'étudiant */
-            render[etu->ligne - 1][etu->position - 1] = etu->type;
+            char type[3];
+            snprintf(type, sizeof(type), "%d%c", etu->pointsDeVie, etu->type);
+            /* Libère l'espace pour réécrire dessus*/
+            free(render[etu->ligne - 1][etu->position - 1]);
+
+            render[etu->ligne - 1][etu->position - 1] = strdup(type);
         }
         etu = etu->next;
     }
@@ -122,13 +138,16 @@ void renduActuelJeu(Jeu* jeu){
         printf("%d|\t", i + 1);
 
         for (int j = 0; j < L; j++) {
-            printf("%c\t", render[i][j]);
+            printf("%s\t", render[i][j]);
         }
         printf("\n");
     }
 
     /* Libération de la mémoire */
     for (int i = 0; i < H; i++) {
+        for (int j = 0; j<L; j++) {
+            free(render[i][j]);
+        }
         free(render[i]);
     }
     free(render);

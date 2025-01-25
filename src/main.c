@@ -70,6 +70,7 @@ int main(int argc, char* argv[]) {
 
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
+            renduActuelJeu(jeu);
             sleep(1);
             compteur -=1;
         }
@@ -80,8 +81,7 @@ int main(int argc, char* argv[]) {
 
 
     }
-    // Libération de la mémoire allouée pour le jeu
-    free(jeu);
+    // Libération de la mémoire
     SDL_DestroyRenderer(rendu);
     SDL_DestroyWindow(window);
     SDL_Quit();
