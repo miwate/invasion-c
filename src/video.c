@@ -107,14 +107,13 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
 
 /* Affiche les étudiants */
 void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Texture* pointVieTexture, int x, int y, int largeurCase, int hauteurCase, int pointsDeVie) {
-    // Afficher l'étudiant
     SDL_Rect rect = {x, y, largeurCase, hauteurCase};
     SDL_RenderCopy(rendu, etudiantTexture, NULL, &rect);
 
-    // Affichage des points de vie (une seule fois)
+    /* affichage des points de vie*/
     if (pointsDeVie > 0 && pointsDeVie <= 9) {
 
-        SDL_Rect pointRect = {x, y - hauteurCase, largeurCase / 2, hauteurCase};
+        SDL_Rect pointRect = {x, y, largeurCase / 2, hauteurCase};
         SDL_RenderCopy(rendu, pointVieTexture, NULL, &pointRect);
     }
 }
@@ -181,8 +180,8 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     
         if (etu->tour == jeu->tour){
  
-            int x = (etu->position - 1) * largeurCase;
-            int y = (etu->ligne - 1) * hauteurCase;
+            int x = (etu->position-1) * largeurCase;
+            int y = (etu->ligne-1) * hauteurCase;
 
             /* Selon le type, affichage des textures et des points de vie */
             char pvTex[32];
@@ -193,7 +192,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             snprintf(etuTex, sizeof(etuTex), "tex/%c.png", etu->type);
             SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
 
-            afficherEtudiant(rendu, etudiantTex, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
+            afficherEtudiant(rendu, etudiantTex, pvTexture, x, y, largeurCase, hauteurCase, etu->pointsDeVie);
 
 
         }

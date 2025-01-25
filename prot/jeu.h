@@ -5,6 +5,7 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
 
 /* -- Définitions des structures -- */
     typedef struct tourelle{
