@@ -162,12 +162,19 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
         if (barney->ligne <= H && barney->position <= L)
         {
-            /* Position et couleur */
+            /* Position */
             int x = (barney->position - 1) * largeurCase;
             int y = (barney->ligne - 1) * hauteurCase;
 
+            /* Selon le type et affichage */
+            char pvTex[32];
+            snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", barney->pointsDeVie);
+            SDL_Texture* pvTexture = chargerTexture(pvTex, rendu);
+
             SDL_Rect rect = {x, y, largeurCase, hauteurCase};
             SDL_RenderCopy(rendu, tourelleTexture, NULL, &rect);
+            SDL_Rect pointRect = {x, y, largeurCase / 2, hauteurCase};
+            SDL_RenderCopy(rendu, pvTexture, NULL, &pointRect);
         }
         barney = barney->next;
 
