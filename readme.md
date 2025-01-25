@@ -12,9 +12,17 @@ Ensuite
 ``
 git add .
 ``
-pour ajouter tes modifications que tu pourras commit
+ensuite, encore
+``
+git status
+``
+ensuite, pour ajouter tes modifications que tu pourras commit
 ``
 git commit -a -m "description de tes modifs"
+``
+ensuite, encore
+``
+git status
 ``
 et finalement
 ``
