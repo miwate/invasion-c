@@ -13,5 +13,5 @@ Exemple : démarrer le niveau expert
 ``make expert``
 Effacer les fichiers compilés
 ``make clean``
-Effaçage complet des fichiers comilés
+Effaçage complet des fichiers compilés
 ``make cleanAll``
