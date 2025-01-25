@@ -1,11 +1,7 @@
 Ce __readme.md__ permet de vous expliquer comment utiliser le projet. Bonne lecture !
 
 
-Avant de se lancer dans l'utilisation du jeu, vous aurez besoin d'avoir un compilateur C et des dépendances (ici 2 librairies).
-
-### Compilateur et Dépendances
-
-
+Avant de vous lancer dans l'utilisation du jeu, vous aurez besoin d'avoir un compilateur C et de dépendances (ici 2 librairies).
 - GCC (le compilateur C nécessaire)
 
 - SDL2 et SDL2_image (les 2 libraires nécessaires pour faire fonctionner le projet) 
