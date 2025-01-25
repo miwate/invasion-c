@@ -5,6 +5,9 @@
 #include "../prot/jeu.h"
 #include "video.h"
 
+/* --Ce fichier démarre une partie et nécessite tous les autres fichiers sources et prototypes pour fonctionner correctement --*/
+/* (C'est un fichier main) */
+
 /* Lance une partie */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -81,7 +84,7 @@ int main(int argc, char* argv[]) {
 
 
     }
-    // Libération de la mémoire
+    /* Libération de la mémoire*/
     SDL_DestroyRenderer(rendu);
     SDL_DestroyWindow(window);
     SDL_Quit();
