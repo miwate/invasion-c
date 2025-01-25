@@ -1,17 +1,30 @@
 # INVASION !!
+Projet de C
 
 ## Dépendances
-``sudo apt-get install libsdl2-dev
-sudo apt-get install libsdl2-image-dev``
+Installation des dépendances
+
+```bash
+sudo apt-get install libsdl2-dev
+sudo apt-get install libsdl2-image-dev
+```
 
 ## Compilation
-Compiler les fichiers sources
-``make``
-Démarrer une partie
-``make foobar``
-Exemple : démarrer le niveau expert
-``make expert``
-Effacer les fichiers compilés
-``make clean``
-Effaçage complet des fichiers compilés
-``make cleanAll``
+### Compilation du projet
+
+```bash
+make
+```
+- Exemple : lancer le niveau expert
+```bash
+make expert
+```
+### Nettoyage
+- Standard
+```bash
+make clean
+```
+- Complet
+```bash
+make cleanAll
+```
