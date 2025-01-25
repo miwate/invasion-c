@@ -9,7 +9,7 @@ void initJeu(Jeu* jeu){
     jeu->tourelles = NULL;
     jeu->etudiants = NULL;
     jeu->cagnotte = 0;
-    jeu->tour = 0;
+    jeu->tour = 1;
     jeu->lastTour = 0;
     jeu->lastLigne = 0;
 }
@@ -36,14 +36,14 @@ void rafraichirJeu(Jeu* jeu){
     }
 
     /* Incrémentation du tour si les ennemis du tour sont morts */
-    if (finTour != 1){
+    if (finTour != 0){
         jeu->tour += 1;
     }
 
     /* Faire avancer les étudiants */
     etu = jeu->etudiants;
     while (etu != NULL){
-        printf("d");
+        //printf("d");
         etu->position -= etu->vitesse;
         etu = etu->next;
     }

@@ -52,9 +52,7 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
 
     /* Chargement des textures */
     SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
-    SDL_Texture* zTexture = chargerTexture("tex/Z.png", rendu);
-    SDL_Texture* zombie = chargerTexture("tex/zombie.png", rendu);
-
+    
     int H = jeu->lastLigne;
     int L = jeu->lastTour;
 
@@ -92,13 +90,12 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
             SDL_Rect rect = {x, y, largeurCase, hauteurCase};
 
             /* Selon le type */
-            if (etu->type == 'Z'){
-                SDL_RenderCopy(rendu, zTexture, NULL, &rect);
-            }
-            else {
-                SDL_RenderCopy(rendu, zombie, NULL, &rect);
-            }
-            
+            char etuTex[32];
+            snprintf(etuTex, sizeof(etuTex), "tex/%c.png", etu->type);
+            SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
+
+            SDL_RenderCopy(rendu, etudiantTex, NULL, &rect);
+
         }
         etu = etu->next;
 
@@ -141,8 +138,6 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
     SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
     SDL_Texture* tourelleTexture = chargerTexture("tex/turret.png", rendu);
-    SDL_Texture* zTexture = chargerTexture("tex/Z.png", rendu);
-    SDL_Texture* zombie = chargerTexture("tex/zombie.png", rendu);
 
 
     int fondLargeur, fondHauteur;
@@ -184,7 +179,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     /* Actualisation des textures pour les étudiants */
     while (etu != NULL) {
     
-        if (etu->tour <= L){
+        if (etu->tour == jeu->tour){
  
             int x = (etu->position - 1) * largeurCase;
             int y = (etu->ligne - 1) * hauteurCase;
@@ -193,16 +188,14 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             char pvTex[32];
             snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", etu->pointsDeVie);
             SDL_Texture* pvTexture = chargerTexture(pvTex, rendu);
-            
-            if (etu->type == 'Z') {
-                afficherEtudiant(rendu, zTexture, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
-            }
 
-            else {
-                afficherEtudiant(rendu, zombie, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
-            }
+            char etuTex[32];
+            snprintf(etuTex, sizeof(etuTex), "tex/%c.png", etu->type);
+            SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
 
-            
+            afficherEtudiant(rendu, etudiantTex, pvTexture, x, y-1, largeurCase, hauteurCase, etu->pointsDeVie);
+
+
         }
         etu = etu->next;
 
@@ -210,5 +203,6 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
     /* Affiche les changements */
     SDL_RenderPresent(rendu);
+
 }
 

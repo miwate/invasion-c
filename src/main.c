@@ -64,13 +64,14 @@ int main(int argc, char* argv[]) {
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
 
-        while(1){
-            printf("Affichage de l'état actuel du jeu\n");
+        compteur = 5;
+        while(compteur){
+            printf("Tour %d\n", jeu->tour);
 
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             sleep(1);
-
+            compteur -=1;
         }
 
         printf("Appuyez sur Entrée pour terminer...\n");
