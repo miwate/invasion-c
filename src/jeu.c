@@ -67,7 +67,7 @@ void rafraichirJeu(Jeu* jeu){
             if (etu->ligne == barney->ligne){
 
                 /* Ajoute le score dégâts infligés */
-                jeu->score = jeu->multiplicateurScore * (jeu->score + etu->pointsDeVie - barney->degats);
+                jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
 
                 /* INflige les dégâts */
                 etu->pointsDeVie -= barney->degats;
@@ -138,7 +138,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
 
     
     /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
-    jeu->multiplicateurScore /= (1 + 0.005 * barney->degats + 0.0025 * barney->pointsDeVie);
+    jeu->multiplicateurScore /= (1 + 0.05 * barney->degats + 0.025 * barney->pointsDeVie);
     
     /* Multiplicateur min */
     if (jeu->multiplicateurScore < 0.1) jeu->multiplicateurScore = 0.1;
@@ -222,7 +222,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     etu->prev_line = NULL;
 
     /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
-    jeu->multiplicateurScore *= (1 + 0.005 * etu->degats + 0.0025 * etu->pointsDeVie + 0.0025 * etu->vitesse);
+    jeu->multiplicateurScore *= (1 + 0.05 * etu->degats + 0.025 * etu->pointsDeVie + 0.025 * etu->vitesse);
 
 
     /* Cas : premier étudiant */
