@@ -12,6 +12,7 @@ void initJeu(Jeu* jeu){
     jeu->tour = 1;
     jeu->lastTour = 0;
     jeu->lastLigne = 0;
+    jeu->score = 0;
 }
 
 
@@ -60,6 +61,9 @@ void rafraichirJeu(Jeu* jeu){
             if (etu->ligne == barney->ligne){
 
                 etu->pointsDeVie -= barney->degats;
+
+                /* Ajoute le score dégâts infligés */
+                jeu->score += barney->degats;
 
                 /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
                 if (etu->pointsDeVie <= 0){
