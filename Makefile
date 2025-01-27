@@ -39,6 +39,10 @@ facile:
 normal:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/normal.txt
 
+difficile:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/difficile.txt
+
+
 expert:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/expert.txt
 
