@@ -3,27 +3,15 @@
 
 /* -- Ce fichier contient les fonctions utilisées pour afficher graphiquement l'état du jeu à l'aide de SDL, il complète le fichier io.c --*/
 
-/* 
-Projet de C - INVASION !! 
-Lien du GitHub https://github.com/miwate/invasion-c
-*/
-
 /* Initialise la fenêtre et crée la frenêtre SDL */
 SDL_Window* initSDL() {
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
-        printf("La fenêtre SDL ne s'initialise pas %s\n", SDL_GetError());
+        printf("La fenêtre SDL ne s'initialise pas\n");
         return NULL;
     }
-
     SDL_Window* fenetre = SDL_CreateWindow("INVASION !!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
     
-    if (!fenetre){
-        printf("La fenêtre SDL n'existe pas %s\n", SDL_GetError());
-        SDL_Quit();
-        return NULL;
-
-    }
     return fenetre;
 }
 
@@ -108,7 +96,7 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
     SDL_RenderPresent(rendu);
 }
 
-/* Affiche les étudiants */
+/* Affiche un étudiant selon la position la texture et ses points de vie */
 void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Texture* pointVieTexture, int x, int y, int largeurCase, int hauteurCase, int pointsDeVie) {
     SDL_Rect rect = {x, y, largeurCase, hauteurCase};
     SDL_RenderCopy(rendu, etudiantTexture, NULL, &rect);
@@ -120,6 +108,7 @@ void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Tex
         SDL_RenderCopy(rendu, pointVieTexture, NULL, &pointRect);
     }
 }
+
 
 
 /* Affiche la fenêtre et affiche l'état actuel du jeu */

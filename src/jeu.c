@@ -3,11 +3,6 @@
 /* -- Ce fichier contient les fonctions nécessaires pour le bon déroulement du jeu -- */
 /* S'il y a des règles à changer, c'est ici */
 
-/* 
-Projet de C - INVASION !! 
-Lien du GitHub https://github.com/miwate/invasion-c
-*/
-
 /* Initialise un jeu vide*/
 void initJeu(Jeu* jeu){
     jeu->tourelles = NULL;
