@@ -3,6 +3,11 @@
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
 /* La partie graphique ayant été ajoutée par la suite, certaines fonctions d'affichage serviront pour debug */
 
+/* 
+Projet de C - INVASION !! 
+Lien du GitHub https://github.com/miwate/invasion-c
+*/
+
 /* Affiche une prévualisation de la vague d'étudiants */
 void prevualisationVagues(Jeu* jeu){
 
@@ -71,12 +76,10 @@ void renduActuelJeu(Jeu* jeu){
         return;
     }
 
-    /* Affichage du numéro du tour */
-    printf("Tour %d - Score %d\n", jeu->tour, jeu->score);
     
     /* Hauteur et Largeur de la double liste */
     int H = jeu->lastLigne;
-    int L = SPAWN_AREA;
+    int L = SPAWN_DISTANCE;
 
     /* On se sert d'une double liste pour afficher la vague ensuite*/
     char*** render = (char***)malloc(H * sizeof(char**));
@@ -117,7 +120,7 @@ void renduActuelJeu(Jeu* jeu){
     /* On récupère tous les étudiants grâce à la liste chaînée */
     Etudiant* etu = jeu->etudiants;
     while (etu != NULL){
-        if (etu->position <= SPAWN_AREA && etu->tour <= jeu->tour) {
+        if (etu->position <= SPAWN_DISTANCE && etu->tour <= jeu->tour) {
 
             /* Modifie les points '.' de la double liste par le type de l'étudiant */
             char type[3];
@@ -131,7 +134,7 @@ void renduActuelJeu(Jeu* jeu){
     }
 
     /* Efface le terminal puis retour à la ligne + Affiche le numéro du tour et la CAgnotte*/
-    printf("\033[2J\033[0;0HTour %d - Cagnotte : $%d\n", jeu->tour, jeu->cagnotte);
+    printf("\033[2J\033[0;0HTour %d - Cagnotte : %d€ - Score : %d\n", jeu->tour, jeu->cagnotte, jeu->score);
 
     /* Affiche le rendu selon la liste*/
     for (int i = 0; i < H; i++){

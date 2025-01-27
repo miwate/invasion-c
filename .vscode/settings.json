@@ -5,6 +5,7 @@
         "video.h": "c",
         "jeu.h": "c",
         "sdl.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "stdlib.h": "c"
     }
 }

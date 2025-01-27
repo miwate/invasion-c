@@ -8,7 +8,7 @@
 
     /* DImensions des fenêtres */
     #define TAILLE_CASE 80
-    #define LARGEUR_JEU TAILLE_CASE*SPAWN_AREA
+    #define LARGEUR_JEU TAILLE_CASE*SPAWN_DISTANCE
     #define HAUTEUR_JEU TAILLE_CASE*7
 
     /* Textures pour l'affichage */
