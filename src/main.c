@@ -67,9 +67,9 @@ int main(int argc, char* argv[]) {
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
 
-        compteur = 5;
+        compteur = 8;
         while(compteur){
-            printf("Tour %d\n", jeu->tour);
+            printf("Tour %d - Cagnotte %d\n", jeu->tour, jeu->score);
 
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
