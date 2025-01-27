@@ -1,7 +1,7 @@
 # INVASION !!
 Projet de C
 
-## Git
+## Git (notes pour nous)
 Avant de push, assure-toi de faire
 ``
 git status
