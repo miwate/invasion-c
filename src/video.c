@@ -119,7 +119,7 @@ void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Tex
 }
 
 
-
+/* Affiche la fenêtre et affiche l'état actuel du jeu */
 void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     if (jeu == NULL) {
         printf("Jeu vide.\n");
