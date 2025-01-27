@@ -8,6 +8,11 @@
 /* --Ce fichier démarre une partie et nécessite tous les autres fichiers sources et prototypes pour fonctionner correctement --*/
 /* (C'est un fichier main) */
 
+/* 
+Projet de C - INVASION !!
+Lien du GitHub https://github.com/miwate/invasion-c
+*/
+
 /* Lance une partie */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -15,7 +20,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Initialisation de SDL et de la fenêtre
+    /* INitialisation de la fenêtre SDL */
     SDL_Window* window = initSDL();
     if (!window) {
         return 1;
@@ -39,7 +44,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    /* POur tous les fichiers entrées en arguments */
     for (int i = 1; i < argc; i++){
+
         /* INitialisation du jeu*/
         initJeu(jeu);
 
@@ -62,14 +69,16 @@ int main(int argc, char* argv[]) {
             compteur -= 1;
         }
 
-        
+        printf("%f\n", jeu->multiplicateurScore);
         ajoutTourelle(jeu, 1,2,'T');
+
+        printf("%f\n", jeu->multiplicateurScore);
+
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
 
-        compteur = 8;
+        compteur = 9;
         while(compteur){
-            printf("Tour %d - Cagnotte %d\n", jeu->tour, jeu->score);
 
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);

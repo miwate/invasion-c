@@ -1,7 +1,6 @@
 #ifndef JEU_H
     #define JEU_H
-    #define SPAWN_AREA 15
-    #define REPOS 5
+    #define SPAWN_DISTANCE 15
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -24,6 +23,7 @@
         int position;
         int vitesse;
         int tour;
+        int degats;
         struct etudiant* next;
         struct etudiant* next_line;
         struct etudiant* prev_line;
@@ -38,6 +38,9 @@
         int lastTour;
         int lastLigne;
         int score;
+        int scoreMax;
+        int combo;
+        float multiplicateurScore;
     } Jeu;
 
 

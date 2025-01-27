@@ -3,6 +3,10 @@
 
 /* -- Ce fichier contient les fonctions utilisées pour afficher graphiquement l'état du jeu à l'aide de SDL, il complète le fichier io.c --*/
 
+/* 
+Projet de C - INVASION !! 
+Lien du GitHub https://github.com/miwate/invasion-c
+*/
 
 /* Initialise la fenêtre et crée la frenêtre SDL */
 SDL_Window* initSDL() {
@@ -25,18 +29,17 @@ SDL_Window* initSDL() {
 
 /* Charge une texture depuis le dossier /tex */
 SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* rendu) {
-    SDL_Surface* surface = IMG_Load(_fichier);  // Charger l'image dans une surface
-    if (!surface) {
-        printf("Erreur lors du chargement de l'image %s: %s\n", _fichier, IMG_GetError());
+    SDL_Surface* tex = IMG_Load(_fichier);
+    if (!tex) {
+        printf("Erreur chargement de l'image %s:\n", _fichier);
         return NULL;
     }
 
-    // Créer une texture à partir de la surface
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(rendu, surface);
-    SDL_FreeSurface(surface);  // Libérer la surface après la création de la texture
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(rendu, tex);
+    SDL_FreeSurface(tex);
 
     if (!texture) {
-        printf("Erreur de création de la texture: %s\n", SDL_GetError());
+        printf("Erreur création de texture\n");
     }
 
     return texture;
@@ -127,7 +130,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     }
 
     int H = jeu->lastLigne;
-    int L = SPAWN_AREA;
+    int L = SPAWN_DISTANCE;
     int largeurCase = LARGEUR_JEU / L;
     int hauteurCase = HAUTEUR_JEU / H;
 

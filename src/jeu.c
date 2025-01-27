@@ -3,6 +3,10 @@
 /* -- Ce fichier contient les fonctions nécessaires pour le bon déroulement du jeu -- */
 /* S'il y a des règles à changer, c'est ici */
 
+/* 
+Projet de C - INVASION !! 
+Lien du GitHub https://github.com/miwate/invasion-c
+*/
 
 /* Initialise un jeu vide*/
 void initJeu(Jeu* jeu){
@@ -13,6 +17,8 @@ void initJeu(Jeu* jeu){
     jeu->lastTour = 0;
     jeu->lastLigne = 0;
     jeu->score = 0;
+    jeu->combo = 0;
+    jeu->multiplicateurScore = 1.0;
 }
 
 
@@ -60,10 +66,12 @@ void rafraichirJeu(Jeu* jeu){
         while (etu != NULL){
             if (etu->ligne == barney->ligne){
 
+                /* Ajoute le score dégâts infligés */
+                jeu->score = jeu->multiplicateurScore * (jeu->score + etu->pointsDeVie - barney->degats);
+
+                /* INflige les dégâts */
                 etu->pointsDeVie -= barney->degats;
 
-                /* Ajoute le score dégâts infligés */
-                jeu->score += barney->degats;
 
                 /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
                 if (etu->pointsDeVie <= 0){
@@ -123,10 +131,17 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
     }
     else {
         barney->degats = 1;
-        barney->pointsDeVie =2;     
+        barney->pointsDeVie = 2;     
     }
 
     barney->next = NULL;
+
+    
+    /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
+    jeu->multiplicateurScore /= (1 + 0.005 * barney->degats + 0.0025 * barney->pointsDeVie);
+    
+    /* Multiplicateur min */
+    if (jeu->multiplicateurScore < 0.1) jeu->multiplicateurScore = 0.1;
 
 
     /* Cas : première tourelle */
@@ -144,6 +159,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
         precedent->next = barney;
 
     }
+    
 
 }
 
@@ -152,6 +168,8 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
 /* Ajoute un étudiant dans la file */
 void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type){
 
+
+    /* Initialisation de l'étudiant */
     Etudiant* etu = malloc(sizeof(Etudiant));
 
     if (etu == NULL) {
@@ -161,7 +179,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
 
     etu->type = _type;
     etu->ligne = _ligne;
-    etu->position = SPAWN_AREA;
+    etu->position = SPAWN_DISTANCE;
     etu->tour = _tour;
     etu->vitesse = 1;
 
@@ -169,33 +187,43 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     if (_type == 'Z') { // Z pour Zombie
         etu->pointsDeVie = 5;
         etu->vitesse = 1;
+        etu->degats = 1;
     }
     else if (_type == 'A'){ // A pour alien
         etu->pointsDeVie = 1;
         etu->vitesse = 1;
+        etu->degats = 2;
     }
     else if (_type == 'C'){ // C pour colosse
-        etu->pointsDeVie = 9;
+        etu->pointsDeVie = 8;
         etu->vitesse = 1;
+        etu->degats = 3;
     }
     else if (_type == 'P'){ // P pour pacman
         etu->pointsDeVie = 1;
         etu->vitesse = 3;
+        etu->degats = 1;
     }
     else if (_type == 'R'){ // R pour Roi
         etu->pointsDeVie = 3;
         etu->vitesse = 2;
+        etu->degats = 4;
     }
 
     /* Valeurs par défaut*/
     else{
         etu->pointsDeVie = 1;
         etu->vitesse = 1;
+        etu->degats = 1;
     }
 
     etu->next = NULL;
     etu->next_line = NULL;
     etu->prev_line = NULL;
+
+    /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
+    jeu->multiplicateurScore *= (1 + 0.005 * etu->degats + 0.0025 * etu->pointsDeVie + 0.0025 * etu->vitesse);
+
 
     /* Cas : premier étudiant */
     if (jeu->etudiants == NULL){

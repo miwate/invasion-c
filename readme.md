@@ -1,5 +1,7 @@
 # INVASION !!
-Projet de C
+Projet de C - INVASION !! 
+Lien du GitHub https://github.com/miwate/invasion-c
+
 
 ## Git (notes pour nous)
 Avant de push, assure-toi de faire
