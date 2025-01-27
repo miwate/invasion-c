@@ -3,10 +3,6 @@
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
 /* La partie graphique ayant été ajoutée par la suite, certaines fonctions d'affichage serviront pour debug */
 
-/* 
-Projet de C - INVASION !! 
-Lien du GitHub https://github.com/miwate/invasion-c
-*/
 
 /* Affiche une prévualisation de la vague d'étudiants */
 void prevualisationVagues(Jeu* jeu){

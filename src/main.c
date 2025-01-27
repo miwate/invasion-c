@@ -8,11 +8,6 @@
 /* --Ce fichier démarre une partie et nécessite tous les autres fichiers sources et prototypes pour fonctionner correctement --*/
 /* (C'est un fichier main) */
 
-/* 
-Projet de C - INVASION !!
-Lien du GitHub https://github.com/miwate/invasion-c
-*/
-
 /* Lance une partie */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
