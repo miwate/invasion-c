@@ -37,6 +37,7 @@
         int tour;
         int lastTour;
         int lastLigne;
+        int score;
     } Jeu;
 
 

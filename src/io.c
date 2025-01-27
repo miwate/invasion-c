@@ -72,7 +72,7 @@ void renduActuelJeu(Jeu* jeu){
     }
 
     /* Affichage du numéro du tour */
-    printf("Tour %d\n", jeu->tour);
+    printf("Tour %d - Score %d\n", jeu->tour, jeu->score);
     
     /* Hauteur et Largeur de la double liste */
     int H = jeu->lastLigne;
