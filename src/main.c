@@ -88,6 +88,11 @@ int main(int argc, char* argv[]) {
             sleep(1);
         }
 
+        /* Libération de la mémoire*/
+        SDL_DestroyRenderer(rendu);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+
         char *scoreFichier = "lb/scores.txt";
         enregistrerScore(scoreFichier, jeu->score);
 
@@ -97,10 +102,7 @@ int main(int argc, char* argv[]) {
 
 
     }
-    /* Libération de la mémoire*/
-    SDL_DestroyRenderer(rendu);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+
 
     printf("Fin du traitement des fichiers.\n");
     return 0;
