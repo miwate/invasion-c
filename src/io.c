@@ -130,7 +130,7 @@ void renduActuelJeu(Jeu* jeu){
     }
 
     /* Efface le terminal puis retour à la ligne + Affiche le numéro du tour et la CAgnotte*/
-    // printf("\033[2J\033[0;0H");
+    printf("\033[2J\033[0;0H");
     printf("Tour %d - Cagnotte : %d€ - Score : %d\n", jeu->tour, jeu->cagnotte, jeu->score);
 
     /* Affiche le rendu selon la liste*/

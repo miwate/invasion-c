@@ -81,6 +81,9 @@ void rafraichirJeu(Jeu* jeu){
                 /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
                 if (etu->pointsDeVie <= 0){
 
+                    /* Ajoute un peu d'argent dans la cagnotte */
+                    jeu->cagnotte += 10 * jeu->combo;
+
                     /* ENleve l'étudiant de la liste */
                     if (etu_prec == NULL) {
                         jeu->etudiants = etu->next;
@@ -211,7 +214,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         etu->degats = 1;
     }
     else if (_type == 'R'){ // R pour Roi
-        etu->pointsDeVie = 7;
+        etu->pointsDeVie = 9;
         etu->vitesse = 2;
         etu->degats = 4;
     }

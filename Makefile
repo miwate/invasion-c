@@ -49,5 +49,8 @@ expert:
 impossible:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/impossible.txt
 
+colossal:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/colossal.txt
+
 meatshield:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/meatshield.txt
