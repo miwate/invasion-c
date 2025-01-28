@@ -1,60 +1,49 @@
-# INVASION !!
-Projet de C - INVASION !! 
-Lien du GitHub https://github.com/miwate/invasion-c
+# INVASION !! - Projet de C
+# 🔗 Dépendances
 
-
-## Git (notes pour nous)
-Avant de push, assure-toi de faire
-``
-git status
-``
-pour voir ta branche et les modifications que t'as apportées
-
-Ensuite
-``
-git add .
-``
-ensuite, encore
-``
-git status
-``
-ensuite, pour ajouter tes modifications que tu pourras commit
-``
-git commit -a -m "description de tes modifs"
-``
-ensuite, encore
-``
-git status
-``
-et finalement
-``
-git push
-``
-
-## Dépendances
-Installation des dépendances
+Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0) et [SDL_image](https://github.com/libsdl-org/SDL_image).
 
 ```bash
 sudo apt-get install libsdl2-dev
 sudo apt-get install libsdl2-image-dev
 ```
 
-## Compilation
-### Compilation du projet
+---
+
+# ⚙️ Compilation
+
+Compilation à l’aide de [GCC 13.3](https://gcc.gnu.org/gcc-13/), nous compilons à l’aide d’un Makefile.
+
+## 📜 Makefile
+
+Permet de compiler tout à la fois, il suffit d’entrer la commande `make` .
 
 ```bash
 make
 ```
-- Exemple : lancer le niveau expert
+
+## 🎮 Lancer le jeu / un niveau
+
+La prochaine étape est de lancer un niveau.
+
+- `make foobar` où *foobar* est un niveau (facile, difficile, expert, impossible ou survie).
+
 ```bash
-make expert
+make impossible
 ```
-### Nettoyage
-- Standard
+
+## 🧹 Nettoyage
+
+- Nettoyage standard
+
 ```bash
 make clean
 ```
-- Complet
+
+- Nettoyage complet
+
 ```bash
 make cleanAll
 ```
+
+---
