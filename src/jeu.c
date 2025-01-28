@@ -5,6 +5,7 @@
 
 /* Initialise un jeu vide*/
 void initJeu(Jeu* jeu){
+    jeu->fin = 1;
     jeu->tourelles = NULL;
     jeu->etudiants = NULL;
     jeu->cagnotte = 0;
@@ -28,17 +29,21 @@ void rafraichirJeu(Jeu* jeu){
 
     Etudiant* etu = jeu->etudiants;
     int finTour = 1;
+    int nbEtudiantsTour = 0;
 
     /* Les étudiants sont-ils tous éliminés ? */
     while (etu != NULL){
-        if (etu->tour == jeu->tour && etu->pointsDeVie > 0){
-            finTour = 0;
+        if (etu->tour == jeu->tour){
+            nbEtudiantsTour += 1;
+            if (etu->pointsDeVie > 0){
+                finTour = 0;
+            }
         }
         etu = etu->next;
     }
 
     /* Incrémentation du tour si les ennemis du tour sont morts */
-    if (finTour != 0){
+    if (nbEtudiantsTour > 0 && finTour){
         jeu->tour += 1;
     }
 
@@ -46,8 +51,10 @@ void rafraichirJeu(Jeu* jeu){
     etu = jeu->etudiants;
     while (etu != NULL){
         //printf("d");
-        etu->position -= etu->vitesse;
-        etu = etu->next;
+        if (etu->tour == jeu->tour){
+            etu->position -= etu->vitesse;
+            etu = etu->next;
+        }
     }
 
     /* Faire tirer les Barney (tourelles pour rappel)*/
@@ -59,7 +66,7 @@ void rafraichirJeu(Jeu* jeu){
         Etudiant* etu_prec = NULL;
 
         while (etu != NULL){
-            if (etu->ligne == barney->ligne){
+            if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
 
                 /* Ajoute le score dégâts infligés */
                 jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
