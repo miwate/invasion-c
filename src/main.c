@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         prevualisationVagues_v(jeu, rendu);
 
         /* Début d'un compteur pour la prévualisation */
-        int compteur = 5;
+        int compteur = 2;
         printf("Début du jeu dans %d...\n", compteur);
 
         while (compteur > 0){
