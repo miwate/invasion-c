@@ -105,7 +105,7 @@ void renduActuelJeu(Jeu* jeu){
             */
             snprintf(type, sizeof(type), "%d%c", barney->pointsDeVie, barney->type);
             /* Libère l'espace pour réécrire dessus*/
-            free(render[barney->ligne - 1][barney->position - 1]);
+            // free(render[barney->ligne - 1][barney->position - 1]);
 
             /* MOdifie la liste*/
             render[barney->ligne - 1][barney->position - 1] = strdup(type);
@@ -122,7 +122,7 @@ void renduActuelJeu(Jeu* jeu){
             char type[3];
             snprintf(type, sizeof(type), "%d%c", etu->pointsDeVie, etu->type);
             /* Libère l'espace pour réécrire dessus*/
-            free(render[etu->ligne - 1][etu->position - 1]);
+            // free(render[etu->ligne - 1][etu->position - 1]);
 
             render[etu->ligne - 1][etu->position - 1] = strdup(type);
         }
@@ -130,7 +130,8 @@ void renduActuelJeu(Jeu* jeu){
     }
 
     /* Efface le terminal puis retour à la ligne + Affiche le numéro du tour et la CAgnotte*/
-    printf("\033[2J\033[0;0HTour %d - Cagnotte : %d€ - Score : %d\n", jeu->tour, jeu->cagnotte, jeu->score);
+    // printf("\033[2J\033[0;0H");
+    printf("Tour %d - Cagnotte : %d€ - Score : %d\n", jeu->tour, jeu->cagnotte, jeu->score);
 
     /* Affiche le rendu selon la liste*/
     for (int i = 0; i < H; i++){
@@ -183,4 +184,41 @@ void chargerFichier(Jeu* jeu, const char* _niveau) {
 
     fclose(niveau);
 
+}
+
+/* Choisit un mot au hasard pour féliciter le joueur à la fin d'une partie */
+char* bravoHasard(void){
+    /* LIste les mots*/
+    char* bravo[] = {"Bravo", "Félicitations", "Hourra", "Excellent", "Parfait"};
+
+    int n = sizeof(bravo);
+    n /= sizeof(bravo[0]);
+
+    /* Mot au hasard */
+    srand(time(NULL));
+    return bravo[rand() % n];
+}
+
+/* Enregistre un score demande le nom du joueur */
+void enregistrerScore(const char* _fichierDest, int _score){
+    char nom[128];
+    char* bravo;
+
+    /* Mot au hasard */
+    bravo = bravoHasard();
+
+    printf("%s ! Vous avez sauvé Dauphine -  Score : %d\n", bravo, _score);
+    printf("Votre nom :\n");
+    scanf("%127s", nom);
+
+    /* Enregistre le score dans le fichier ..lb/scores.txt*/
+    FILE* fichier = fopen(_fichierDest, "a");
+    if (fichier ==NULL){
+        perror("Impossible de lire le fichier lb\n");
+        return;
+    }
+    fprintf(fichier, "%s\t%d\n", nom, _score);
+    fclose(fichier);
+
+    printf("Score enregistré !\n");
 }

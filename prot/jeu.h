@@ -5,6 +5,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
+    #include <time.h>
 
 /* -- Définitions des structures -- */
     typedef struct tourelle{
@@ -52,6 +53,12 @@
     
     /* Rafraîchit le jeu pour un tour suivant */
     void rafraichirJeu(Jeu* jeu);
+
+    /* Enregistrer score dans le fichier du niveau du dossier ../lb*/
+    void enregistrerScore(const char* _fichierDest, int _score);
+
+    /* Choisit un mot au hasard pour féliciter le joueur à la fin d'une partie */
+    char* bravoHasard(void);
 
     /* Ajoute un étudiant dans la file en fonction de son type*/
     void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type);

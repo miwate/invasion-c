@@ -23,6 +23,7 @@ void rafraichirJeu(Jeu* jeu){
 
     /* Vague vide */
     if (jeu->etudiants == NULL){
+        jeu->fin = 0;
         printf("Pas de vague.\n");
         return;
     }
@@ -33,6 +34,7 @@ void rafraichirJeu(Jeu* jeu){
 
     /* Les étudiants sont-ils tous éliminés ? */
     while (etu != NULL){
+        // printf("%d - %d\n", etu->tour, jeu->tour);
         if (etu->tour == jeu->tour){
             nbEtudiantsTour += 1;
             if (etu->pointsDeVie > 0){
@@ -43,18 +45,19 @@ void rafraichirJeu(Jeu* jeu){
     }
 
     /* Incrémentation du tour si les ennemis du tour sont morts */
-    if (nbEtudiantsTour > 0 && finTour){
+    if (nbEtudiantsTour == 0 && finTour){
+        printf("Incrémentation du tour\n");
         jeu->tour += 1;
     }
 
     /* Faire avancer les étudiants */
     etu = jeu->etudiants;
     while (etu != NULL){
-        //printf("d");
-        if (etu->tour == jeu->tour){
+        //printf("etu->tour %d\n", etu->tour);
+        if (etu->tour <= jeu->tour) {
             etu->position -= etu->vitesse;
-            etu = etu->next;
         }
+        etu = etu->next;
     }
 
     /* Faire tirer les Barney (tourelles pour rappel)*/
@@ -90,8 +93,9 @@ void rafraichirJeu(Jeu* jeu){
                     /* Libération de mémoire */
                     Etudiant* q = etu;
                     etu = etu->next;
-                    free(q);
-
+                    if (etu != NULL){
+                        free(q);
+                    }
                     continue; 
                 }
 
@@ -192,22 +196,22 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         etu->degats = 1;
     }
     else if (_type == 'A'){ // A pour alien
-        etu->pointsDeVie = 1;
+        etu->pointsDeVie = 7;
         etu->vitesse = 1;
         etu->degats = 2;
     }
     else if (_type == 'C'){ // C pour colosse
-        etu->pointsDeVie = 8;
+        etu->pointsDeVie = 9;
         etu->vitesse = 1;
         etu->degats = 3;
     }
     else if (_type == 'P'){ // P pour pacman
-        etu->pointsDeVie = 1;
+        etu->pointsDeVie = 8;
         etu->vitesse = 3;
         etu->degats = 1;
     }
     else if (_type == 'R'){ // R pour Roi
-        etu->pointsDeVie = 3;
+        etu->pointsDeVie = 7;
         etu->vitesse = 2;
         etu->degats = 4;
     }
