@@ -230,7 +230,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
     }
     /* Affiche le score */
-    afficherScore(rendu, jeu->score, LARGEUR_JEU - 150, 10);
+    afficherScore(rendu, jeu->score, LARGEUR_JEU - 250, 10);
 
     
     /* Affiche les changements */
