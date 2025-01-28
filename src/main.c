@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../prot/jeu.h"
-#include "video.h"
+#include "../prot/video.h"
 
 /* --Ce fichier démarre une partie et nécessite tous les autres fichiers sources et prototypes pour fonctionner correctement --*/
 /* (C'est un fichier main) */
@@ -85,9 +85,11 @@ int main(int argc, char* argv[]) {
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
-            sleep(1);
-
+            sleep(0.5);
         }
+
+        char *scoreFichier = "lb/scores.txt";
+        enregistrerScore(scoreFichier, jeu->score);
 
         printf("Appuyez sur Entrée pour terminer...\n");
         getchar();
