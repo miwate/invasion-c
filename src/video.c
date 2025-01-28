@@ -106,9 +106,40 @@ void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Tex
 
         SDL_Rect pointRect = {x, y, largeurCase / 2, hauteurCase};
         SDL_RenderCopy(rendu, pointVieTexture, NULL, &pointRect);
+
+        /* LIbération de la mémoire */
+        SDL_DestroyTexture(pointVieTexture);
+
     }
+    /* LIbération de la mémoire */
+    SDL_DestroyTexture(etudiantTexture);
+
+
 }
 
+void afficherScore(SDL_Renderer* rendu, int score, int x, int y){
+
+    /* Convertit le score (int) en chaîne de charactères */
+    char scoreCh[32];
+    snprintf(scoreCh, sizeof(scoreCh), "%d", score);
+
+    /* Affiche chiffre par chiffre le score */
+    for (int i=0; i < strlen(scoreCh); i++) {
+        char chiffre = scoreCh[i];
+
+        /* Récupération de la texture du chiffre */
+        char chiffreTex[32];
+        snprintf(chiffreTex, sizeof(chiffreTex), "tex/score-%c.png", chiffre);
+        SDL_Texture* _chiffreTex = chargerTexture(chiffreTex, rendu);
+
+        SDL_Rect chiffreRect = {x +(i*20), y, 20, 30};
+
+        SDL_RenderCopy(rendu, _chiffreTex, NULL, &chiffreRect);
+
+        /* LIbération de la mémoire */
+        SDL_DestroyTexture(_chiffreTex);
+    }
+}
 
 
 /* Affiche la fenêtre et affiche l'état actuel du jeu */
@@ -198,7 +229,10 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
         etu = etu->next;
 
     }
+    /* Affiche le score */
+    afficherScore(rendu, jeu->score, LARGEUR_JEU - 150, 10);
 
+    
     /* Affiche les changements */
     SDL_RenderPresent(rendu);
 

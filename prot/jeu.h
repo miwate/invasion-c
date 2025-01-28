@@ -33,6 +33,7 @@
     typedef struct jeu{
         Tourelle* tourelles;
         Etudiant* etudiants;
+        int fin;
         int cagnotte;
         int tour;
         int lastTour;
