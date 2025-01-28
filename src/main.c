@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         prevualisationVagues_v(jeu, rendu);
 
         /* Début d'un compteur pour la prévualisation */
-        int compteur = 1;
+        int compteur = 5;
         printf("Début du jeu dans %d...\n", compteur);
 
         while (compteur > 0){
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
-            sleep(0.5);
+            sleep(1);
         }
 
         char *scoreFichier = "lb/scores.txt";

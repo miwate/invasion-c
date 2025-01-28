@@ -46,6 +46,8 @@ difficile:
 expert:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/expert.txt
 
+impossible:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/impossible.txt
 
 meatshield:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/meatshield.txt
