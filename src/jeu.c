@@ -5,7 +5,7 @@
 
 /* Initialise un jeu vide*/
 void initJeu(Jeu* jeu){
-    jeu->fin = 1;
+    jeu->fin = 1; // = 1 si le jeu n'est pas fini
     jeu->tourelles = NULL;
     jeu->etudiants = NULL;
     jeu->cagnotte = 0;
