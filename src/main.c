@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         initJeu(jeu);
 
         /* Chargement du niveau */
-        printf("Traitement du fichier : %s\n", argv[i]);
+        printf("Chargement du niveau : %s\n", argv[i]);
         chargerFichier(jeu, argv[i]);
 
         /* Prévisualisation des vagues */
@@ -65,8 +65,7 @@ int main(int argc, char* argv[]) {
         }
 
         printf("%f\n", jeu->multiplicateurScore);
-        ajoutTourelle(jeu, 1,2,'T');
-        ajoutTourelle(jeu, 1,1,'T');
+
         ajoutTourelle(jeu, 2,1,'T');
         ajoutTourelle(jeu, 3,2,'T');
         ajoutTourelle(jeu, 4,2,'T');
@@ -80,30 +79,25 @@ int main(int argc, char* argv[]) {
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
 
-        while(jeu->fin){
+        while(jeu->fin == 1){
 
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
             sleep(1);
+ 
         }
 
-        /* Libération de la mémoire*/
+        /* Libération de la mémoire, fermeture des fenêtres */
         SDL_DestroyRenderer(rendu);
         SDL_DestroyWindow(window);
         SDL_Quit();
 
         char *scoreFichier = "lb/scores.txt";
-        enregistrerScore(scoreFichier, jeu->score);
-
-        printf("Appuyez sur Entrée pour terminer...\n");
-        getchar();
-
-
+        enregistrerScore(scoreFichier, jeu->score, jeu->fin);
 
     }
 
-
-    printf("Fin du traitement des fichiers.\n");
+    printf("Jeu terminé.\n");
     return 0;
 }

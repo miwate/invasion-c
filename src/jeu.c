@@ -10,8 +10,8 @@ void initJeu(Jeu* jeu){
     jeu->etudiants = NULL;
     jeu->cagnotte = 0;
     jeu->tour = 1;
-    jeu->lastTour = 0;
-    jeu->lastLigne = 0;
+    jeu->dernierTour = 0;
+    jeu->derniereLigne = 0;
     jeu->score = 0;
     jeu->combo = 0;
     jeu->multiplicateurScore = 1.0;
@@ -35,6 +35,7 @@ void rafraichirJeu(Jeu* jeu){
     /* Les étudiants sont-ils tous éliminés ? */
     while (etu != NULL){
         // printf("%d - %d\n", etu->tour, jeu->tour);
+
         if (etu->tour == jeu->tour){
             nbEtudiantsTour += 1;
             if (etu->pointsDeVie > 0){
@@ -56,6 +57,10 @@ void rafraichirJeu(Jeu* jeu){
         //printf("etu->tour %d\n", etu->tour);
         if (etu->tour <= jeu->tour) {
             etu->position -= etu->vitesse;
+        }
+        /* FIN de la partie ? */
+        if (etu->position < 0){
+            jeu->fin = -1;
         }
         etu = etu->next;
     }
@@ -244,13 +249,13 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         Etudiant* precedent = jeu->etudiants;
 
         while (precedent->next != NULL){
-            
+            if (precedent->ligne == etu->ligne - 1){
+                precedent->next_line = etu;
+                etu->prev_line = precedent;
+            }
             precedent = precedent->next;
         }
         precedent->next = etu;
 
-        if (precedent->ligne == etu->ligne - 1){
-            precedent->next_line = etu;
-        }
     }
 }

@@ -37,8 +37,8 @@
         int fin;
         int cagnotte;
         int tour;
-        int lastTour;
-        int lastLigne;
+        int dernierTour;
+        int derniereLigne;
         int score;
         int scoreMax;
         int combo;
@@ -55,10 +55,10 @@
     void rafraichirJeu(Jeu* jeu);
 
     /* Enregistrer score dans le fichier du niveau du dossier ../lb*/
-    void enregistrerScore(const char* _fichierDest, int _score);
+    void enregistrerScore(const char* _fichierDest, int _score, int _codeFin);
 
     /* Choisit un mot au hasard pour féliciter le joueur à la fin d'une partie */
-    char* bravoHasard(void);
+    char* bravoHasard(int _codeFin);
 
     /* Ajoute un étudiant dans la file en fonction de son type*/
     void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type);

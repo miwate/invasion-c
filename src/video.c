@@ -44,8 +44,8 @@ void prevualisationVagues_v(Jeu* jeu, SDL_Renderer* rendu){
     /* Chargement des textures */
     SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
     
-    int H = jeu->lastLigne;
-    int L = jeu->lastTour;
+    int H = jeu->derniereLigne;
+    int L = jeu->dernierTour;
 
     int hauteurCase = HAUTEUR_JEU / H;
     int largeurCase = hauteurCase;
@@ -149,7 +149,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
         return;
     }
 
-    int H = jeu->lastLigne;
+    int H = jeu->derniereLigne;
     int L = SPAWN_DISTANCE;
     int largeurCase = LARGEUR_JEU / L;
     int hauteurCase = HAUTEUR_JEU / H;

@@ -14,8 +14,8 @@ void prevualisationVagues(Jeu* jeu){
     }
 
     /* Hauteur et Largeur de la double liste */
-    int H = jeu->lastLigne;
-    int L = jeu->lastTour;
+    int H = jeu->derniereLigne;
+    int L = jeu->dernierTour;
 
     /* On se sert d'une double liste pour afficher la vague ensuite*/
     char** preview = (char**)malloc(H * sizeof(char*));
@@ -74,7 +74,7 @@ void renduActuelJeu(Jeu* jeu){
 
     
     /* Hauteur et Largeur de la double liste */
-    int H = jeu->lastLigne;
+    int H = jeu->derniereLigne;
     int L = SPAWN_DISTANCE;
 
     /* On se sert d'une double liste pour afficher la vague ensuite*/
@@ -179,35 +179,45 @@ void chargerFichier(Jeu* jeu, const char* _niveau) {
     }
     
     /* On en aura besoin pour la preview */
-    jeu->lastLigne = hauteur;
-    jeu->lastTour = tour;
+    jeu->derniereLigne = hauteur;
+    jeu->dernierTour = tour;
 
     fclose(niveau);
 
 }
 
-/* Choisit un mot au hasard pour féliciter le joueur à la fin d'une partie */
-char* bravoHasard(void){
-    /* LIste les mots*/
-    char* bravo[] = {"Bravo", "Félicitations", "Hourra", "Excellent", "Parfait"};
-
-    int n = sizeof(bravo);
-    n /= sizeof(bravo[0]);
+/* Choisit un mot au hasard pour féliciter/dire dommage le joueur à la fin d'une partie */
+char* bravoHasard(int _codeFin){
+    /* Liste des mots */
+    char* bravo[] = {"Bravo", "Félicitations", "Hourra", "Excellent", "Parfait", "Dommage", "Malheureusement", "Tristesse", "Déception"};
+    
+    int i = 0, j = 5;
+    if (_codeFin == -1){
+        i = 5;
+        j = 9;
+    }
 
     /* Mot au hasard */
     srand(time(NULL));
-    return bravo[rand() % n];
+    int n = i-j;
+    return bravo[i + rand() % n];
 }
 
+
 /* Enregistre un score demande le nom du joueur */
-void enregistrerScore(const char* _fichierDest, int _score){
+void enregistrerScore(const char* _fichierDest, int _score, int _codeFin){
     char nom[128];
     char* bravo;
 
     /* Mot au hasard */
-    bravo = bravoHasard();
+    bravo = bravoHasard(_codeFin);
 
-    printf("%s ! Vous avez sauvé Dauphine -  Score : %d\n", bravo, _score);
+    if (_codeFin == -1){
+        printf("%s ! Les carottes sont cuites -  Score : %d\n", bravo, _score);       
+    }
+    else {
+        printf("%s ! Vous avez sauvé Dauphine -  Score : %d\n", bravo, _score);
+    }
     printf("Votre nom :\n");
     scanf("%127s", nom);
 
