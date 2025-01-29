@@ -114,6 +114,7 @@ void rafraichirJeu(Jeu* jeu){
         }
         barney = barney->next;
     }
+    jeu->combo ++;
 
 
 }
@@ -236,7 +237,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     etu->prev_line = NULL;
 
     /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
-    jeu->multiplicateurScore *= (1 + 0.05 * etu->degats + 0.025 * etu->pointsDeVie + 0.025 * etu->vitesse);
+    jeu->multiplicateurScore *= (1 + 0.025 * etu->degats + 0.025 * etu->pointsDeVie + 0.025 * etu->vitesse);
 
     
     /* Cas : premier étudiant */
