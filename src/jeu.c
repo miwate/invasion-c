@@ -208,7 +208,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         etu->vitesse = 1;
         etu->degats = 3;
     }
-    else if (_type == 'P'){ // P pour pacman
+    else if (_type == 'M'){ // M pour Medic
         etu->pointsDeVie = 8;
         etu->vitesse = 3;
         etu->degats = 1;
@@ -244,11 +244,12 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
         Etudiant* precedent = jeu->etudiants;
 
         while (precedent->next != NULL){
+            
             precedent = precedent->next;
         }
         precedent->next = etu;
 
-        if (precedent->ligne < etu->ligne){
+        if (precedent->ligne == etu->ligne - 1){
             precedent->next_line = etu;
         }
     }
