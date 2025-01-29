@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
         }
 
         printf("%f\n", jeu->multiplicateurScore);
-
+        ajoutTourelle(jeu, 1,1,'T');
         ajoutTourelle(jeu, 2,1,'T');
         ajoutTourelle(jeu, 3,2,'T');
         ajoutTourelle(jeu, 4,2,'T');

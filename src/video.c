@@ -117,6 +117,7 @@ void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Tex
 
 }
 
+/* Affiche le score du jeu en haut à droite de la fenêtre */
 void afficherScore(SDL_Renderer* rendu, int score, int x, int y){
 
     /* Convertit le score (int) en chaîne de charactères */
@@ -139,6 +140,38 @@ void afficherScore(SDL_Renderer* rendu, int score, int x, int y){
         /* LIbération de la mémoire */
         SDL_DestroyTexture(_chiffreTex);
     }
+}
+
+/* Affiche la cagnotte du jeu en haut à droite de la fenêtre */
+void afficherCagnotte(SDL_Renderer* rendu, int _cagnotte, int x, int y){
+
+    /* Convertit la cagnotte (int) en chaîne de charactères */
+    char cagnotteCh[32];
+    snprintf(cagnotteCh, sizeof(cagnotteCh), "%d", _cagnotte);
+
+    /* Affiche l'icône EURO */
+    SDL_Texture* _euroTex = chargerTexture("tex/EURO.png", rendu);
+    SDL_Rect euroRect = {x - 35, y, 20, 30};
+    SDL_RenderCopy(rendu, _euroTex, NULL, &euroRect);
+
+    /* Affiche chiffre par chiffre le score */
+    for (int i = 0; i < strlen(cagnotteCh) ; i++) {
+        char chiffre = cagnotteCh[i];
+
+        /* Récupération de la texture du chiffre */
+        char chiffreTex[32];
+        snprintf(chiffreTex, sizeof(chiffreTex), "tex/score-%c.png", chiffre);
+        SDL_Texture* _chiffreTex = chargerTexture(chiffreTex, rendu);
+
+        SDL_Rect chiffreRect = {x+(i*20), y, 20, 30};
+
+        SDL_RenderCopy(rendu, _chiffreTex, NULL, &chiffreRect);
+
+        /* LIbération de la mémoire */
+        SDL_DestroyTexture(_chiffreTex);
+    }
+    /* LIbération de la mémoire */
+    SDL_DestroyTexture(_euroTex);
 }
 
 
@@ -232,6 +265,8 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     /* Affiche le score */
     afficherScore(rendu, jeu->score, LARGEUR_JEU - 250, 10);
 
+    /* Affiche la cagnotte */
+    afficherCagnotte(rendu, jeu->cagnotte, LARGEUR_JEU - 250, 50);
     
     /* Affiche les changements */
     SDL_RenderPresent(rendu);

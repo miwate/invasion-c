@@ -29,4 +29,6 @@
     /* Affiche les étudiants*/
     void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Texture* pointVieTexture, int x, int y, int largeurCase, int hauteurCase, int pointsDeVie);
 
+    /* Affiche la cagnotte du jeu en haut à droite de la fenêtre */
+    void afficherCagnotte(SDL_Renderer* rendu, int _cagnotte, int x, int y);
 #endif
