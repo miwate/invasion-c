@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
-            sleep(1);
+            sleep(0.5);
  
         }
 

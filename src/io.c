@@ -206,7 +206,7 @@ char* bravoHasard(int _codeFin){
 
 /* Enregistre un score demande le nom du joueur */
 void enregistrerScore(const char* _fichierDest, int _score, int _codeFin){
-    char nom[128];
+    char nom[128] = "Anonyme";
     char* bravo;
 
     /* Mot au hasard */
@@ -221,10 +221,10 @@ void enregistrerScore(const char* _fichierDest, int _score, int _codeFin){
     printf("Votre nom :\n");
     scanf("%127s", nom);
 
-    /* Enregistre le score dans le fichier ..lb/scores.txt*/
+    /* Enregistre le score dans le fichier lb/scores.txt*/
     FILE* fichier = fopen(_fichierDest, "a");
     if (fichier ==NULL){
-        perror("Impossible de lire le fichier lb\n");
+        printf("Impossible de lire le fichier lb\n");
         return;
     }
     fprintf(fichier, "%s\t%d\n", nom, _score);
