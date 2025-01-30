@@ -1,4 +1,8 @@
 # INVASION !! - Projet de C
+
+![Bannière](https://i.postimg.cc/B6Vbgjdd/HEADER-copy.webp)
+
+
 # 🔗 Dépendances
 
 Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0) et [SDL_image](https://github.com/libsdl-org/SDL_image).
