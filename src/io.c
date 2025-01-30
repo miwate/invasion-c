@@ -232,3 +232,71 @@ void enregistrerScore(const char* _fichierDest, int _score, int _codeFin){
 
     printf("Score enregistré !\n");
 }
+
+void sauvegarderPartie(Jeu* jeu, const char* destFichier){
+    FILE* sauvegarde = fopen(destFichier, "w");
+
+    if (sauvegarde == NULL){
+        printf("Sauvegarde échouée !\n");
+        return;
+    }
+
+    // Collecte des données de la structure Jeu
+    fprintf(sauvegarde, "%d %d %d\n", jeu->tour, jeu->cagnotte, jeu->dernierTour);
+
+    // Collecte des données des Tourelles
+    Tourelle* barney = jeu->tourelles;
+
+    // Récupération de toutes les tourelles
+    while (barney != NULL){
+        fprintf(sauvegarde, "T %d %d %d %d %c\n", barney->ligne, barney->position, barney->pointsDeVie, barney->degats, barney->type);
+        barney = barney->next;
+    }
+    
+    // Collecte des données des étudiants
+    Etudiant* etu = jeu->etudiants;
+    // Récupération des données des étudiants 
+    while (etu != NULL){
+        fprintf(sauvegarde, "%d %d %d %d %d %c\n", etu->ligne, etu->position, etu->pointsDeVie, etu->vitesse, etu->tour, etu->type);
+        etu = etu->next;
+    }
+
+    fclose(sauvegarde);
+    printf("Partie sauvegardée dans le fichier %s !\n", destFichier);
+    return;
+}
+
+// Ne marche pas
+int chargerFichierSave(Jeu* jeu, const char* srcFichier){
+    FILE* sauvegarde = fopen(srcFichier, "r");
+
+    if (sauvegarde == NULL){
+        printf("Sauvegarde %s introuvable.\n", srcFichier);
+        return 0;
+    }
+
+    // Provoque une erreur si le jeu n'est pas initialisé
+    initJeu(jeu);
+
+    /* Lecture des données de la structure Jeu */
+    fscanf(sauvegarde, "%d %d %d", &jeu->tour, &jeu->cagnotte, &jeu->dernierTour);
+
+    int tour, ligne, position, pointsDeVie, degats, vitesse;
+    char type;
+
+    /* Lecture des données des tourelles */
+    /* Sort de la boucle en cas d'échec <=> Ligne vide <=> Fin du fichier */
+    while (fscanf(sauvegarde, "T %d %d %d %d %c", &ligne, &position, &pointsDeVie, &degats, &type) == 5){
+        ajoutTourelle(jeu, ligne, position, type);
+    }
+
+    /* Lecture des données des étudiants */
+    /* Idem */
+    while (fscanf(sauvegarde, "%d %d %d %d %d %c", &ligne, &position, &pointsDeVie, &vitesse, &tour, &type) == 6){
+        ajoutEtudiant(jeu, tour, ligne, type);
+    }
+
+    fclose(sauvegarde);
+    printf("Sauvegarde %s chargée.\n", srcFichier);
+    return 1;
+}
