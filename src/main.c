@@ -80,7 +80,16 @@ int main(int argc, char* argv[]) {
         sleep(1);
 
         while(jeu->fin == 1){
-
+            // Sauvegarde ? + vidage du buffer
+            printf("Voulez-vous sauvegarder la partie ? (s pour sauvegarder, autre pour continuer)\n");
+            char reponse;
+            scanf(" %c", &reponse);
+            if (reponse == 's'){
+                sauvegarderPartie(jeu, "sauvegarde.txt");
+                return 0;
+            }
+            while (getchar() != '\n');
+            
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
