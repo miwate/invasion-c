@@ -221,7 +221,14 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             /* Position */
             int x = (barney->position - 1) * largeurCase;
             int y = (barney->ligne - 1) * hauteurCase;
-
+            
+            // Affichage de la tourelle
+            char tourelleTex[32];
+            snprintf(tourelleTex, sizeof(tourelleTex), "tex/%c.png", barney->type);
+            SDL_Texture* tourelleTexture = chargerTexture(tourelleTex, rendu);
+            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+            SDL_RenderCopy(rendu, tourelleTexture, NULL, &rect);
+            
             /* Selon le type et affichage */
             char pvTex[32];
             snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", barney->pointsDeVie);
@@ -231,6 +238,10 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             SDL_RenderCopy(rendu, tourelleTexture, NULL, &rect);
             SDL_Rect pointRect = {x, y, largeurCase / 2, hauteurCase};
             SDL_RenderCopy(rendu, pvTexture, NULL, &pointRect);
+
+            // Libération mémoire - peut-être pas nécessaire vu que la boucle de texture pour les étudiants marche sans libérer
+            SDL_DestroyTexture(tourelleTexture);
+            SDL_DestroyTexture(pvTexture);
         }
         barney = barney->next;
 
