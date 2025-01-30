@@ -75,4 +75,16 @@
     /* Charge un fichier contenant un niveau spécifique et met à jour les attributs du jeu*/
     void chargerFichier(Jeu* jeu, const char* _niveau);
 
+    /* Demande à l'utilisateur s'il veut placer une tourelle*/
+    void questionTourelle(Jeu* jeu);
+
+    /* Sauvegarder la partie en cours */
+    void sauvegarderPartie(Jeu* jeu, const char* destFichier);
+
+    /* Charger une sauvegarde si elle existe : NE MARCHE PAS*/
+    int chargerFichierSave(Jeu* jeu, const char* srcFichier);
+
+    /* VIDER LE BUFFER */
+    void viderBuffer();
+
 #endif
