@@ -134,21 +134,48 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
     barney->type = _type;
     barney->ligne = _ligne;
     barney->position = _position;
+    barney->next = NULL;
 
-    /* Différents types de tourelles */
-    if (_type == 'T'){ // T pour Tourelle
-        barney->degats = 2;
-        barney->pointsDeVie = 2;
-    }
-    else if (_type == 'D'){ // B pour Defective
-        barney->degats = 1;
-        barney->pointsDeVie = 1;
-    }
-    else {
-        barney->degats = 1;
-        barney->pointsDeVie = 2;     
+    // Gros changements apportés ici pour simplifier les cas
+    /* Affectation des stats */
+    switch (_type) {
+        case 't': // Tourelle classique
+            barney->pointsDeVie = 3;
+            barney->degats = 1;
+            barney->prix = 150;
+            break;
+        case 'b': // Bouclier
+            barney->pointsDeVie = 6;
+            barney->degats = 0;
+            barney->prix = 200;
+            break;
+        case 'm': // Mine Explosive
+            barney->pointsDeVie = 1;
+            barney->degats = 5;
+            barney->prix = 100;
+            break;
+        case 's': // Slow (Ralentissement)
+            barney->pointsDeVie = 2;
+            barney->degats = 1;
+            barney->prix = 120;
+            break;
+        case 'x': // Explosive adjacente
+            barney->pointsDeVie = 2;
+            barney->degats = 4;
+            barney->prix = 800;
+            break;
+        default:
+            printf("Type de tourelle inconnu : %c\n", _type);
+            free(barney);
+            return;
     }
 
+    if (barney->prix > jeu->cagnotte){
+        printf("Cagnotte insuffisante !\n");
+        free(barney);
+        return;
+    }
+    jeu->cagnotte -= barney->prix;
     barney->next = NULL;
 
     
