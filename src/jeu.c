@@ -17,7 +17,6 @@ void initJeu(Jeu* jeu){
     jeu->multiplicateurScore = 1.0;
 }
 
-
 /* Rafraichit l'état du jeu (faire tirer les tourelles, faire avancer les ennemis)*/
 void rafraichirJeu(Jeu* jeu){
 
@@ -35,7 +34,6 @@ void rafraichirJeu(Jeu* jeu){
     /* Les étudiants sont-ils tous éliminés ? */
     while (etu != NULL){
         // printf("%d - %d\n", etu->tour, jeu->tour);
-
         if (etu->tour == jeu->tour){
             nbEtudiantsTour += 1;
             if (etu->pointsDeVie > 0){
@@ -73,51 +71,171 @@ void rafraichirJeu(Jeu* jeu){
         etu = jeu->etudiants;
         Etudiant* etu_prec = NULL;
 
-        while (etu != NULL){
-            if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
+        // Cas pour chacune des barney (tourelles)
+        switch (barney->type){
+            // Mine
+            case 'm':
+                char explosion='n';
+                // Etudiant sur la mine (même ligne et position)
+                while (etu != NULL){
+                    if (etu->ligne == barney->ligne && etu->position == barney->position){
+                        // Explosion 
+                        jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
+                        // Dégâts transférés à l'étudiant
+                        etu->pointsDeVie -= barney->degats;
 
-                /* Ajoute le score dégâts infligés */
-                jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
-
-                /* INflige les dégâts */
-                etu->pointsDeVie -= barney->degats;
-
-
-                /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
-                if (etu->pointsDeVie <= 0){
-
-                    /* Ajoute un peu d'argent dans la cagnotte */
-                    jeu->cagnotte += 10 * jeu->combo;
-
-                    /* ENleve l'étudiant de la liste */
-                    if (etu_prec == NULL) {
-                        jeu->etudiants = etu->next;
+                        if (etu->pointsDeVie <= 0){
+                            // Gain d'argent 
+                            jeu->cagnotte += 10 * jeu->combo;
+                            // Suppression de l'étudiant
+                            if (etu_prec == NULL) {
+                                jeu->etudiants = etu->next;
+                            }
+                            else {
+                                etu_prec->next = etu->next;
+                            }
+                            // Mort de l'ennemi et libération de mémoire
+                            Etudiant* ennemi_mort = etu;
+                            etu = etu->next;
+                            free(ennemi_mort);
+                            continue;
+                        }
+                        else {
+                            etu_prec->next = etu->next;
+                            etu = etu->next;
+                        } 
+                        // La mine a explosé donc :
+                        explosion='o';
                     }
-                    
-                    else {
-                        etu_prec->next = etu->next;
-                    }
+                if (explosion =='o'){
+                    barney->pointsDeVie = 0;
 
-                    /* Libération de mémoire */
-                    Etudiant* q = etu;
-                    etu = etu->next;
-                    if (etu != NULL){
-                        free(q);
-                    }
-                    continue; 
+                    // Libération de mémoire
+                    Tourelle* mineExplosee = barney;
+                    barney = barney->next;
+                    free(mineExplosee);
+                    continue;
                 }
-
+                break;
+                
+            case 's' :
+                while (etu != NULL){
+                    if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
+                        // Baisse de vitesse + dégâts infligés + score augmenté
+                        etu->vitesse = 1;
+                        etu->pointsDeVie -= barney->degats;
+                        jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
+    
+                        // Ennemi mort
+                        if (etu->pointsDeVie <= 0){
+                            // Gain d'argent 
+                            jeu->cagnotte += 10 * jeu->combo;
+                            // Suppression de l'étudiant
+                            if (etu_prec == NULL) {
+                                jeu->etudiants = etu->next;
+                            }
+                            else {
+                                etu_prec->next = etu->next;
+                            }
+                            // Mort de l'ennemi et libération de mémoire
+                            Etudiant* ennemi_mort = etu;
+                            etu = etu->next;
+                            free(ennemi_mort);
+                            continue;
+                        }
+                        else {
+                            etu_prec->next = etu->next;
+                            etu = etu->next;
+                        }
+                        break;
+                    } // essayer sans } 
+                
+            case 'x': // Explosive de zone
+                    /* Affecte les étudiants sur la même ligne et les lignes adjacentes */
+                    for (int i = -1; i <= 1; i++) {
+                        int ligneCible = barney->ligne + i;
+                        if (ligneCible < 1 || ligneCible > jeu->derniereLigne) {
+                            continue; // Ligne en dehors des limites
+                        }
+    
+                        etu = jeu->etudiants;
+                        etu_prec = NULL;
+    
+                        while (etu != NULL){
+                            if (etu->ligne == ligneCible && jeu->tour == etu->tour){
+                                /* Dégâts + Augmentation du score*/
+                                etu->pointsDeVie -= barney->degats;
+                                jeu->score += jeu->multiplicateurScore * barney->degats;
+    
+                                /* Ennemi mort */
+                                if (etu->pointsDeVie <= 0){
+                                    /* Ajouter de l'argent à la cagnotte */
+                                    jeu->cagnotte += 10 * jeu->combo;
+    
+                                    /* Retirer l'étudiant de la liste */
+                                    if (etu_prec == NULL){
+                                        jeu->etudiants = etu->next;
+                                    } else {
+                                        etu_prec->next = etu->next;
+                                    }
+    
+                                    /* Libérer mémoire */
+                                    Etudiant* etu_cancel = etu;
+                                    etu = etu->next;
+                                    free(etu_cancel);
+                                    continue; /* Prochain étudiant */
+                                }
+                            }
+                            etu_prec = etu;
+                            etu = etu->next;
+                        }
+                    }
+                    break;
+                }
+    
+            default : // Tourelles à comportement "classiques" dont B (Bouclier mais ses dégâts sont nuls)
+                while (etu != NULL){
+                    if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
+                        /* Ajoute le score dégâts infligés */
+                        jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
+                        /* INflige les dégâts */
+                        etu->pointsDeVie -= barney->degats;
+                        
+                        /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
+                        if (etu->pointsDeVie <= 0){
+    
+                            /* Ajoute un peu d'argent dans la cagnotte */
+                            jeu->cagnotte += 10 * jeu->combo;
+    
+                            /* ENleve l'étudiant de la liste */
+                            if (etu_prec == NULL) {
+                                jeu->etudiants = etu->next;
+                            }
+                            
+                            else {
+                                etu_prec->next = etu->next;
+                            }       
+    
+                            /* Libération de mémoire */
+                            Etudiant* q = etu;
+                            etu = etu->next;
+                            if (etu != NULL){
+                                free(q);
+                            }
+                            continue; 
+                        }
+    
+                    }
+                    etu_prec = etu;
+    
+                    etu = etu->next;
+                }
+                barney = barney->next;
             }
-            etu_prec = etu;
-
-            etu = etu->next;
+            jeu->combo ++;
+            }
         }
-        barney = barney->next;
     }
-    jeu->combo ++;
-
-
-}
 
 
 /* Ajoute une tourelle dans le jeu en fonction de la ligne et de la position */
