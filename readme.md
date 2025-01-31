@@ -51,3 +51,18 @@ make cleanAll
 ```
 
 ---
+
+# Architecture
+```mermaid
+graph TD
+    F[main.c]
+
+    F --> F1[io.c]
+    F --> F2[jeu.c]
+    F --> F4[video.c]
+
+    F1 -->|lit/écrit| H[Terminal]
+    F1 -->|communique avec| F2
+    F4 -->|récupère| G[tex]
+    F4 -->|SDL_image| I[Fenêtre Graphique] 
+```
