@@ -63,18 +63,8 @@ int main(int argc, char* argv[]) {
             sleep(1);
             compteur -= 1;
         }
-
-        printf("%f\n", jeu->multiplicateurScore);
-        ajoutTourelle(jeu, 1,1,'T');
-        ajoutTourelle(jeu, 2,1,'T');
-        ajoutTourelle(jeu, 3,2,'T');
-        ajoutTourelle(jeu, 4,2,'T');
-        ajoutTourelle(jeu, 5,2,'T');
-        ajoutTourelle(jeu, 6,2,'T');
-        ajoutTourelle(jeu, 7,2,'T');
-
-
-        printf("%f\n", jeu->multiplicateurScore);
+        
+        printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
@@ -89,7 +79,8 @@ int main(int argc, char* argv[]) {
                 return 0;
             }
             while (getchar() != '\n');
-            
+
+            questionTourelle(jeu);
             rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
