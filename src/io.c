@@ -300,3 +300,63 @@ int chargerFichierSave(Jeu* jeu, const char* srcFichier){
     printf("Sauvegarde %s chargée.\n", srcFichier);
     return 1;
 }
+
+void viderBuffer(){
+    int videBuffer;
+    while ((videBuffer = getchar()) != '\n' && videBuffer != EOF);
+
+}
+
+void questionTourelle(Jeu* jeu){
+    int condition = 1;
+
+    // On n'en sort que si le joueur ne veut pas construire de tourelle (Sa réponse est 'N').
+    // On ajoute un viderBuffer() pour chaque entrée.
+    while (condition){ 
+        printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
+        char reponseTourelle;
+        scanf("%c", &reponseTourelle);
+        viderBuffer();
+
+        if (reponseTourelle == 'N'){
+            printf("Aucune tourelle n'est construite ce tour.\n");
+            condition = 0;
+        }
+
+        else {  
+            // Récupération de la ligne avec garde fous 
+            printf("En quelle ligne voulez-vous placer la tourelle ?\n");
+            int ligne;
+            scanf("%d", &ligne);
+            viderBuffer();
+            while (ligne < 1 || ligne > 7){ 
+                printf("Ligne invalide.\nRecommencez et pensez à entrer une ligne entre 1 et 7 : \n");
+                scanf("%d", &ligne);
+                viderBuffer();
+            }
+
+            // Récupération de la position avec garde fous 
+            printf("A quelle position voulez-vous placer la tourelle ?\n");
+            int position;
+            scanf("%d", &position);
+            viderBuffer();
+            while (position < 1 || position > 10){
+                printf("Position invalide.\nRecommencez et pensez à entrer une position entre 1 et 10 : \n");
+                scanf(" %d", &position);
+                viderBuffer();
+            }
+
+            // Récupération du type avec garde fous 
+            printf("Choisissez un type de tourelle : \n");
+            char type;
+            scanf(" %c", &type);
+            viderBuffer();
+            while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
+                printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150) \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120) \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200) \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
+                scanf(" %c", &type);
+                viderBuffer();
+            }
+            ajoutTourelle(jeu, ligne, position, type);
+        }
+    }
+}
