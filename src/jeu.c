@@ -294,6 +294,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
         return;
     }
     jeu->cagnotte -= barney->prix;
+    printf("Construction réussie !\nCagnotte restante : %d\n", jeu->cagnotte);
     barney->next = NULL;
 
     
