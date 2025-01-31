@@ -192,9 +192,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
 
     SDL_Texture* fondTexture = chargerTexture("tex/fond.png", rendu);
-    SDL_Texture* tourelleTexture = chargerTexture("tex/turret.png", rendu);
-
-
+    
     int fondLargeur, fondHauteur;
     SDL_QueryTexture(fondTexture, NULL, NULL, &fondLargeur, &fondHauteur);
 
@@ -226,8 +224,8 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             char tourelleTex[32];
             snprintf(tourelleTex, sizeof(tourelleTex), "tex/%c.png", barney->type);
             SDL_Texture* tourelleTexture = chargerTexture(tourelleTex, rendu);
-            SDL_Rect rect = {x, y, largeurCase, hauteurCase};
-            SDL_RenderCopy(rendu, tourelleTexture, NULL, &rect);
+            SDL_Rect rectType = {x, y, largeurCase, hauteurCase};
+            SDL_RenderCopy(rendu, tourelleTexture, NULL, &rectType);
             
             /* Selon le type et affichage */
             char pvTex[32];
