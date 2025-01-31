@@ -119,13 +119,15 @@ void rafraichirJeu(Jeu* jeu){
                 break;
                 
             case 's' :
-                while (etu != NULL){
+                char frappeTourelles = 'n';
+                while (etu != NULL && frappeTourelles == 'n'){
                     if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
                         // Baisse de vitesse + dégâts infligés + score augmenté
                         etu->vitesse = 1;
                         etu->pointsDeVie -= barney->degats;
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
-    
+                        // Tourelle a frappé
+                        frappeTourelles = 'o';
                         // Ennemi mort
                         if (etu->pointsDeVie <= 0){
                             // Gain d'argent 
@@ -162,7 +164,7 @@ void rafraichirJeu(Jeu* jeu){
                         etu_prec = NULL;
     
                         while (etu != NULL){
-                            if (etu->ligne == ligneCible && jeu->tour == etu->tour){
+                            if (etu->ligne == ligneCible && (etu->position <= SPAWN_DISTANCE) && (etu->position >= 0)){
                                 /* Dégâts + Augmentation du score*/
                                 etu->pointsDeVie -= barney->degats;
                                 jeu->score += jeu->multiplicateurScore * barney->degats;
@@ -194,13 +196,14 @@ void rafraichirJeu(Jeu* jeu){
                 }
     
             default : // Tourelles à comportement "classiques" dont B (Bouclier mais ses dégâts sont nuls)
-                while (etu != NULL){
+                char frappeTourelled = 'n';
+                while (etu != NULL && frappeTourelled == 'n'){
                     if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
                         etu->pointsDeVie -= barney->degats;
-                        
+                        frappeTourelled = 'o';
                         /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
                         if (etu->pointsDeVie <= 0){
     
