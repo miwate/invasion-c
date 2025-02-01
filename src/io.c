@@ -1,4 +1,5 @@
 #include "../prot/jeu.h"
+#include "../prot/video.h"
 
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
 /* La partie graphique ayant été ajoutée par la suite, certaines fonctions d'affichage serviront pour debug */
@@ -307,13 +308,13 @@ void viderBuffer(){
 
 }
 
-void questionTourelle(Jeu* jeu, int* sauver){
+void questionTourelle(Jeu* jeu, int* sauver, SDL_Renderer* rendu){
     int condition = 1;
     int ligne, position;
     char type;
     // On n'en sort que si le joueur ne veut pas construire de tourelle (Sa réponse est 'N').
     while (condition){ 
-
+        
         /*Efface + retour ligne */
         printf("\033[2J\033[0;0H");
         printf("t (Tourelle classique : 3PV, 1ATQ, Prix : 150) \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120) \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200) \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
@@ -323,7 +324,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
         scanf("%c", &reponseTourelle);
         viderBuffer();
 
-        if (reponseTourelle == 'N'){
+        if (reponseTourelle == 'N' || reponseTourelle == 'n'){
             printf("Aucune tourelle n'est construite ce tour.\n");
             condition = 0;
             return;
@@ -377,6 +378,9 @@ void questionTourelle(Jeu* jeu, int* sauver){
                 viderBuffer();
             }
             ajoutTourelle(jeu, ligne, position, type);
+
+            /* Met à jour l'affichage */
+            renduActuelJeu_v(jeu, rendu);
         }
     }
 }
