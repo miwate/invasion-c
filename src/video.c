@@ -5,15 +5,22 @@
 
 /* Initialise la fenêtre et crée la frenêtre SDL */
 SDL_Window* initSDL() {
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0){
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("La fenêtre SDL ne s'initialise pas\n");
         return NULL;
     }
-    SDL_Window* fenetre = SDL_CreateWindow("INVASION !!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
-    
+
+    /* Affiche en haut à droite (comme ça tu peux avoir le terminal à gauche)*/
+    SDL_Rect displayBounds;
+    SDL_GetDisplayBounds(0, &displayBounds);
+    int posX = displayBounds.w - LARGEUR_JEU;
+    int posY = 0;
+
+    SDL_Window* fenetre = SDL_CreateWindow("INVASION !!", posX, posY, LARGEUR_JEU, HAUTEUR_JEU, SDL_WINDOW_SHOWN);
+
     return fenetre;
 }
+
 
 /* Charge une texture depuis le dossier /tex */
 SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* rendu) {
