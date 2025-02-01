@@ -14,6 +14,15 @@ sudo apt-get install libsdl2-mixer-dev
 sudo apt-get install libsdl2-ttf-dev
 ```
 
+En cas d'erreurs
+```bash
+sudo apt update
+```
+```bash
+sudo apt --fix-missing update
+sudo apt install -f
+```
+
 ---
 
 # ⚙️ Compilation
