@@ -282,3 +282,38 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
 }
 
+/* Boite de dialogue + personnage + texte */
+void dialogue(SDL_Renderer* rendu, const char* personnage, const char* texte, TTF_Font* police) {
+
+    /* Boîte  */
+    SDL_SetRenderDrawBlendMode(rendu, SDL_BLENDMODE_BLEND);
+
+    SDL_Rect boiteRect = {50, HAUTEUR_JEU-150, LARGEUR_JEU-100, 100};
+    SDL_SetRenderDrawColor(rendu, 90, 0, 0, 200);
+    SDL_RenderFillRect(rendu, &boiteRect);
+
+    /* Chargement du personnage*/
+    char persoTex[64];
+
+    snprintf(persoTex, sizeof(persoTex), "tex/%s.png", personnage); 
+    SDL_Texture* persoTexture = chargerTexture(persoTex, rendu);
+    SDL_Rect persoRect = {LARGEUR_JEU-200, HAUTEUR_JEU-250, 150, 250};
+    SDL_RenderCopy(rendu, persoTexture, NULL, &persoRect);
+
+    /* TExte */
+    SDL_Color couleurBlanche = {255, 255, 255, 255};
+    SDL_Surface* surfaceTexte = TTF_RenderText_Solid(police, texte, couleurBlanche);
+    SDL_Texture* textureTexte = SDL_CreateTextureFromSurface(rendu, surfaceTexte);
+    SDL_Rect texteRect = {70, HAUTEUR_JEU - 130, surfaceTexte->w, surfaceTexte->h};
+
+    SDL_RenderCopy(rendu, textureTexte, NULL, &texteRect);
+
+    /* LIbération mémoire */
+    SDL_FreeSurface(surfaceTexte);
+    SDL_DestroyTexture(textureTexte);
+    SDL_DestroyTexture(persoTexture);
+
+    /* Affiche */
+    SDL_RenderPresent(rendu);
+}
+
