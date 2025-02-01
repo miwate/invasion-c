@@ -307,11 +307,9 @@ void viderBuffer(){
 
 }
 
-void questionTourelle(Jeu* jeu){
+void questionTourelle(Jeu* jeu, int* sauver){
     int condition = 1;
-
     // On n'en sort que si le joueur ne veut pas construire de tourelle (Sa réponse est 'N').
-    // On ajoute un viderBuffer() pour chaque entrée.
     while (condition){ 
         printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
         char reponseTourelle;
@@ -321,6 +319,13 @@ void questionTourelle(Jeu* jeu){
         if (reponseTourelle == 'N'){
             printf("Aucune tourelle n'est construite ce tour.\n");
             condition = 0;
+            return;
+        }
+
+        else if (reponseTourelle == 'S'){
+            sauvegarderPartie(jeu, "sauvegarde.txt");
+            *sauver = 1;
+            return;
         }
 
         else {  
