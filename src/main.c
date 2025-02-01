@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Renderer* rendu = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer* rendu = SDL_CreateRenderer(window, -1, 2);
     if (!rendu) {
         printf("Erreur de création de rendu: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
@@ -39,6 +39,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    /* CHargement police */
+    TTF_Init();
+    TTF_Font* police = TTF_OpenFont("tex/montserrat.ttf", 30);
+
     /* POur tous les fichiers entrées en arguments */
     for (int i = 1; i < argc; i++){
 
@@ -53,18 +57,21 @@ int main(int argc, char* argv[]) {
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
         prevualisationVagues(jeu);
         prevualisationVagues_v(jeu, rendu);
+        printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
-        /* Début d'un compteur pour la prévualisation */
-        int compteur = 2;
-        printf("Début du jeu dans %d...\n", compteur);
+        /* Partie dialogue */
+        int dialogueSkip = 1;
+        if (dialogueSkip == 1){
+            dialogue(rendu, "me_zany", "Miwate : Salut !", police);
+            printf("Miwate : Salut !\n");
+            sleep(3);
 
-        while (compteur > 0){
-            printf("%d\n", compteur);
-            sleep(1);
-            compteur -= 1;
+            prevualisationVagues_v(jeu, rendu);
+            dialogue(rendu, "me_sleepy", "Miwate : Je suis celui qui dort en cours.", police);
+            printf("Miwate : Je suis celui qui dort en cours.\n");
+            sleep(6);
         }
         
-        printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
@@ -95,6 +102,8 @@ int main(int argc, char* argv[]) {
         SDL_DestroyRenderer(rendu);
         SDL_DestroyWindow(window);
         SDL_Quit();
+        TTF_CloseFont(police);
+        TTF_Quit();
 
         char *scoreFichier = "lb/scores.txt";
         enregistrerScore(scoreFichier, jeu->score, jeu->fin);

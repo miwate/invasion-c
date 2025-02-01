@@ -76,7 +76,7 @@
     void chargerFichier(Jeu* jeu, const char* _niveau);
 
     /* Demande à l'utilisateur s'il veut placer une tourelle*/
-    void questionTourelle(Jeu* jeu);
+    void questionTourelle(Jeu* jeu, int* sauver);
 
     // Le format des données enregistrées par la sauvegarde influe sur l'ordres des informations à charger avec chargerFichierSave()
     /* Sauvegarder la partie en cours */

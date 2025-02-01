@@ -4,6 +4,8 @@
 
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_ttf.h>
+    #include <SDL2/SDL_mixer.h>
     #include "../prot/jeu.h"
 
     /* DImensions des fenêtres */
@@ -31,4 +33,8 @@
 
     /* Affiche la cagnotte du jeu en haut à droite de la fenêtre */
     void afficherCagnotte(SDL_Renderer* rendu, int _cagnotte, int x, int y);
+
+    /* Affiche boîte de dialogue avec texte et personnage */
+    void dialogue(SDL_Renderer* rendu, const char* personnage, const char* texte, TTF_Font* police);
+
 #endif

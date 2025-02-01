@@ -6,6 +6,8 @@
         "jeu.h": "c",
         "sdl.h": "c",
         "unistd.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "sdl_ttf.h": "c",
+        "sdl_mixer.h": "c"
     }
 }
