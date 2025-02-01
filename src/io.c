@@ -317,6 +317,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
         
         /*Efface + retour ligne */
         printf("\033[2J\033[0;0H");
+        renduActuelJeu(jeu);
         printf("t (Tourelle classique : 3PV, 1ATQ, Prix : 150) \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120) \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200) \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
 
         printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
