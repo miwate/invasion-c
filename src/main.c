@@ -87,6 +87,7 @@ int main(int argc, char* argv[]) {
         int sauver = 0;
         while(jeu->fin == 1){
             questionTourelle(jeu, &sauver);
+            renduActuelJeu_v(jeu, rendu);
             if (sauver == 1){
                 SDL_DestroyRenderer(rendu);
                 SDL_DestroyWindow(window);
