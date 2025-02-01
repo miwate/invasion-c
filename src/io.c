@@ -309,6 +309,8 @@ void viderBuffer(){
 
 void questionTourelle(Jeu* jeu, int* sauver){
     int condition = 1;
+    int ligne, position;
+    char type;
     // On n'en sort que si le joueur ne veut pas construire de tourelle (Sa réponse est 'N').
     while (condition){ 
         printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
@@ -330,30 +332,38 @@ void questionTourelle(Jeu* jeu, int* sauver){
 
         else {  
             // Récupération de la ligne avec garde fous 
-            printf("En quelle ligne voulez-vous placer la tourelle ?\n");
-            int ligne;
-            scanf("%d", &ligne);
-            viderBuffer();
-            while (ligne < 1 || ligne > 7){ 
-                printf("Ligne invalide.\nRecommencez et pensez à entrer une ligne entre 1 et 7 : \n");
-                scanf("%d", &ligne);
-                viderBuffer();
+            int ligneCorrecte = 0;
+            while (ligneCorrecte == 0) {
+                printf("En quelle ligne voulez-vous placer la tourelle ?\n");
+                if (scanf("%d", &ligne) != 1) {
+                    printf("Entrée invalide. Veuillez saisir un nombre entier.\n");
+                    viderBuffer();
+                    continue;
+                }
+                if (ligne < 1 || ligne > 7)
+                    printf("Ligne invalide.-> Recommencez et pensez à entrer une ligne entre 1 et %d : \n", jeu->derniereLigne);
+                else 
+                    ligneCorrecte = 1;
             }
 
             // Récupération de la position avec garde fous 
-            printf("A quelle position voulez-vous placer la tourelle ?\n");
-            int position;
-            scanf("%d", &position);
-            viderBuffer();
-            while (position < 1 || position > 10){
-                printf("Position invalide.\nRecommencez et pensez à entrer une position entre 1 et 10 : \n");
-                scanf(" %d", &position);
-                viderBuffer();
+            int posCorrecte = 0;
+            while (posCorrecte == 0) {
+                printf("A quelle position voulez-vous placer la tourelle ?\n");
+                if (scanf("%d", &position) != 1) {
+                    printf("Entrée invalide. Veuillez saisir un nombre entier.\n");
+                    viderBuffer();
+                    continue;
+                }
+                if (position < 1 || position > 10)
+                    printf("Position invalide.-> Recommencez et pensez à entrer une position entre 1 et 10 : \n");
+                else 
+                    posCorrecte = 1;
+                
             }
 
             // Récupération du type avec garde fous 
             printf("Choisissez un type de tourelle : \n");
-            char type;
             scanf(" %c", &type);
             viderBuffer();
             while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
