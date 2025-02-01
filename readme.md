@@ -5,11 +5,13 @@
 
 # 🔗 Dépendances
 
-Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0) et [SDL_image](https://github.com/libsdl-org/SDL_image).
+Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0)
 
 ```bash
 sudo apt-get install libsdl2-dev
 sudo apt-get install libsdl2-image-dev
+sudo apt-get install libsdl2-mixer-dev
+sudo apt-get install libsdl2-ttf-dev
 ```
 
 ---
