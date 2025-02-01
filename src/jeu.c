@@ -78,7 +78,7 @@ void rafraichirJeu(Jeu* jeu){
                 char explosion='n';
                 // Etudiant sur la mine (même ligne et position)
                 while (etu != NULL){
-                    if (etu->ligne == barney->ligne && etu->position == barney->position){
+                    if (etu->ligne == barney->ligne && etu->position == barney->position && etu->tour <= jeu->tour && etu->tour <= jeu->tour){
                         // Explosion 
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         // Dégâts transférés à l'étudiant
@@ -121,7 +121,7 @@ void rafraichirJeu(Jeu* jeu){
             case 's': { // Tourelle de ralentissement adjacentes transperçantes
                 char frappeTourelles = 'n';
                 while (etu != NULL && frappeTourelles == 'n'){
-                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0){
+                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0 && etu->tour <= jeu->tour){
                         // Baisse de vitesse + dégâts infligés + score augmenté
                         etu->vitesse = 1;
                         etu->pointsDeVie -= barney->degats;
@@ -171,7 +171,7 @@ void rafraichirJeu(Jeu* jeu){
                         etu_prec = NULL;
     
                         while (etu != NULL){
-                            if (etu->ligne == ligneCible && (etu->position <= SPAWN_DISTANCE) && (etu->position >= 0)){
+                            if (etu->ligne == ligneCible && (etu->position <= SPAWN_DISTANCE) && (etu->position >= 0) && etu->tour <= jeu->tour){
                                 /* Dégâts + Augmentation du score*/
                                 etu->pointsDeVie -= barney->degats;
                                 jeu->score += jeu->multiplicateurScore * barney->degats;
@@ -205,7 +205,7 @@ void rafraichirJeu(Jeu* jeu){
             default : // Tourelles à comportement "classiques" dont B (Bouclier mais ses dégâts sont nuls)
                 char frappeTourelled = 'n';
                 while (etu != NULL && frappeTourelled == 'n'){
-                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0){
+                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0 && etu->tour <= jeu->tour){
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */

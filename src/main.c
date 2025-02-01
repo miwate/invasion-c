@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
     /* CHargement police */
     TTF_Init();
-    TTF_Font* police = TTF_OpenFont("tex/montserrat.ttf", 30);
+    TTF_Font* police = TTF_OpenFont("tex/montserrat.ttf", 25);
 
 
     /* JOuer la musique */
@@ -68,25 +68,45 @@ int main(int argc, char* argv[]) {
         /* Partie dialogue */
         int dialogueSkip = 1;
         if (dialogueSkip == 1){
-            dialogue(rendu, "me_zany", "Miwate : Salut !", police);
-            printf("Miwate : Salut !\n");
-            sleep(3);
+            dialogue(rendu, "me_zany", "Dev  : Salut !", police);
+            printf("Dev : Salut !\n");
+            SDL_Delay(1000);
 
             prevualisationVagues_v(jeu, rendu);
-            dialogue(rendu, "me_sleepy", "Miwate : Je suis celui qui dort en cours.", police);
-            printf("Miwate : Je suis celui qui dort en cours.\n");
-            sleep(6);
+            dialogue(rendu, "me_sleepy", "Dev : Je suis celui qui dort en cours.", police);
+            printf("Dev : Je suis celui qui dort en cours.\n");
+            SDL_Delay(2500);
+
+            prevualisationVagues_v(jeu, rendu);
+            dialogue(rendu, "me_sleepy", "Dev : Le programme s'arrête si tu perds.", police);
+            printf("Dev : Je suis celui qui dort en cours.\n");
+            SDL_Delay(2500);
         }
         
 
         renduActuelJeu_v(jeu, rendu);
-        sleep(1);
+        SDL_Delay(1000);
 
         // Sauvegarde
         printf("Si vous voulez sauvegarder l'avancement au cours de la partie, entrez S pour sauvegarder !\n");
         int sauver = 0;
-        while(jeu->fin == 1){
-            questionTourelle(jeu, &sauver);
+
+        /* Déroulé du jeu */
+        SDL_Event event;
+        int enMarche = 1;
+
+        while(jeu->fin == 1 && enMarche){
+            SDL_PollEvent(&event);
+
+                ajoutTourelle(jeu, 1,1,'t');
+                ajoutTourelle(jeu, 2,1,'t');
+                ajoutTourelle(jeu, 3,1,'t');
+                ajoutTourelle(jeu, 4,1,'t');
+                ajoutTourelle(jeu, 5,1,'t');
+                ajoutTourelle(jeu, 6,1,'t');
+                ajoutTourelle(jeu, 7,1,'t');
+
+            //questionTourelle(jeu, &sauver);
             renduActuelJeu_v(jeu, rendu);
             
             if (sauver == 1){
@@ -104,6 +124,18 @@ int main(int argc, char* argv[]) {
             //printf("Appel à renduActuelJeu\n");
             renduActuelJeu(jeu);
             // SDL_Delay(500); // Pause de 500 millisecondes
+
+            SDL_Delay(30);
+        }
+
+        if (dialogueSkip == 1){
+            char* bravo;
+            bravo = bravoHasard(jeu->fin);
+            char texte[128];
+            sprintf(texte, "Dev : %s", bravo);
+            dialogue(rendu, "me_sleepy", texte, police);
+            printf("Dev : %s !\n", texte);
+            SDL_Delay(3000);
         }
 
         /* Libération de la mémoire, fermeture des fenêtres */
@@ -113,10 +145,10 @@ int main(int argc, char* argv[]) {
         TTF_CloseFont(police);
         TTF_Quit();
 
-        char *scoreFichier = "lb/scores.txt";
-        enregistrerScore(scoreFichier, jeu->score, jeu->fin);
-
     }
+
+    char *scoreFichier = "lb/scores.txt";
+    enregistrerScore(scoreFichier, jeu->score, jeu->fin);
 
     /* Libération de la musique */
     Mix_FreeMusic(theme);
