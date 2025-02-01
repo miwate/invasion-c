@@ -43,6 +43,12 @@ int main(int argc, char* argv[]) {
     TTF_Init();
     TTF_Font* police = TTF_OpenFont("tex/montserrat.ttf", 30);
 
+
+    /* JOuer la musique */
+    Mix_OpenAudio(20000, MIX_DEFAULT_FORMAT, 2, 4096);
+    Mix_Music* theme = Mix_LoadMUS("audio/invasion.mp3");
+    Mix_PlayMusic(theme, -1);
+
     /* POur tous les fichiers entrées en arguments */
     for (int i = 1; i < argc; i++){
 
@@ -95,7 +101,7 @@ int main(int argc, char* argv[]) {
             renduActuelJeu_v(jeu, rendu);
             //printf("Appel à renduActuelJeu\n");
             renduActuelJeu(jeu);
-            SDL_Delay(500); // Pause de 500 millisecondes
+            // SDL_Delay(500); // Pause de 500 millisecondes
         }
 
         /* Libération de la mémoire, fermeture des fenêtres */
@@ -109,6 +115,10 @@ int main(int argc, char* argv[]) {
         enregistrerScore(scoreFichier, jeu->score, jeu->fin);
 
     }
+
+    /* Libération de la musique */
+    Mix_FreeMusic(theme);
+    Mix_CloseAudio();
 
     printf("Jeu terminé.\n");
     return 0;
