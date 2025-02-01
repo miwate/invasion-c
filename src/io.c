@@ -308,7 +308,7 @@ void viderBuffer(){
 
 }
 
-void questionTourelle(Jeu* jeu, int* sauver, SDL_Renderer* rendu){
+void questionTourelle(Jeu* jeu, int* sauver){
     int condition = 1;
     int ligne, position;
     char type;
@@ -378,9 +378,6 @@ void questionTourelle(Jeu* jeu, int* sauver, SDL_Renderer* rendu){
                 viderBuffer();
             }
             ajoutTourelle(jeu, ligne, position, type);
-
-            /* Met à jour l'affichage */
-            renduActuelJeu_v(jeu, rendu);
         }
     }
 }

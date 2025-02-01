@@ -16,9 +16,6 @@
     /* Textures pour l'affichage */
     extern SDL_Texture* textureFond;
 
-    /* Besoin pour jeu.h*/
-    extern SDL_Renderer* rendu;
-
     /* Crée la fenêtre SDL */
     SDL_Window* initSDL();
 
