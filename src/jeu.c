@@ -118,16 +118,18 @@ void rafraichirJeu(Jeu* jeu){
                 }
                 break;
                 
-            case 's' :
+            case 's': { // Tourelle de ralentissement adjacentes transperçantes
                 char frappeTourelles = 'n';
                 while (etu != NULL && frappeTourelles == 'n'){
-                    if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
+                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0){
                         // Baisse de vitesse + dégâts infligés + score augmenté
                         etu->vitesse = 1;
                         etu->pointsDeVie -= barney->degats;
-                        jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
-                        // Tourelle a frappé
+                        jeu->score += jeu->multiplicateurScore * abs(etu->degats);
+
+                        // La tourelle a frappé
                         frappeTourelles = 'o';
+
                         // Ennemi mort
                         if (etu->pointsDeVie <= 0){
                             // Gain d'argent 
@@ -135,22 +137,27 @@ void rafraichirJeu(Jeu* jeu){
                             // Suppression de l'étudiant
                             if (etu_prec == NULL) {
                                 jeu->etudiants = etu->next;
-                            }
+                            } 
                             else {
                                 etu_prec->next = etu->next;
                             }
-                            // Mort de l'ennemi et libération de mémoire
+                            // Libération de mémoire
                             Etudiant* ennemi_mort = etu;
                             etu = etu->next;
                             free(ennemi_mort);
                             continue;
-                        }
-                        else {
-                            etu_prec->next = etu->next;
+                        } else {
+                            etu_prec = etu;
                             etu = etu->next;
                         }
                         break;
-                    } // essayer sans } 
+                    } 
+                    else {
+                        etu_prec = etu;
+                        etu = etu->next;
+                    }
+                }
+            }
                 
             case 'x': // Explosive de zone
                     /* Affecte les étudiants sur la même ligne et les lignes adjacentes */
@@ -198,7 +205,7 @@ void rafraichirJeu(Jeu* jeu){
             default : // Tourelles à comportement "classiques" dont B (Bouclier mais ses dégâts sont nuls)
                 char frappeTourelled = 'n';
                 while (etu != NULL && frappeTourelled == 'n'){
-                    if (etu->ligne == barney->ligne && jeu->tour == etu->tour){
+                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0){
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
@@ -220,26 +227,27 @@ void rafraichirJeu(Jeu* jeu){
                             }       
     
                             /* Libération de mémoire */
-                            Etudiant* q = etu;
+                            Etudiant* etu_mort = etu;
                             etu = etu->next;
-                            if (etu != NULL){
-                                free(q);
-                            }
-                            continue; 
+                            free(etu_mort);
+                            continue;
+                        } 
+                        else {
+                            etu_prec = etu;
+                            etu = etu->next;
                         }
-    
+                    } 
+                    else {
+                        etu_prec = etu;
+                        etu = etu->next;
                     }
-                    etu_prec = etu;
-    
-                    etu = etu->next;
                 }
-                barney = barney->next;
+                break;
             }
-            jeu->combo ++;
-            }
-        }
+        jeu->combo++;
+        barney = barney->next;
     }
-
+}
 
 /* Ajoute une tourelle dans le jeu en fonction de la ligne et de la position */
 void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type){
@@ -275,7 +283,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             barney->degats = 5;
             barney->prix = 100;
             break;
-        case 's': // Slow (Ralentissement)
+        case 's': // Slow (Ralentissement) adjacente transperçante
             barney->pointsDeVie = 2;
             barney->degats = 1;
             barney->prix = 120;
