@@ -69,23 +69,26 @@ int main(int argc, char* argv[]) {
         renduActuelJeu_v(jeu, rendu);
         sleep(1);
 
+        // Sauvegarde
+        printf("Si vous voulez sauvegarder l'avancement au cours de la partie, entrez S pour sauvegarder !\n");
+        int sauver = 0;
         while(jeu->fin == 1){
-            // Sauvegarde ? + vidage du buffer
-            printf("Voulez-vous sauvegarder la partie ? (s pour sauvegarder, autre pour continuer)\n");
-            char reponse;
-            scanf(" %c", &reponse);
-            if (reponse == 's'){
-                sauvegarderPartie(jeu, "sauvegarde.txt");
+            questionTourelle(jeu, &sauver);
+            if (sauver == 1){
+                SDL_DestroyRenderer(rendu);
+                SDL_DestroyWindow(window);
+                SDL_Quit();
+                printf("Sauvegarde effectuée -> Fin du programme.\n");
                 return 0;
             }
-            while (getchar() != '\n');
-
-            questionTourelle(jeu);
+            
+            //printf("Appel à rafraichirJeu\n");
             rafraichirJeu(jeu);
+            //printf("Appel à renduActuelJeu_v\n");
             renduActuelJeu_v(jeu, rendu);
+            //printf("Appel à renduActuelJeu\n");
             renduActuelJeu(jeu);
-            sleep(0.5);
- 
+            SDL_Delay(500); // Pause de 500 millisecondes
         }
 
         /* Libération de la mémoire, fermeture des fenêtres */
