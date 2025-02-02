@@ -285,7 +285,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
         case 's': // Slow (Ralentissement) adjacente transperçante
             barney->pointsDeVie = 2;
             barney->degats = 1;
-            barney->prix = 120;
+            barney->prix = 400;
             break;
         case 'x': // Explosive adjacente
             barney->pointsDeVie = 2;
