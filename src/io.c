@@ -305,24 +305,17 @@ int chargerFichierSave(Jeu* jeu, const char* srcFichier){
 void viderBuffer(){
     int videBuffer;
     while ((videBuffer = getchar()) != '\n' && videBuffer != EOF);
-
 }
 
 void questionTourelle(Jeu* jeu, int* sauver){
     int condition = 1;
     int ligne, position;
     char type;
-    // On n'en sort que si le joueur ne veut pas construire de tourelle (Sa réponse est 'N').
+    // On n'en sort que si le joueur ne veut pas construire de tourelle ou s'il veut sauvergarder (Sa réponse est 'N'/'n'/'S').
     while (condition){ 
-        
-        /*Efface + retour ligne */
-        printf("\033[2J\033[0;0H");
-        renduActuelJeu(jeu);
-        printf("t (Tourelle classique : 3PV, 1ATQ, Prix : 150) \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120) \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200) \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
-
         printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
         char reponseTourelle;
-        scanf("%c", &reponseTourelle);
+        scanf(" %c", &reponseTourelle);
         viderBuffer();
 
         if (reponseTourelle == 'N' || reponseTourelle == 'n'){
@@ -337,7 +330,31 @@ void questionTourelle(Jeu* jeu, int* sauver){
             return;
         }
 
-        else {  
+        else {
+            // Récupération du type avec garde fous 
+            printf("Choisissez un type de tourelle entre :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
+            scanf("%c", &type);
+            viderBuffer();
+            while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
+                printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
+                scanf(" %c", &type);
+                viderBuffer();
+            }
+            
+            int prix = 0;
+            switch (type) {
+                case 't': prix = 150; break;
+                case 's': prix = 120; break;
+                case 'm': prix = 100; break;
+                case 'b': prix = 200; break;
+                case 'x': prix = 800; break;
+            }
+
+            if (jeu->cagnotte < prix){
+                printf("Vous n'avez pas assez d'argent pour construire une tourelle, son prix est : %d\n", prix);
+                continue;
+            } // Retour à la demande utilisateur
+
             // Récupération de la ligne avec garde fous 
             int ligneCorrecte = 0;
             while (ligneCorrecte == 0) {
@@ -368,17 +385,8 @@ void questionTourelle(Jeu* jeu, int* sauver){
                     posCorrecte = 1;
                 
             }
-
-            // Récupération du type avec garde fous 
-            printf("Choisissez un type de tourelle : \n");
-            scanf(" %c", &type);
-            viderBuffer();
-            while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
-                printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150) \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120) \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200) \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
-                scanf(" %c", &type);
-                viderBuffer();
-            }
             ajoutTourelle(jeu, ligne, position, type);
         }
     }
 }
+
