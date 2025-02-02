@@ -43,11 +43,10 @@ void rafraichirJeu(Jeu* jeu){
         etu = etu->next;
     }
 
-    /* Incrémentation du tour si les ennemis du tour sont morts */
-    if (nbEtudiantsTour == 0 && finTour){
-        printf("Incrémentation du tour\n");
-        jeu->tour += 1;
-    }
+    /* Incrémentation du tour */
+    printf("Incrémentation du tour\n");
+    jeu->tour += 1;
+
 
     /* Faire avancer les étudiants */
     etu = jeu->etudiants;
