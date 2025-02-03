@@ -54,3 +54,6 @@ colossal:
 
 meatshield:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/meatshield.txt
+
+survie:
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/survie.txt
