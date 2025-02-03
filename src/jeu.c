@@ -28,7 +28,7 @@ void rafraichirJeu(Jeu* jeu){
     }
 
     Etudiant* etu = jeu->etudiants;
-    int finTour = 1;
+    //int finTour = 1;
     int nbEtudiantsTour = 0;
 
     /* Les étudiants sont-ils tous éliminés ? */
@@ -36,9 +36,12 @@ void rafraichirJeu(Jeu* jeu){
         // printf("%d - %d\n", etu->tour, jeu->tour);
         if (etu->tour == jeu->tour){
             nbEtudiantsTour += 1;
+
+            /*
             if (etu->pointsDeVie > 0){
                 finTour = 0;
             }
+            */
         }
         etu = etu->next;
     }

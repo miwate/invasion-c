@@ -78,8 +78,8 @@ int main(int argc, char* argv[]) {
             SDL_Delay(2500);
 
             prevualisationVagues_v(jeu, rendu);
-            dialogue(rendu, "me_sleepy", "Dev : Le programme s'arrête si tu perds.", police);
-            printf("Dev : Je suis celui qui dort en cours.\n");
+            dialogue(rendu, "me_sleepy", "Dev : Le programme crash si tu perds.", police);
+            printf("Dev : Le programme crash si tu perds.\n");
             SDL_Delay(2500);
         }
         
@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
             renduActuelJeu(jeu);
             // SDL_Delay(500); // Pause de 500 millisecondes
 
-            SDL_Delay(30);
+            SDL_Delay(1000);
         }
 
         if (dialogueSkip == 1){

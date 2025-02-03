@@ -257,7 +257,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
     /* Actualisation des textures pour les étudiants */
     while (etu != NULL) {
     
-        if (etu->tour == jeu->tour){
+        if (etu->tour <= jeu->tour){
  
             int x = (etu->position-1) * largeurCase;
             int y = (etu->ligne-1) * hauteurCase;
