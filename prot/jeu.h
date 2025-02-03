@@ -29,6 +29,7 @@
         struct etudiant* next_line;
         struct etudiant* prev_line;
         char type;
+        char touche;
     } Etudiant;
 
     typedef struct jeu{

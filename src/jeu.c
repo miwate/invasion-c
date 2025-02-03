@@ -58,6 +58,10 @@ void rafraichirJeu(Jeu* jeu){
     Tourelle* barney_avant = NULL;
 
     while (etu != NULL){
+
+        /* Ça sert pour afficher le sang s'il est touché */
+        etu->touche = 'n';
+
         //printf("etu->tour %d\n", etu->tour);
         if (etu->tour <= jeu->tour) {
             etu->position -= etu->vitesse;
@@ -175,6 +179,7 @@ void rafraichirJeu(Jeu* jeu){
                         
                         printf("BOOM !\n");
                         etu->pointsDeVie -= 5;
+                        etu->touche = 'o';
                         
 
                         if (etu->pointsDeVie <= 0){
@@ -219,6 +224,8 @@ void rafraichirJeu(Jeu* jeu){
                         // Baisse de vitesse + dégâts infligés + score augmenté
                         etu->vitesse = 1;
                         etu->pointsDeVie -= barney->degats;
+
+                        etu->touche = 'o';
                         jeu->score += jeu->multiplicateurScore * abs(etu->degats);
 
                         // La tourelle a frappé
@@ -268,6 +275,8 @@ void rafraichirJeu(Jeu* jeu){
                             if (etu->ligne == ligneCible && (etu->position <= SPAWN_DISTANCE) && (etu->position >= 0) && etu->tour <= jeu->tour){
                                 /* Dégâts + Augmentation du score*/
                                 etu->pointsDeVie -= barney->degats;
+                                etu->touche = 'o';
+
                                 jeu->score += jeu->multiplicateurScore * barney->degats;
     
                                 /* Ennemi mort */
@@ -309,6 +318,8 @@ void rafraichirJeu(Jeu* jeu){
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
                         etu->pointsDeVie -= barney->degats;
+                        etu->touche = 'o';
+
                         frappeTourelled = 'o';
                         /* Cas : zombie mort (parce que ça me met mal à l'aise de dire étudiant mort) */
                         if (etu->pointsDeVie <= 0){
@@ -528,6 +539,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     etu->position = SPAWN_DISTANCE+1;
     etu->tour = _tour;
     etu->vitesse = 1;
+    etu->touche = 'n';
 
     /* Met à jour les caractéristiques d'un étudiant selon son type */
     if (_type == 'Z') { // Z pour Zombie
