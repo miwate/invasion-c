@@ -85,6 +85,7 @@ void rafraichirJeu(Jeu* jeu){
                     if (etu->pointsDeVie <= 2){
                         etu->type = 'D';
                         etu->degats = 3;
+                        etu->vitesse = 2;
                     }
             }
 
