@@ -247,9 +247,11 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             Etudiant* etu = jeu->etudiants;
             char uneFois = 'n';
             while (etu != NULL && uneFois == 'n'){
-                if (etu->ligne == barney->ligne && (etu-> type == 't' || etu->type == 's')){
-                    afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
-                    uneFois = 'o';
+                if (etu->ligne == barney->ligne){
+                    if (barney->type == 't' || barney->type == 's') {
+                        afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
+                        uneFois = 'o';
+                    }
                 }
                 etu = etu->next;
             }
@@ -282,7 +284,19 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
 
             afficherEtudiant(rendu, etudiantTex, pvTexture, x, y, largeurCase, hauteurCase, etu->pointsDeVie);
-
+            
+            /* Animation enfin presque */
+            Tourelle* barney = jeu->tourelles;
+            char uneFoisB = 'n';
+            while (barney != NULL && uneFoisB == 'n'){
+                if (barney->ligne == etu->ligne && etu->touche == 'o'){
+                    if (barney->type == 't' || barney->type == 's') {
+                        afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
+                        uneFoisB = 'o';
+                    }
+                }
+                barney = barney->next;
+            }
 
         }
         etu = etu->next;
