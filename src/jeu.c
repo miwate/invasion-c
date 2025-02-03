@@ -77,12 +77,12 @@ void rafraichirJeu(Jeu* jeu){
                 /* ALIEN */
                 case 'A':
                     /* Il devient invisible sauf ses mains et ses antennes quand PV <= 3*/
-                    if (etu->pointsDeVie <= 2) etu->type = 'E';
+                    if (etu->pointsDeVie <= 3) etu->type = 'E';
 
                 /* Colosse */
                 case 'C':
                     /* Si on casse son mur adoré, il s'énerve beaucoup !! */
-                    if (etu->pointsDeVie <= 2){
+                    if (etu->pointsDeVie <= 6){
                         etu->type = 'D';
                         etu->degats = 3;
                         etu->vitesse = 2;
