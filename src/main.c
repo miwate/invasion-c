@@ -110,8 +110,8 @@ int main(int argc, char* argv[]) {
             renduActuelJeu_v(jeu, rendu);
             
             if (sauver == 1){
-                SDL_DestroyRenderer(rendu);
-                SDL_DestroyWindow(window);
+                if (rendu) SDL_DestroyRenderer(rendu);
+                if (window) SDL_DestroyWindow(window);
                 SDL_Quit();
                 printf("Sauvegarde effectuée -> Fin du programme.\n");
                 return 0;
@@ -139,8 +139,8 @@ int main(int argc, char* argv[]) {
         }
 
         /* Libération de la mémoire, fermeture des fenêtres */
-        SDL_DestroyRenderer(rendu);
-        SDL_DestroyWindow(window);
+        if (rendu) SDL_DestroyRenderer(rendu);
+        if (window) SDL_DestroyWindow(window);
         SDL_Quit();
         TTF_CloseFont(police);
         TTF_Quit();

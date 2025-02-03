@@ -68,7 +68,7 @@ void rafraichirJeu(Jeu* jeu){
     /* Faire tirer les Barney (tourelles pour rappel)*/
     Tourelle* barney = jeu->tourelles;
 
-    while (barney != NULL){
+    while (barney != NULL && jeu->fin == 1){
         
         etu = jeu->etudiants;
         Etudiant* etu_prec = NULL;
@@ -315,7 +315,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
     jeu->multiplicateurScore /= (1 + 0.5 * barney->degats + 0.25 * barney->pointsDeVie);
     
     /* Multiplicateur min */
-    if (jeu->multiplicateurScore < 0.1) jeu->multiplicateurScore = 0.1;
+    if (jeu->multiplicateurScore < 1) jeu->multiplicateurScore = 1;
 
 
     /* Cas : première tourelle */
