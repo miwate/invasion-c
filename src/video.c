@@ -247,7 +247,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             Etudiant* etu = jeu->etudiants;
             char uneFois = 'n';
             while (etu != NULL && uneFois == 'n'){
-                if (etu->ligne == barney->ligne){
+                if (etu->ligne == barney->ligne && (etu-> type == 't' || etu->type == 's')){
                     afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                     uneFois = 'o';
                 }
