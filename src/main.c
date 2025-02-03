@@ -23,10 +23,12 @@ void forceTourellesDEMO(Jeu* jeu){
 
     forceTourelle(jeu, 1,2,'t');
     forceTourelle(jeu, 2,1,'t');
-    forceTourelle(jeu, 2,4,'m');
+    forceTourelle(jeu, 2,7,'m');
+    forceTourelle(jeu, 4,7,'m');
     forceTourelle(jeu, 5,3,'s');
     forceTourelle(jeu, 6,5,'s');  
-    forceTourelle(jeu, 1,5,'b');    
+    forceTourelle(jeu, 1,5,'b'); 
+    forceTourelle(jeu, 5,5,'b');    
     forceTourelle(jeu, 3,5,'b');    
 }
 
@@ -73,13 +75,18 @@ int main(int argc, char* argv[]) {
 
     /* POur tous les fichiers entrées en arguments */
     for (int i = 1; i < argc; i++){
-
+        
         /* INitialisation du jeu*/
         initJeu(jeu);
 
         /* Chargement du niveau */
         printf("Chargement du niveau : %s\n", argv[i]);
         chargerFichier(jeu, argv[i]);
+
+        /* DEMO ? */
+        int DEMO = 0;
+        if (jeu->cagnotte < 0) DEMO = 1;
+        jeu->cagnotte = 9999;
 
         /* Prévisualisation des vagues */
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
@@ -88,7 +95,7 @@ int main(int argc, char* argv[]) {
         printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         /* Partie dialogue | 1 normal, 0 pour skip */
-        int dialogueSkip = 0;
+        int dialogueSkip = 1;
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
             printf("Dev : Salut !\n");
@@ -117,17 +124,17 @@ int main(int argc, char* argv[]) {
         SDL_Event event;
         int enMarche = 1;
 
-        forceTourellesDEMO(jeu);
+        if (DEMO == 1) forceTourellesDEMO(jeu);
 
         while(jeu->fin == 1 && enMarche){
             SDL_PollEvent(&event);
 
-            rafraichirJeu(jeu);
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
+            rafraichirJeu(jeu);
 
 
-            //questionTourelle(jeu, &sauver);
+            if (DEMO != 1) questionTourelle(jeu, &sauver);
                 
             
             if (sauver == 1){
@@ -138,7 +145,7 @@ int main(int argc, char* argv[]) {
                 return 0;
             }
                         
-            SDL_Delay(200);
+            SDL_Delay(1500);
         }
 
         if (dialogueSkip == 1){
@@ -152,9 +159,9 @@ int main(int argc, char* argv[]) {
             else {
                 sprintf(texte, "Dev : %s, tu n'as pas perdu. On se reverra.", bravo);
             }
-            dialogue(rendu, "me_sleepy", texte, police);
+            dialogue(rendu, "me_zany", texte, police);
             printf("%s !\n", texte);
-            SDL_Delay(3000);
+            SDL_Delay(5000);
         }
 
         /* Libération de la mémoire, fermeture des fenêtres */
