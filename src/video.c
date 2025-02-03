@@ -243,6 +243,17 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             SDL_Rect pointRect = {x, y, largeurCase / 2, hauteurCase};
             SDL_RenderCopy(rendu, pvTexture, NULL, &pointRect);
 
+            /* Animation enfin presque */
+            Etudiant* etu = jeu->etudiants;
+            char uneFois = 'n';
+            while (etu != NULL && uneFois == 'n'){
+                if (etu->ligne == barney->ligne){
+                    afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
+                    uneFois = 'o';
+                }
+                etu = etu->next;
+            }
+
             // Libération mémoire - peut-être pas nécessaire vu que la boucle de texture pour les étudiants marche sans libérer
             SDL_DestroyTexture(tourelleTexture);
             SDL_DestroyTexture(pvTexture);
