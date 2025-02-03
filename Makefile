@@ -32,6 +32,10 @@ clean:
 cleanAll: clean
 	rm -f $(BUILD_DIR)/$(TARGET)
 
+# Exécution de la démo
+demo : 
+	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/demo.txt
+
 # Exécution avec un fichier spécifique
 facile:
 	./$(BUILD_DIR)/$(TARGET) $(LEVELS_DIR)/facile.txt

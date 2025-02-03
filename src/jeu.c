@@ -91,7 +91,13 @@ void rafraichirJeu(Jeu* jeu){
                 
                 /* Roi */
                 case 'R':
-                    /* */
+                    /*LE roi est presque mort vive le nouveau presque roi */
+                    if (etu->pointsDeVie <= 3) {
+                        etu->type = 'O';
+                        etu->degats = 0;
+                        etu->vitesse = 0;
+                        etu->pointsDeVie = 9;
+                    }
             }
 
             /* Barney notre héros national bloque les étudiants */
