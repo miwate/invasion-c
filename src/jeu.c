@@ -86,6 +86,18 @@ void rafraichirJeu(Jeu* jeu){
                 barney_avant = barney;
                 barney = barney->next;
             }
+
+            /* Eviter overlap des étu ou dépassement */
+            Etudiant* etuTemp = jeu->etudiants;
+            while (etuTemp != NULL){
+                if (etuTemp!=etu && etuTemp->ligne==etu->ligne && etu->tour>etuTemp->tour) {
+                    if (etuTemp->position > etu->position) {
+                        etu->position = etuTemp->position+1;
+                    }
+                }
+                etuTemp = etuTemp->next;
+            }
+            
             
         }
         /* FIN de la partie ? */
@@ -384,7 +396,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
 
     etu->type = _type;
     etu->ligne = _ligne;
-    etu->position = SPAWN_DISTANCE;
+    etu->position = SPAWN_DISTANCE+1;
     etu->tour = _tour;
     etu->vitesse = 1;
 
