@@ -91,7 +91,7 @@ void rafraichirJeu(Jeu* jeu){
             Etudiant* etuTemp = jeu->etudiants;
             while (etuTemp != NULL){
                 if (etuTemp!=etu && etuTemp->ligne==etu->ligne && etu->tour>etuTemp->tour) {
-                    if (etuTemp->position > etu->position) {
+                    if (etuTemp->position >= etu->position) {
                         etu->position = etuTemp->position+1;
                     }
                 }
