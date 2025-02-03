@@ -70,8 +70,9 @@ void rafraichirJeu(Jeu* jeu){
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
                     if (jeu->tour % 7 == 0) {
-                        if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
-                        if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+                        printf("heal");
+                        //if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
+                        //if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
                     }
 
                 /* ALIEN */
@@ -115,7 +116,7 @@ void rafraichirJeu(Jeu* jeu){
                                 barney_avant->next = barney->next;
                             }
 
-                            free(barney);
+                            if (barney) free(barney);
                             break;
                         }
                     }
@@ -183,7 +184,7 @@ void rafraichirJeu(Jeu* jeu){
                             // Mort de l'ennemi et libération de mémoire
                             Etudiant* ennemi_mort = etu;
                             etu = etu->next;
-                            free(ennemi_mort);
+                            if (ennemi_mort) free(ennemi_mort);
                             continue;
                         }
                         else {
@@ -196,11 +197,11 @@ void rafraichirJeu(Jeu* jeu){
                 if (explosion =='o'){
                     barney->pointsDeVie = 0;
 
-                    /*Libération de mémoire
+                    /*Libération de mémoire */
                     Tourelle* mineExplosee = barney;
                     barney = barney->next;
-                    free(mineExplosee);
-                    */
+                    if (mineExplosee) free(mineExplosee);
+                    
                     continue;
                 }
                 break;
