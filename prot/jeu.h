@@ -66,6 +66,9 @@
     /* Ajoute une tourelle dans la file */
     void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type);
 
+    /* pour la démo*/
+    void forceTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type);
+
     /* Affiche l'état actuel du jeu (tourelles + étudiants)*/
     void renduActuelJeu(Jeu* jeu);
 
@@ -90,5 +93,6 @@
     
     /* Trie les 10 meilleurs scores */
     void triScores(const char* _fichierDest);
+
 
 #endif

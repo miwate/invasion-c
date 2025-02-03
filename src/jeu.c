@@ -66,7 +66,7 @@ void rafraichirJeu(Jeu* jeu){
             while (barney != NULL){
                 if (barney->ligne == etu->ligne){
                     if (etu->position <= barney->position){
-                        etu->position  = barney->position+1;
+                        etu->position  = barney->position;
                         barney->pointsDeVie -= etu->degats;
 
                         if (barney->pointsDeVie <= 0){
@@ -104,6 +104,7 @@ void rafraichirJeu(Jeu* jeu){
         if (etu->position < 0){
             //printf("FIn\n");
             jeu->fin = -1;
+            return;
         }
         etu = etu->next;
     }
@@ -354,6 +355,81 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
     barney->next = NULL;
 
     
+    /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
+    jeu->multiplicateurScore /= (1 + 0.5 * barney->degats + 0.25 * barney->pointsDeVie);
+    
+    /* Multiplicateur min */
+    if (jeu->multiplicateurScore < 1) jeu->multiplicateurScore = 1;
+
+
+    /* Cas : première tourelle */
+    if (jeu->tourelles == NULL){
+        jeu->tourelles = barney;
+    }
+
+    /* Cas : il y a déjà des tourelles, donc on met la tourelle en fin de liste */
+    else {
+        Tourelle* precedent = jeu->tourelles;
+
+        while (precedent->next != NULL){
+            precedent = precedent->next;
+        }
+        precedent->next = barney;
+
+    }
+
+}
+
+/* Ajoute une tourelle dans le jeu sans cagnotte, force pour la démo*/
+void forceTourelle(Jeu* jeu, const int _ligne, const int _position, const char _type){
+
+    /* Barney pour le nom générique des tourelles en référence à Half life (côté sympa des tourelles)*/
+    Tourelle* barney = malloc(sizeof(Tourelle));
+
+    if (barney == NULL){
+        printf("Impossible d'ajouter la tourelle %d %c.\n", _ligne, _type);
+        return;
+    }
+
+    barney->type = _type;
+    barney->ligne = _ligne;
+    barney->position = _position;
+    barney->next = NULL;
+
+    // Gros changements apportés ici pour simplifier les cas
+    /* Affectation des stats */
+    switch (_type) {
+        case 't': // Tourelle classique
+            barney->pointsDeVie = 3;
+            barney->degats = 1;
+            barney->prix = 150;
+            break;
+        case 'b': // Bouclier
+            barney->pointsDeVie = 6;
+            barney->degats = 0;
+            barney->prix = 200;
+            break;
+        case 'm': // Mine Explosive
+            barney->pointsDeVie = 1;
+            barney->degats = 5;
+            barney->prix = 100;
+            break;
+        case 's': // Slow (Ralentissement) adjacente transperçante
+            barney->pointsDeVie = 2;
+            barney->degats = 1;
+            barney->prix = 400;
+            break;
+        case 'x': // Explosive adjacente
+            barney->pointsDeVie = 2;
+            barney->degats = 4;
+            barney->prix = 800;
+            break;
+        default:
+            printf("Type de tourelle inconnu : %c\n", _type);
+            free(barney);
+            return;
+    }
+
     /* Mise à jour du multiplicateur de score en fonction des Barney ajoutés (aussi en fonction des étudiants) */
     jeu->multiplicateurScore /= (1 + 0.5 * barney->degats + 0.25 * barney->pointsDeVie);
     
