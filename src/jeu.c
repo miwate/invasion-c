@@ -79,6 +79,11 @@ void rafraichirJeu(Jeu* jeu){
                         etu->position  = barney->position;
                         barney->pointsDeVie -= etu->degats;
 
+                        /* MIne? */
+                        if (barney->type == 'm'){
+                            etu->pointsDeVie -= 5;
+                        }
+
                         if (barney->pointsDeVie <= 0){
                             /* SUpprimer barney*/
                             if (barney_avant == NULL){
@@ -134,13 +139,14 @@ void rafraichirJeu(Jeu* jeu){
                 char explosion='n';
                 // Etudiant sur la mine (même ligne et position)
                 while (etu != NULL){
-                    if (etu->ligne == barney->ligne && etu->position == barney->position && etu->tour <= jeu->tour && etu->tour <= jeu->tour){
+                    if (etu->ligne == barney->ligne && etu->position <= barney->position && etu->tour <= jeu->tour){
                         // Explosion 
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         // Dégâts transférés à l'étudiant
-                        /* Pas ici parce que c'est une mine
-                        etu->pointsDeVie -= barney->degats;
-                        */
+                        
+                        printf("BOOM !\n");
+                        etu->pointsDeVie -= 5;
+                        
 
                         if (etu->pointsDeVie <= 0){
                             // Gain d'argent 
@@ -168,10 +174,11 @@ void rafraichirJeu(Jeu* jeu){
                 if (explosion =='o'){
                     barney->pointsDeVie = 0;
 
-                    // Libération de mémoire
+                    /*Libération de mémoire
                     Tourelle* mineExplosee = barney;
                     barney = barney->next;
                     free(mineExplosee);
+                    */
                     continue;
                 }
                 break;
@@ -338,7 +345,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             break;
         case 'm': // Mine Explosive
             barney->pointsDeVie = 1;
-            barney->degats = 5;
+            barney->degats = 0;
             barney->prix = 100;
             break;
         case 's': // Slow (Ralentissement) adjacente transperçante
@@ -423,7 +430,7 @@ void forceTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             break;
         case 'm': // Mine Explosive
             barney->pointsDeVie = 1;
-            barney->degats = 5;
+            barney->degats = 0;
             barney->prix = 100;
             break;
         case 's': // Slow (Ralentissement) adjacente transperçante
