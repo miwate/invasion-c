@@ -37,4 +37,7 @@
     /* Affiche boîte de dialogue avec texte et personnage */
     void dialogue(SDL_Renderer* rendu, const char* personnage, const char* texte, TTF_Font* police);
 
+    /* Supperpose une image pour un effet visuel*/
+    void afficheEffet_v(SDL_Renderer* rendu, const char _effet[], int x, int y, int largeurCase, int hauteurCase);
+
 #endif

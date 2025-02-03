@@ -31,7 +31,7 @@ SDL_Texture* chargerTexture(const char* _fichier, SDL_Renderer* rendu) {
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(rendu, tex);
-    SDL_FreeSurface(tex);
+    if (tex) SDL_FreeSurface(tex);
 
     if (!texture) {
         printf("Erreur création de texture\n");
@@ -120,7 +120,6 @@ void afficherEtudiant(SDL_Renderer* rendu, SDL_Texture* etudiantTexture, SDL_Tex
     }
     /* LIbération de la mémoire */
     SDL_DestroyTexture(etudiantTexture);
-
 
 }
 
@@ -316,7 +315,7 @@ void dialogue(SDL_Renderer* rendu, const char* personnage, const char* texte, TT
     SDL_RenderCopy(rendu, textureTexte, NULL, &texteRect);
 
     /* LIbération mémoire */
-    SDL_FreeSurface(surfaceTexte);
+    if (surfaceTexte) SDL_FreeSurface(surfaceTexte);
     SDL_DestroyTexture(textureTexte);
     SDL_DestroyTexture(persoTexture);
 
@@ -324,3 +323,15 @@ void dialogue(SDL_Renderer* rendu, const char* personnage, const char* texte, TT
     SDL_RenderPresent(rendu);
 }
 
+/* Superpose une image pour un effet visuel */
+void afficheEffet_v(SDL_Renderer* rendu, const char _effet[], int x, int y, int largeurCase, int hauteurCase) {
+    SDL_Rect rect = {x, y, largeurCase, hauteurCase};
+    SDL_Texture* effetTexture = chargerTexture(_effet, rendu);
+
+    /* Affichage */
+    SDL_RenderCopy(rendu, effetTexture, NULL, &rect);
+
+    /* LIbération de la mémoire */
+    SDL_DestroyTexture(effetTexture);
+
+}
