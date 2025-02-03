@@ -1,4 +1,5 @@
 #include "../prot/jeu.h"
+#include "../prot/video.h"
 
 /* -- Ce fichier contient les fonctions nécessaires pour le bon déroulement du jeu -- */
 /* S'il y a des règles à changer, c'est ici */
@@ -70,6 +71,19 @@ void rafraichirJeu(Jeu* jeu){
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
                     if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                     if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+
+                /* ALIEN */
+                case 'A':
+                    /* Il devient invisible sauf ses mains et ses antennes quand PV <= 3*/
+                    if (etu->pointsDeVie <= 2) etu->type = 'E';
+
+                /* Colosse */
+                case 'C':
+                    /* Si on casse son mur adoré, il s'énerve beaucoup !! */
+                    if (etu->pointsDeVie <= 2){
+                        etu->type = 'D';
+                        etu->degats = 3;
+                    }
             }
 
             /* Barney notre héros national bloque les étudiants */
@@ -270,7 +284,11 @@ void rafraichirJeu(Jeu* jeu){
             default : // Tourelles à comportement "classiques" dont B (Bouclier mais ses dégâts sont nuls)
                 char frappeTourelled = 'n';
                 while (etu != NULL && frappeTourelled == 'n'){
-                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0 && etu->tour <= jeu->tour){
+                    
+                    if (etu->ligne == barney->ligne && etu->position >= barney->position && etu->tour <= jeu->tour){
+                    //if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position > 0 && etu->tour <= jeu->tour){
+                        
+                        printf("la");
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
@@ -360,13 +378,13 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             break;
         default:
             printf("Type de tourelle inconnu : %c\n", _type);
-            free(barney);
+            if (barney) free(barney);
             return;
     }
 
     if (barney->prix > jeu->cagnotte){
         printf("Cagnotte insuffisante !\n");
-        free(barney);
+        if (barney) free(barney);
         return;
     }
     jeu->cagnotte -= barney->prix;
@@ -445,7 +463,7 @@ void forceTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             break;
         default:
             printf("Type de tourelle inconnu : %c\n", _type);
-            free(barney);
+            if (barney) free(barney);
             return;
     }
 
@@ -509,7 +527,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     else if (_type == 'C'){ // C pour colosse
         etu->pointsDeVie = 9;
         etu->vitesse = 1;
-        etu->degats = 3;
+        etu->degats = 1;
     }
     else if (_type == 'M'){ // M pour Medic
         etu->pointsDeVie = 8;
