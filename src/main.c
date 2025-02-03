@@ -21,6 +21,7 @@ void forceTourellesDEMO(Jeu* jeu){
     forceTourelle(jeu, 7,1,'t');
     forceTourelle(jeu, 7,1,'t');
 
+    forceTourelle(jeu, 1,2,'t');
     forceTourelle(jeu, 2,4,'m');
     forceTourelle(jeu, 5,3,'s');
     forceTourelle(jeu, 6,5,'s');  
@@ -86,7 +87,7 @@ int main(int argc, char* argv[]) {
         printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         /* Partie dialogue | 1 normal, 0 pour skip */
-        int dialogueSkip = 1;
+        int dialogueSkip = 0;
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
             printf("Dev : Salut !\n");
@@ -136,7 +137,7 @@ int main(int argc, char* argv[]) {
                 return 0;
             }
                         
-            SDL_Delay(750);
+            SDL_Delay(200);
         }
 
         if (dialogueSkip == 1){

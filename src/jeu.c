@@ -67,7 +67,7 @@ void rafraichirJeu(Jeu* jeu){
 
                 /* MEDIC */
                 case 'M':
-                    /* Heal le suivant de 1 et lui-même mais les max pv est 9 */
+                    /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
                     if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                     if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
             }
@@ -111,7 +111,7 @@ void rafraichirJeu(Jeu* jeu){
             
         }
         /* FIN de la partie ? */
-        if (etu->position < 0){
+        if (etu->position <= 0){
             //printf("FIn\n");
             jeu->fin = -1;
             return;
@@ -138,7 +138,9 @@ void rafraichirJeu(Jeu* jeu){
                         // Explosion 
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         // Dégâts transférés à l'étudiant
+                        /* Pas ici parce que c'est une mine
                         etu->pointsDeVie -= barney->degats;
+                        */
 
                         if (etu->pointsDeVie <= 0){
                             // Gain d'argent 
