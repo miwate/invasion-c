@@ -190,7 +190,7 @@ void chargerFichier(Jeu* jeu, const char* _niveau) {
 /* Choisit un mot au hasard pour féliciter/dire dommage le joueur à la fin d'une partie */
 char* bravoHasard(int _codeFin){
     /* Liste des mots */
-    char* bravo[] = {"Bravo", "Félicitations", "Hourra", "Excellent", "Parfait", "Dommage", "Malheureusement", "Tristesse", "Déception"};
+    char* bravo[] = {"Bravo", "FELICITATIONS", "Hourra", "Excellent", "Parfait", "Dommage", "Malheureusement", "Tristesse", "DECEPTION"};
     
     int i = 0, j = 5;
     if (_codeFin == -1){
@@ -441,7 +441,7 @@ void triScores(const char* _fichierDest) {
     printf("\tTableau des scores\n");
     for (int i = 0; i < 10 && i < cpt; i++) {
         fprintf(fichier, "%s %d\n", scores[i].nom, scores[i].score);
-        printf("%d |\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
+        printf("%d\t|\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
     }
     fclose(fichier);
 }

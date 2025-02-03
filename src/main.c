@@ -85,8 +85,8 @@ int main(int argc, char* argv[]) {
         prevualisationVagues_v(jeu, rendu);
         printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
-        /* Partie dialogue - 1 normal, 0 pour skip */
-        int dialogueSkip = 0;
+        /* Partie dialogue | 1 normal, 0 pour skip */
+        int dialogueSkip = 1;
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
             printf("Dev : Salut !\n");
@@ -143,14 +143,17 @@ int main(int argc, char* argv[]) {
             char* bravo;
             bravo = bravoHasard(jeu->fin);
             char texte[128];
-            sprintf(texte, "Dev : %s", bravo);
+
+            if (jeu->fin == -1) {
+                sprintf(texte, "Dev : %s, tu as perdu. On se reverra.", bravo);
+            }
+            else {
+                sprintf(texte, "Dev : %s, tu n'as pas perdu. On se reverra.", bravo);
+            }
             dialogue(rendu, "me_sleepy", texte, police);
             printf("%s !\n", texte);
             SDL_Delay(3000);
         }
-
-        SDL_PollEvent(&event);
-        SDL_Delay(1500);
 
         /* Libération de la mémoire, fermeture des fenêtres */
         if (rendu) SDL_DestroyRenderer(rendu);

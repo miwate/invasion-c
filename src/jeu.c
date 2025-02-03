@@ -62,6 +62,16 @@ void rafraichirJeu(Jeu* jeu){
             etu->position -= etu->vitesse;
             barney = jeu->tourelles;
 
+            /* Actions selon l'étu */
+            switch (etu->type){
+
+                /* MEDIC */
+                case 'M':
+                    /* Heal le suivant de 1 et lui-même mais les max pv est 9 */
+                    if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
+                    if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+            }
+
             /* Barney notre héros national bloque les étudiants */
             while (barney != NULL){
                 if (barney->ligne == etu->ligne){
