@@ -69,8 +69,10 @@ void rafraichirJeu(Jeu* jeu){
                 /* MEDIC */
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
-                    if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
-                    if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+                    if (jeu->tour % 7 == 0) {
+                        if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
+                        if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+                    }
 
                 /* ALIEN */
                 case 'A':
@@ -96,6 +98,7 @@ void rafraichirJeu(Jeu* jeu){
                         /* MIne? */
                         if (barney->type == 'm'){
                             etu->pointsDeVie -= 5;
+                            barney->pointsDeVie = 0;
                         }
 
                         if (barney->pointsDeVie <= 0){
@@ -285,7 +288,8 @@ void rafraichirJeu(Jeu* jeu){
                 char frappeTourelled = 'n';
                 while (etu != NULL && frappeTourelled == 'n'){
                     
-                    if (etu->ligne == barney->ligne && etu->position >= barney->position && etu->tour <= jeu->tour){
+                    if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0 && etu->tour <= jeu->tour){
+                    //if (etu->ligne == barney->ligne && etu->position >= barney->position && etu->tour <= jeu->tour){
                     //if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position > 0 && etu->tour <= jeu->tour){
                         
                         printf("la");
