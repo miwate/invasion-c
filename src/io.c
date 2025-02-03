@@ -441,7 +441,7 @@ void triScores(const char* _fichierDest) {
     printf("\tTableau des scores\n");
     for (int i = 0; i < 10 && i < cpt; i++) {
         fprintf(fichier, "%s %d\n", scores[i].nom, scores[i].score);
-        printf("%d  |\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
+        printf("%d |\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
     }
     fclose(fichier);
 }
