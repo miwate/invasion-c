@@ -53,20 +53,51 @@ void rafraichirJeu(Jeu* jeu){
 
     /* Faire avancer les étudiants */
     etu = jeu->etudiants;
+    Tourelle* barney = jeu->tourelles;
+    Tourelle* barney_avant = NULL;
+
     while (etu != NULL){
         //printf("etu->tour %d\n", etu->tour);
         if (etu->tour <= jeu->tour) {
             etu->position -= etu->vitesse;
+            barney = jeu->tourelles;
+
+            /* Barney notre héros national bloque les étudiants */
+            while (barney != NULL){
+                if (barney->ligne == etu->ligne){
+                    if (etu->position <= barney->position){
+                        etu->position  = barney->position+1;
+                        barney->pointsDeVie -= etu->degats;
+
+                        if (barney->pointsDeVie <= 0){
+                            /* SUpprimer barney*/
+                            if (barney_avant == NULL){
+                                jeu->tourelles = barney->next;
+                            }
+                            else {
+                                barney_avant->next = barney->next;
+                            }
+
+                            free(barney);
+                            break;
+                        }
+                    }
+                }
+                barney_avant = barney;
+                barney = barney->next;
+            }
+            
         }
         /* FIN de la partie ? */
         if (etu->position < 0){
+            //printf("FIn\n");
             jeu->fin = -1;
         }
         etu = etu->next;
     }
 
     /* Faire tirer les Barney (tourelles pour rappel)*/
-    Tourelle* barney = jeu->tourelles;
+    barney = jeu->tourelles;
 
     while (barney != NULL && jeu->fin == 1){
         

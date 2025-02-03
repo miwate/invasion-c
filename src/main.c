@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
     /* CHargement police */
     TTF_Init();
-    TTF_Font* police = TTF_OpenFont("tex/montserrat.ttf", 25);
+    TTF_Font* police = TTF_OpenFont("tex/liberation.ttf", 25);
 
 
     /* JOuer la musique */
@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
         prevualisationVagues_v(jeu, rendu);
         printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
-        /* Partie dialogue */
-        int dialogueSkip = 1;
+        /* Partie dialogue - 1 normal, 0 pour skip */
+        int dialogueSkip = 0;
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
             printf("Dev : Salut !\n");
@@ -105,6 +105,14 @@ int main(int argc, char* argv[]) {
                 ajoutTourelle(jeu, 5,1,'t');
                 ajoutTourelle(jeu, 6,1,'t');
                 ajoutTourelle(jeu, 7,1,'t');
+                
+                ajoutTourelle(jeu, 1,2,'t');
+                ajoutTourelle(jeu, 2,2,'t');
+                ajoutTourelle(jeu, 3,2,'t');
+                ajoutTourelle(jeu, 4,2,'t');
+                ajoutTourelle(jeu, 5,2,'t');
+                ajoutTourelle(jeu, 6,2,'t');
+                ajoutTourelle(jeu, 7,2,'t');
 
             //questionTourelle(jeu, &sauver);
             renduActuelJeu_v(jeu, rendu);
@@ -134,7 +142,7 @@ int main(int argc, char* argv[]) {
             char texte[128];
             sprintf(texte, "Dev : %s", bravo);
             dialogue(rendu, "me_sleepy", texte, police);
-            printf("Dev : %s !\n", texte);
+            printf("%s !\n", texte);
             SDL_Delay(3000);
         }
 
