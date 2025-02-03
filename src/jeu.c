@@ -82,11 +82,15 @@ void rafraichirJeu(Jeu* jeu){
                 /* Colosse */
                 case 'C':
                     /* Si on casse son mur adoré, il s'énerve beaucoup !! */
-                    if (etu->pointsDeVie <= 6){
+                    if (etu->pointsDeVie <= 5){
                         etu->type = 'D';
                         etu->degats = 3;
                         etu->vitesse = 2;
                     }
+                
+                /* Roi */
+                case 'R':
+                    /* */
             }
 
             /* Barney notre héros national bloque les étudiants */
