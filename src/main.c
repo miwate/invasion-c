@@ -8,6 +8,26 @@
 /* --Ce fichier démarre une partie et nécessite tous les autres fichiers sources et prototypes pour fonctionner correctement --*/
 /* (C'est un fichier main) */
 
+
+/* Demo placer des tourelles sans demander */
+void forceTourellesDEMO(Jeu* jeu){
+    
+    forceTourelle(jeu, 1,1,'t');
+    forceTourelle(jeu, 2,2,'t');
+    forceTourelle(jeu, 3,1,'t');
+    forceTourelle(jeu, 4,2,'t');
+    forceTourelle(jeu, 5,1,'t');
+    forceTourelle(jeu, 6,2,'t');
+    forceTourelle(jeu, 7,1,'t');
+    forceTourelle(jeu, 7,1,'t');
+
+    forceTourelle(jeu, 2,4,'m');
+    forceTourelle(jeu, 5,3,'s');
+    forceTourelle(jeu, 6,5,'s');  
+    forceTourelle(jeu, 1,5,'b');    
+    forceTourelle(jeu, 3,5,'b');    
+}
+
 /* Lance une partie */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -78,8 +98,8 @@ int main(int argc, char* argv[]) {
             SDL_Delay(2500);
 
             prevualisationVagues_v(jeu, rendu);
-            dialogue(rendu, "me_sleepy", "Dev : Le programme crash si tu perds.", police);
-            printf("Dev : Le programme crash si tu perds.\n");
+            dialogue(rendu, "me_sleepy", "Dev : Attention ! Zzzz...", police);
+            printf("Dev : Attention ! Zzzz...\n");
             SDL_Delay(2500);
         }
         
@@ -95,27 +115,18 @@ int main(int argc, char* argv[]) {
         SDL_Event event;
         int enMarche = 1;
 
+        forceTourellesDEMO(jeu);
+
         while(jeu->fin == 1 && enMarche){
             SDL_PollEvent(&event);
 
-                ajoutTourelle(jeu, 1,1,'t');
-                ajoutTourelle(jeu, 2,1,'t');
-                ajoutTourelle(jeu, 3,1,'t');
-                ajoutTourelle(jeu, 4,1,'t');
-                ajoutTourelle(jeu, 5,1,'t');
-                ajoutTourelle(jeu, 6,1,'t');
-                ajoutTourelle(jeu, 7,1,'t');
-                
-                ajoutTourelle(jeu, 1,2,'t');
-                ajoutTourelle(jeu, 2,2,'t');
-                ajoutTourelle(jeu, 3,2,'t');
-                ajoutTourelle(jeu, 4,2,'t');
-                ajoutTourelle(jeu, 5,2,'t');
-                ajoutTourelle(jeu, 6,2,'t');
-                ajoutTourelle(jeu, 7,2,'t');
+            rafraichirJeu(jeu);
+            renduActuelJeu_v(jeu, rendu);
+            renduActuelJeu(jeu);
+
 
             //questionTourelle(jeu, &sauver);
-            renduActuelJeu_v(jeu, rendu);
+                
             
             if (sauver == 1){
                 if (rendu) SDL_DestroyRenderer(rendu);
@@ -124,16 +135,8 @@ int main(int argc, char* argv[]) {
                 printf("Sauvegarde effectuée -> Fin du programme.\n");
                 return 0;
             }
-            
-            //printf("Appel à rafraichirJeu\n");
-            rafraichirJeu(jeu);
-            //printf("Appel à renduActuelJeu_v\n");
-            renduActuelJeu_v(jeu, rendu);
-            //printf("Appel à renduActuelJeu\n");
-            renduActuelJeu(jeu);
-            // SDL_Delay(500); // Pause de 500 millisecondes
-
-            SDL_Delay(100);
+                        
+            SDL_Delay(750);
         }
 
         if (dialogueSkip == 1){
@@ -145,6 +148,9 @@ int main(int argc, char* argv[]) {
             printf("%s !\n", texte);
             SDL_Delay(3000);
         }
+
+        SDL_PollEvent(&event);
+        SDL_Delay(1500);
 
         /* Libération de la mémoire, fermeture des fenêtres */
         if (rendu) SDL_DestroyRenderer(rendu);
