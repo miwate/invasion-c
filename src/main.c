@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
             renduActuelJeu(jeu);
             // SDL_Delay(500); // Pause de 500 millisecondes
 
-            SDL_Delay(1000);
+            SDL_Delay(100);
         }
 
         if (dialogueSkip == 1){
@@ -149,6 +149,7 @@ int main(int argc, char* argv[]) {
 
     char *scoreFichier = "lb/scores.txt";
     enregistrerScore(scoreFichier, jeu->score, jeu->fin);
+    triScores(scoreFichier);
 
     /* Libération de la musique */
     Mix_FreeMusic(theme);

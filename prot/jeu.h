@@ -87,5 +87,8 @@
 
     /* VIDER LE BUFFER */
     void viderBuffer();
+    
+    /* Trie les 10 meilleurs scores */
+    void triScores(const char* _fichierDest);
 
 #endif

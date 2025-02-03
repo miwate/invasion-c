@@ -230,8 +230,6 @@ void enregistrerScore(const char* _fichierDest, int _score, int _codeFin){
     }
     fprintf(fichier, "%s\t%d\n", nom, _score);
     fclose(fichier);
-
-    printf("Score enregistré !\n");
 }
 
 void sauvegarderPartie(Jeu* jeu, const char* destFichier){
@@ -390,3 +388,60 @@ void questionTourelle(Jeu* jeu, int* sauver){
     }
 }
 
+
+typedef struct {
+    char nom[128];
+    int score;
+} Ligne;
+
+/* Trie les 10 meilleurs scores + Affiche le lb */
+void triScores(const char* _fichierDest) {
+
+    FILE* fichier = fopen(_fichierDest, "r");
+    if (fichier == NULL) {
+        return;
+    }
+
+    /* LIre les lignes */
+    Ligne scores[30];
+    char ligne[256];
+    int cpt = 0;
+    while (fgets(ligne, sizeof(ligne), fichier) && cpt < 30) {
+        if (sscanf(ligne, "%127s %d", scores[cpt].nom, &scores[cpt].score) == 2) {
+            scores[cpt].nom[strcspn(scores[cpt].nom, "\n")] = '\0';
+            cpt++;
+        }
+    }
+    fclose(fichier);
+
+    if (cpt==0) {
+        printf("Aucun score.\n");
+        return;
+    }
+
+    /* Tri insertion */
+    for (int i=1; i<cpt; i++) {
+        Ligne x = scores[i];
+        int j = i-1;
+        while (j>=0 && scores[j].score<x.score) {
+            scores[j+1] = scores[j];
+            j-=1;
+        }
+        scores[j+1] = x;
+    }
+
+    /* Réécriture du fichier scores */
+    fichier = fopen(_fichierDest, "w");
+    if (fichier == NULL) {
+        printf("Erreur : Réécriture impossible.\n");
+        return;
+    }
+
+    printf("\033[2J\033[0;0H");
+    printf("\tTableau des scores\n");
+    for (int i = 0; i < 10 && i < cpt; i++) {
+        fprintf(fichier, "%s %d\n", scores[i].nom, scores[i].score);
+        printf("%d  |\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
+    }
+    fclose(fichier);
+}
