@@ -320,7 +320,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
                         }
                     }
                 }
-                else if (barney->type == 'k' || barney->type == 'm'){
+                else if (barney->type == 'k' || barney->type == 'u'){
                     if (barney->ligne == etu->ligne && barney->position == etu->position){
                         afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
                         uneFoisB = 'o';

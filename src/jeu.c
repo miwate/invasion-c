@@ -109,7 +109,7 @@ void rafraichirJeu(Jeu* jeu){
                         barney->pointsDeVie = barney->pointsDeVie - etu->degats;
 
                         /* MIne? La mine crée un mini incendie qui fait un peu mal */
-                        if (barney->type == 'm'){
+                        if (barney->type == 'u'){
                             etu->pointsDeVie -= 5;
                             barney->type = 'k';
                             barney->pointsDeVie = 1;
@@ -188,7 +188,7 @@ void rafraichirJeu(Jeu* jeu){
         switch (barney->type){
 
             // Mine
-            case 'm': {
+            case 'u': {
                 char explosion='n';
                 // Etudiant sur la mine (même ligne et position)
                 while (etu != NULL){
@@ -407,7 +407,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             barney->degats = 0;
             barney->prix = 200;
             break;
-        case 'm': // Mine Explosive
+        case 'u': // Mine Explosive
             barney->pointsDeVie = 1;
             barney->degats = 0;
             barney->prix = 100;
@@ -492,7 +492,7 @@ void forceTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             barney->degats = 0;
             barney->prix = 200;
             break;
-        case 'm': // Mine Explosive
+        case 'u': // Mine Explosive
             barney->pointsDeVie = 1;
             barney->degats = 0;
             barney->prix = 100;
