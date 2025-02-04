@@ -258,7 +258,9 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
                 else if (barney->type == 'x'){
                     if (barney->ligne == etu->ligne || barney->ligne == etu->ligne +1 || barney->ligne == etu->ligne-1){
-                        afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
+                        if (abs(etu->position - barney->position) <= 5) {
+                            afficheEffet_v(rendu, "tex/feu_vert.png", x, y, largeurCase, hauteurCase);
+                        }
                         uneFois = 'o';
                     }
                 }
