@@ -73,10 +73,11 @@ void rafraichirJeu(Jeu* jeu){
                 /* MEDIC */
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
-                    if (jeu->tour % 7 == 0) {
+                    if (etu->pointsDeVie < 3) {
                         printf("heal");
-                        //if (etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
-                        //if (etu->pointsDeVie < 9) etu->pointsDeVie += 1;
+                        if (etu->next && etu->next->pointsDeVie > 2 && etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
+                        etu->pointsDeVie += 1;
+                        etu->type = 'N';
                     }
 
                 /* ALIEN */
