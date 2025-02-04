@@ -28,8 +28,7 @@ sudo apt install -f
 # ⚙️ Compilation
 
 Compilation à l’aide de [GCC 13.3](https://gcc.gnu.org/gcc-13/), nous compilons à l’aide d’un Makefile.
-Placez-vous au préalable dans le dossier `invasion-c`.
-
+Placez-vous au préalable dans le dossier du jeu.
 ## 📜 Makefile
 
 Permet de compiler tout à la fois, il suffit d’entrer la commande `make`.
