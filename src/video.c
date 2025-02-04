@@ -249,7 +249,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
             while (etu != NULL && uneFois == 'n'){
                 if (etu->ligne == barney->ligne){
-                    if (barney->type == 't' || barney->type == 's') {
+                    if (barney->type == 't' || barney->type == 's' || barney->type == 'x') {
                         afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                         uneFois = 'o';
                     }
