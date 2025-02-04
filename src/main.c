@@ -12,24 +12,26 @@
 /* Demo placer des tourelles sans demander */
 void forceTourellesDEMO(Jeu* jeu){
     
-    forceTourelle(jeu, 1,1,'t');
-    forceTourelle(jeu, 2,2,'t');
-    forceTourelle(jeu, 3,5,'x');
-    forceTourelle(jeu, 4,2,'t');
+    if (jeu->tour == 5) {
+    forceTourelle(jeu, 2,2,'s');
+    forceTourelle(jeu, 5,5,'x');
     forceTourelle(jeu, 5,1,'t');
     forceTourelle(jeu, 6,2,'t');
     forceTourelle(jeu, 7,1,'t');
     forceTourelle(jeu, 7,1,'t');
+    }
 
+    if (jeu->tour == 1) {
     forceTourelle(jeu, 1,2,'t');
     forceTourelle(jeu, 2,1,'t');
     forceTourelle(jeu, 2,7,'m');
     forceTourelle(jeu, 4,7,'m');
-    forceTourelle(jeu, 5,3,'s');
+    forceTourelle(jeu, 7,7,'m');
     forceTourelle(jeu, 6,5,'s');  
     forceTourelle(jeu, 1,5,'b'); 
     forceTourelle(jeu, 5,5,'b');    
     forceTourelle(jeu, 3,6,'b');
+    }
 }
 
 /* Lance une partie */
@@ -125,10 +127,11 @@ int main(int argc, char* argv[]) {
         SDL_Event event;
         int enMarche = 1;
 
-        if (DEMO == 1) forceTourellesDEMO(jeu);
-
         while(jeu->fin == 1 && enMarche){
             SDL_PollEvent(&event);
+
+            /* Démonstration */
+            if (DEMO == 1) forceTourellesDEMO(jeu);
 
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);

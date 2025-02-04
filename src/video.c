@@ -249,7 +249,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
             while (etu != NULL && uneFois == 'n'){
                 if (etu->ligne == barney->ligne){
-                    if (barney->type == 't' || barney->type == 's') {
+                    if (barney->type == 't' || barney->type == 's' || barney->type == 'x') {
                         afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                         uneFois = 'o';
                     }
@@ -297,12 +297,27 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             Tourelle* barney = jeu->tourelles;
             char uneFoisB = 'n';
             while (barney != NULL && uneFoisB == 'n'){
-                if (barney->ligne == etu->ligne && etu->touche == 'o' && jeu->tour>=etu->tour){
-                    if (barney->type == 't' || barney->type == 's' || barney->type == 'x') {
+
+                /*Affiche sang sur les zombies */
+                if (barney->type == 't' || barney->type == 's'){
+                    if (barney->ligne == etu->ligne && etu->touche == 'o' && jeu->tour>=etu->tour){
                         afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
                         uneFoisB = 'o';
                     }
                 }
+                else if (barney->type == 'x'){
+                    if (barney->ligne == etu->ligne || barney->ligne == etu->ligne +1 || barney->ligne == etu->ligne-1){
+                        afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
+                        uneFoisB = 'o';
+                    }
+                }
+                else if (barney->type == 'k' || barney->type == 'm'){
+                    if (barney->ligne == etu->ligne && barney->position == etu->position){
+                        afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
+                        uneFoisB = 'o';
+                    }
+                }
+
                 barney = barney->next;
             }
 
