@@ -14,33 +14,28 @@ void forceTourellesDEMO(Jeu* jeu){
     
     if (jeu->tour == 4) {
     forceTourelle(jeu, 2,2,'t');  
-    forceTourelle(jeu, 5,3,'x'),
+    forceTourelle(jeu, 5,6,'x');
     forceTourelle(jeu, 7,1,'t');
+    forceTourelle(jeu, 1,1,'x');
+    forceTourelle(jeu, 5,1,'t');
     }
 
     else if (jeu->tour == 8){
     forceTourelle(jeu, 2,3,'m');
-    forceTourelle(jeu, 1,2,'s');
-
     forceTourelle(jeu, 7,2,'t');
-
     forceTourelle(jeu, 3,4,'m');
     forceTourelle(jeu, 3,1,'t');
     forceTourelle(jeu, 3,2,'s');
     }
 
-    else if (jeu->tour == 11){
-    forceTourelle(jeu, 1,2,'x');
-    }
-
     else if (jeu->tour == 1) {
-    forceTourelle(jeu, 4,8,'m');
+    forceTourelle(jeu, 4,5,'m');
     forceTourelle(jeu, 2,1,'t');
     forceTourelle(jeu, 2,7,'m');
-    forceTourelle(jeu, 4,8,'m');
+    forceTourelle(jeu, 4,5,'m');
     forceTourelle(jeu, 7,7,'m');
     forceTourelle(jeu, 1,5,'t'); 
-    forceTourelle(jeu, 5,5,'b');    
+    forceTourelle(jeu, 5,7,'b');    
     forceTourelle(jeu, 3,6,'b');
     }
 }
@@ -105,10 +100,10 @@ int main(int argc, char* argv[]) {
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
         prevualisationVagues(jeu);
         prevualisationVagues_v(jeu, rendu);
-        printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
+        //printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         /* Partie dialogue | 1 normal, 0 pour skip */
-        int dialogueSkip = 1;
+        int dialogueSkip = 0;
 
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
@@ -167,6 +162,7 @@ int main(int argc, char* argv[]) {
                 return 0;
             }
                         
+            renduActuelJeu_v(jeu, rendu);
             SDL_Delay(1000);
         }
 

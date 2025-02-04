@@ -113,7 +113,19 @@ void rafraichirJeu(Jeu* jeu){
                 if (barney->ligne == etu->ligne){
 
                     if (etu->position <= barney->position){
+
                         etu->position  = barney->position;
+
+                        /* Eviter overlap des étu ou dépassement */
+                        Etudiant* etuTemp = jeu->etudiants;
+                        while (etuTemp != NULL){
+                            if (etuTemp!=etu && etuTemp->ligne==etu->ligne && etu->tour>etuTemp->tour) {
+                                if (etuTemp->position >= etu->position) {
+                                    etu->position = etuTemp->position+1;
+                                }
+                            }
+                            etuTemp = etuTemp->next;
+                        }
 
                         barney->pointsDeVie = barney->pointsDeVie - etu->degats;
 
@@ -135,7 +147,7 @@ void rafraichirJeu(Jeu* jeu){
                             barney->degats = 0;
                         }
 
-                        else if (barney->pointsDeVie <= 0){
+                        if (barney->pointsDeVie <= 0){
 
                             /* SUpprimer barney*/
                             if (barney_avant == NULL){
@@ -157,7 +169,7 @@ void rafraichirJeu(Jeu* jeu){
                 barney = barney->next;
             }
 
-            /* Eviter overlap des étu ou dépassement */
+            /* Eviter overlap des étu ou dépassement
             Etudiant* etuTemp = jeu->etudiants;
             while (etuTemp != NULL){
                 if (etuTemp!=etu && etuTemp->ligne==etu->ligne && etu->tour>etuTemp->tour) {
@@ -167,6 +179,7 @@ void rafraichirJeu(Jeu* jeu){
                 }
                 etuTemp = etuTemp->next;
             }
+            */
             
             
         }
