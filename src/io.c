@@ -1,5 +1,6 @@
 #include "../prot/jeu.h"
 #include "../prot/video.h"
+#include "../prot/replay.h"
 
 /* -- Ce fichier contient les fonctions pour les entrées/sorties (càd fichiers locaux, terminal MAIS pas la partie graphique) -- */
 /* La partie graphique ayant été ajoutée par la suite, certaines fonctions d'affichage serviront pour debug */
@@ -99,11 +100,7 @@ void renduActuelJeu(Jeu* jeu){
 
             /* Modifie les points '.' de la double liste par le type de Barney et ses pv*/
             char type[3];
-            /*
-            type[0] = barney->pointsDeVie;
-            type[1] = barney->type;
-            type[2] = '\0';
-            */
+
             snprintf(type, sizeof(type), "%d%c", barney->pointsDeVie, barney->type);
             /* Libère l'espace pour réécrire dessus*/
             // free(render[barney->ligne - 1][barney->position - 1]);
@@ -447,4 +444,43 @@ void triScores(const char* _fichierDest) {
         printf("%d\t|\t%d\t%s\n", i + 1, scores[i].score, scores[i].nom);
     }
     fclose(fichier);
+}
+
+/* Sauvegarde le replay de la partie */
+void sauvegarderReplay(const char _niveau, Replay* replay){
+    if (replay == NULL){
+        printf("Pas de replay.\n");
+        return;
+    }
+
+    FILE* fichier = fopen("replay.txt", "w");
+    if (fichier == NULL){
+        printf("Écriture imposible");
+        return;
+    }
+    fprintf(fichier, "%c\n", _niveau);
+
+    /* Parcourir le replay */
+    Replay* barney = replay;
+    while (barney != NULL){
+        fprintf(fichier, "%d %d %d %c\n", barney->tour, barney->ligne, barney->position, barney->type);
+        barney = barney->next;
+    }
+
+    /* LIbération de la mémoire */
+    barney = replay;
+    while (barney != NULL){
+        Replay* barneyEncore = barney;
+        barney = barney->next;
+        free(barneyEncore);
+    }
+
+    printf("Partie sauvegardée.\n");
+    fclose(fichier);
+
+}
+
+/* Voir un replay unfinished */
+void voirReplay(const int _fichier) {
+    return;
 }
