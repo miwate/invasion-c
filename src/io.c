@@ -447,7 +447,7 @@ void triScores(const char* _fichierDest) {
 }
 
 /* Sauvegarde le replay de la partie */
-void sauvegarderReplay(const char _niveau, Replay* replay){
+void sauvegarderReplay(const char _niveau[], Replay* replay){
     if (replay == NULL){
         printf("Pas de replay.\n");
         return;
@@ -458,7 +458,7 @@ void sauvegarderReplay(const char _niveau, Replay* replay){
         printf("Écriture imposible");
         return;
     }
-    fprintf(fichier, "%c\n", _niveau);
+    fprintf(fichier, "%s\n", _niveau);
 
     /* Parcourir le replay */
     Replay* barney = replay;
