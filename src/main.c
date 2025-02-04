@@ -32,7 +32,6 @@ void forceTourellesDEMO(Jeu* jeu){
     forceTourelle(jeu, 4,5,'m');
     forceTourelle(jeu, 2,1,'t');
     forceTourelle(jeu, 2,7,'m');
-    forceTourelle(jeu, 4,5,'m');
     forceTourelle(jeu, 7,7,'m');
     forceTourelle(jeu, 1,5,'t'); 
     forceTourelle(jeu, 5,7,'b');    
@@ -94,7 +93,7 @@ int main(int argc, char* argv[]) {
         /* DEMO ? */
         int DEMO = 0;
         if (jeu->cagnotte < 0) DEMO = 1;
-        if (jeu->cagnotte < 0) jeu->cagnotte = 9999;
+        if (jeu->cagnotte < 0) jeu->cagnotte = 10;
 
         /* Prévisualisation des vagues */
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
@@ -103,7 +102,7 @@ int main(int argc, char* argv[]) {
         //printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         /* Partie dialogue | 1 normal, 0 pour skip */
-        int dialogueSkip = 0;
+        int dialogueSkip = 1;
 
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
