@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
                 sprintf(texte, "Dev : %s, tu n'as pas perdu. On se reverra.", bravo);
             }
             dialogue(rendu, "me_zany", texte, police);
-            printf("%s !\n", texte);
+            printf("%s\n", texte);
             SDL_Delay(5000);
         }
 

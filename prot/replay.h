@@ -18,7 +18,7 @@
     extern Replay* replay;
 
     /* Sauvegarde l'entièreté de la partie */
-    void sauvegarderReplay(const char _niveau, Replay* replay);
+    void sauvegarderReplay(const char _niveau[], Replay* replay);
 
     /* Voir un replay */
     void voirReplay(const int _fichier);
