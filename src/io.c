@@ -329,12 +329,12 @@ void questionTourelle(Jeu* jeu, int* sauver){
             // Récupération du type avec garde fous 
             printf("\033[2J\033[0;0H");
 
-            printf("Choisissez un type de tourelle entre :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
+            printf("Choisissez un type de tourelle entre :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nu (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
             scanf("%c", &type);
             viderBuffer();
             while (type != 't' && type != 's' && type != 'u' && type != 'b' && type != 'x'){
                 printf("\033[2J\033[0;0H");
-                printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
+                printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nu (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
                 scanf(" %c", &type);
                 viderBuffer();
             }
