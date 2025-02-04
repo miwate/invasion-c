@@ -44,6 +44,7 @@
         int scoreMax;
         int combo;
         float multiplicateurScore;
+        char premierSang;
     } Jeu;
 
 
