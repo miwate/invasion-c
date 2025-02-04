@@ -96,6 +96,7 @@ int main(int argc, char* argv[]) {
 
         /* Partie dialogue | 1 normal, 0 pour skip */
         int dialogueSkip = 1;
+
         if (dialogueSkip == 1){
             dialogue(rendu, "me_zany", "Dev  : Salut !", police);
             printf("Dev : Salut !\n");

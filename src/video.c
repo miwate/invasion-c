@@ -246,12 +246,22 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             /* Animation enfin presque */
             Etudiant* etu = jeu->etudiants;
             char uneFois = 'n';
+
             while (etu != NULL && uneFois == 'n'){
                 if (etu->ligne == barney->ligne){
+                    /* Afficher le flash du canon */
+
                     if (barney->type == 't' || barney->type == 's') {
                         afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                         uneFois = 'o';
                     }
+
+                    /*Afficher l'explosion 
+                    else if (barney->type == 'k'){
+                        afficheEffet_v(rendu, "tex/k.png", x, y, largeurCase, hauteurCase);
+                        uneFois = 'o';
+                    }
+                    */
                 }
                 etu = etu->next;
             }
