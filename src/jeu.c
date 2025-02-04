@@ -16,6 +16,7 @@ void initJeu(Jeu* jeu){
     jeu->score = 0;
     jeu->combo = 0;
     jeu->multiplicateurScore = 1.0;
+    jeu->premierSang = 'n';
 }
 
 /* Rafraichit l'état du jeu (faire tirer les tourelles, faire avancer les ennemis)*/
@@ -128,6 +129,9 @@ void rafraichirJeu(Jeu* jeu){
                             }
 
                             if (barney) free(barney);
+                            /* Premier sang donc dialogue */
+                            if (jeu->premierSang == 'n') jeu->premierSang = 'o';
+                            
                             break;
                         }
                     }
@@ -213,6 +217,8 @@ void rafraichirJeu(Jeu* jeu){
                     Tourelle* mineExplosee = barney;
                     barney = barney->next;
                     if (mineExplosee) free(mineExplosee);
+                    /* Premier sang donc dialogue */
+                    if (jeu->premierSang == 'n') jeu->premierSang = 'o';
                     
                     continue;
                 }

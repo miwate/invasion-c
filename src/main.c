@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
         /* DEMO ? */
         int DEMO = 0;
         if (jeu->cagnotte < 0) DEMO = 1;
-        jeu->cagnotte = 9999;
+        if (jeu->cagnotte < 0) jeu->cagnotte = 9999;
 
         /* Prévisualisation des vagues */
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
@@ -135,7 +135,14 @@ int main(int argc, char* argv[]) {
 
 
             if (DEMO != 1) questionTourelle(jeu, &sauver);
-                
+
+            if (dialogueSkip == 1 && jeu->premierSang == 'o'){
+
+                dialogue(rendu, "me_sleepy", "Dev : Premier sang pour toi, attention !!", police);
+                printf("Dev : Premier sang pour toi, attention !!\n");
+                jeu->premierSang = 'f';
+                SDL_Delay(3000);
+            }
             
             if (sauver == 1){
                 if (rendu) SDL_DestroyRenderer(rendu);
@@ -145,7 +152,7 @@ int main(int argc, char* argv[]) {
                 return 0;
             }
                         
-            SDL_Delay(1500);
+            SDL_Delay(1000);
         }
 
         if (dialogueSkip == 1){
