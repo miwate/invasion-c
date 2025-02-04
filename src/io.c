@@ -310,7 +310,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
     int ligne, position;
     char type;
     // On n'en sort que si le joueur ne veut pas construire de tourelle ou s'il veut sauvergarder (Sa réponse est 'N'/'n'/'S').
-    while (condition){ 
+    while (condition){
         printf("Voulez-vous construire une tourelle ?\nN pour non, n'importe quoi d'autre si oui\n");
         char reponseTourelle;
         scanf(" %c", &reponseTourelle);
@@ -336,6 +336,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
             scanf("%c", &type);
             viderBuffer();
             while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
+                printf("\033[2J\033[0;0H");
                 printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
                 scanf(" %c", &type);
                 viderBuffer();

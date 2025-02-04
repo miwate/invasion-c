@@ -126,6 +126,7 @@ int main(int argc, char* argv[]) {
         SDL_Delay(1000);
 
         // Sauvegarde
+        printf("\033[2J\033[0;0H");
         printf("Si vous voulez sauvegarder l'avancement au cours de la partie, entrez S pour sauvegarder !\n");
         int sauver = 0;
 
