@@ -36,6 +36,7 @@ void forceTourellesDEMO(Jeu* jeu){
     forceTourelle(jeu, 1,5,'t'); 
     forceTourelle(jeu, 5,7,'b');    
     forceTourelle(jeu, 3,6,'b');
+    forceTourelle(jeu, 3,5,'t');
     }
 }
 
