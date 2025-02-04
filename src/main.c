@@ -139,6 +139,7 @@ int main(int argc, char* argv[]) {
             /* Démonstration */
             if (DEMO == 1) forceTourellesDEMO(jeu);
 
+            
             renduActuelJeu_v(jeu, rendu);
             renduActuelJeu(jeu);
             rafraichirJeu(jeu);

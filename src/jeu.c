@@ -31,7 +31,7 @@ void rafraichirJeu(Jeu* jeu){
 
 
     /* Incrémentation du tour */
-    printf("Incrémentation du tour\n");
+    // printf("Incrémentation du tour\n");
     jeu->tour += 1;
 
 
