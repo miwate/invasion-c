@@ -249,8 +249,6 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
             while (etu != NULL && uneFois == 'n'){
                 if (etu->ligne == barney->ligne){
-                    /* Afficher le flash du canon */
-
                     if (barney->type == 't' || barney->type == 's') {
                         afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                         uneFois = 'o';
@@ -300,7 +298,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             char uneFoisB = 'n';
             while (barney != NULL && uneFoisB == 'n'){
                 if (barney->ligne == etu->ligne && etu->touche == 'o' && jeu->tour>=etu->tour){
-                    if (barney->type == 't' || barney->type == 's') {
+                    if (barney->type == 't' || barney->type == 's' || barney->type == 's') {
                         afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
                         uneFoisB = 'o';
                     }
