@@ -332,7 +332,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
             printf("Choisissez un type de tourelle entre :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
             scanf("%c", &type);
             viderBuffer();
-            while (type != 't' && type != 's' && type != 'm' && type != 'b' && type != 'x'){
+            while (type != 't' && type != 's' && type != 'u' && type != 'b' && type != 'x'){
                 printf("\033[2J\033[0;0H");
                 printf("Type inconnu.\nRecommencez et pensez à entrer un des types suivants :\nt (Tourelle classique : 3PV, 1ATQ, Prix : 150), \ns (tourelle de ralentissement : 2PV, 1ATQ, Prix : 120), \nm (Mine infligeant des dégâts au contact d'un ennemi : 1PV, 5ATQ, Prix : 100) \nb (Bouclier : 6PV, 0ATQ, Prix : 200), \nx (Tourelle Explosive Adjacente : 2PV, 4ATQ, Prix : 800)\n");
                 scanf(" %c", &type);
@@ -343,7 +343,7 @@ void questionTourelle(Jeu* jeu, int* sauver){
             switch (type) {
                 case 't': prix = 150; break;
                 case 's': prix = 120; break;
-                case 'm': prix = 100; break;
+                case 'u': prix = 100; break;
                 case 'b': prix = 200; break;
                 case 'x': prix = 800; break;
             }

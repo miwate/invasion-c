@@ -21,18 +21,18 @@ void forceTourellesDEMO(Jeu* jeu){
     }
 
     else if (jeu->tour == 8){
-    forceTourelle(jeu, 2,3,'m');
+    forceTourelle(jeu, 2,3,'u');
     forceTourelle(jeu, 7,2,'t');
-    forceTourelle(jeu, 3,4,'m');
+    forceTourelle(jeu, 3,4,'u');
     forceTourelle(jeu, 3,1,'t');
     forceTourelle(jeu, 3,2,'s');
     }
 
     else if (jeu->tour == 1) {
-    forceTourelle(jeu, 4,5,'m');
+    forceTourelle(jeu, 4,5,'u');
     forceTourelle(jeu, 2,1,'t');
-    forceTourelle(jeu, 2,7,'m');
-    forceTourelle(jeu, 7,7,'m');
+    forceTourelle(jeu, 2,7,'u');
+    forceTourelle(jeu, 7,7,'u');
     forceTourelle(jeu, 1,5,'t'); 
     forceTourelle(jeu, 5,7,'b');    
     forceTourelle(jeu, 3,6,'b');
