@@ -14,7 +14,7 @@ void forceTourellesDEMO(Jeu* jeu){
     
     forceTourelle(jeu, 1,1,'t');
     forceTourelle(jeu, 2,2,'t');
-    forceTourelle(jeu, 3,1,'t');
+    forceTourelle(jeu, 3,5,'x');
     forceTourelle(jeu, 4,2,'t');
     forceTourelle(jeu, 5,1,'t');
     forceTourelle(jeu, 6,2,'t');
@@ -29,7 +29,7 @@ void forceTourellesDEMO(Jeu* jeu){
     forceTourelle(jeu, 6,5,'s');  
     forceTourelle(jeu, 1,5,'b'); 
     forceTourelle(jeu, 5,5,'b');    
-    forceTourelle(jeu, 3,5,'b');    
+    forceTourelle(jeu, 3,6,'b');
 }
 
 /* Lance une partie */
