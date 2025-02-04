@@ -12,23 +12,34 @@
 /* Demo placer des tourelles sans demander */
 void forceTourellesDEMO(Jeu* jeu){
     
-    if (jeu->tour == 5) {
-    forceTourelle(jeu, 2,2,'s');
-    forceTourelle(jeu, 5,5,'x');
-    forceTourelle(jeu, 5,1,'t');
-    forceTourelle(jeu, 6,2,'t');
-    forceTourelle(jeu, 7,1,'t');
+    if (jeu->tour == 4) {
+    forceTourelle(jeu, 2,2,'t');  
+    forceTourelle(jeu, 5,3,'x'),
     forceTourelle(jeu, 7,1,'t');
     }
 
-    if (jeu->tour == 1) {
-    forceTourelle(jeu, 1,2,'t');
+    else if (jeu->tour == 8){
+    forceTourelle(jeu, 2,3,'m');
+    forceTourelle(jeu, 1,2,'s');
+
+    forceTourelle(jeu, 7,2,'t');
+
+    forceTourelle(jeu, 3,4,'m');
+    forceTourelle(jeu, 3,1,'t');
+    forceTourelle(jeu, 3,2,'s');
+    }
+
+    else if (jeu->tour == 11){
+    forceTourelle(jeu, 1,2,'x');
+    }
+
+    else if (jeu->tour == 1) {
+    forceTourelle(jeu, 4,8,'m');
     forceTourelle(jeu, 2,1,'t');
     forceTourelle(jeu, 2,7,'m');
-    forceTourelle(jeu, 4,7,'m');
+    forceTourelle(jeu, 4,8,'m');
     forceTourelle(jeu, 7,7,'m');
-    forceTourelle(jeu, 6,5,'s');  
-    forceTourelle(jeu, 1,5,'b'); 
+    forceTourelle(jeu, 1,5,'t'); 
     forceTourelle(jeu, 5,5,'b');    
     forceTourelle(jeu, 3,6,'b');
     }

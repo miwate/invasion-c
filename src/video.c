@@ -220,7 +220,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
     while (barney != NULL){
 
-        if (barney->ligne <= H && barney->position <= L)
+        if (barney->ligne <= H && barney->position <= SPAWN_DISTANCE)
         {
             /* Position */
             int x = (barney->position - 1) * largeurCase;
@@ -235,6 +235,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             
             /* Selon le type et affichage */
             char pvTex[32];
+            if (barney->pointsDeVie < 0) barney->pointsDeVie = 0;
             snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", barney->pointsDeVie);
             SDL_Texture* pvTexture = chargerTexture(pvTex, rendu);
 
@@ -291,6 +292,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             snprintf(etuTex, sizeof(etuTex), "tex/%c.png", etu->type);
             SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
 
+            if (etu->pointsDeVie <0) etu->pointsDeVie = 0;
             afficherEtudiant(rendu, etudiantTex, pvTexture, x, y, largeurCase, hauteurCase, etu->pointsDeVie);
             
             /* Animation enfin presque */
@@ -307,8 +309,10 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
                 }
                 else if (barney->type == 'x'){
                     if (barney->ligne == etu->ligne || barney->ligne == etu->ligne +1 || barney->ligne == etu->ligne-1){
-                        afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
-                        uneFoisB = 'o';
+                        if (abs(etu->position - barney->position) <= 5) {
+                            afficheEffet_v(rendu, "tex/sang.png", x, y, largeurCase, hauteurCase);
+                            uneFoisB = 'o';
+                        }
                     }
                 }
                 else if (barney->type == 'k' || barney->type == 'm'){

@@ -75,7 +75,7 @@ void rafraichirJeu(Jeu* jeu){
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
                     if (etu->pointsDeVie < 5 && etu->pointsDeVie > 1) {
-                        printf("heal");
+                        //printf("heal");
                         if (etu->next && etu->next->pointsDeVie > 2 && etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                         etu->pointsDeVie += 1;
                         etu->type = 'N';
@@ -102,7 +102,7 @@ void rafraichirJeu(Jeu* jeu){
                         etu->type = 'O';
                         etu->degats = 0;
                         etu->vitesse = 0;
-                        etu->pointsDeVie = 9;
+                        etu->pointsDeVie = 5;
                     }
             }
 
@@ -114,7 +114,8 @@ void rafraichirJeu(Jeu* jeu){
 
                     if (etu->position <= barney->position){
                         etu->position  = barney->position;
-                        barney->pointsDeVie -= etu->degats;
+
+                        barney->pointsDeVie = barney->pointsDeVie - etu->degats;
 
                         /* MIne? La mine crée un mini incendie qui fait un peu mal */
                         if (barney->type == 'm'){
@@ -296,7 +297,7 @@ void rafraichirJeu(Jeu* jeu){
                         etu_prec = NULL;
     
                         while (etu != NULL){
-                            if (etu->ligne == ligneCible && (etu->position <= SPAWN_DISTANCE) && (etu->position >= 0) && etu->tour <= jeu->tour){
+                            if (etu->ligne == ligneCible && (abs(etu->position - barney->position) <= 5) && (etu->position >= 0) && etu->tour <= jeu->tour){
                                 /* Dégâts + Augmentation du score*/
                                 etu->pointsDeVie -= barney->degats;
                                 etu->touche = 'o';
