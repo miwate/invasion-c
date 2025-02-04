@@ -100,7 +100,6 @@ int main(int argc, char* argv[]) {
         printf("Prévisualisation des vagues - Cagnotte : %d€\n", jeu->cagnotte);
         prevualisationVagues(jeu);
         prevualisationVagues_v(jeu, rendu);
-        //printf("Multiplicateur de score : %f\n", jeu->multiplicateurScore);
 
         /* Partie dialogue | 1 normal, 0 pour skip */
         int dialogueSkip = 1;

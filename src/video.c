@@ -264,13 +264,6 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
                         uneFois = 'o';
                     }
                 }
-
-                    /*Afficher l'explosion 
-                    else if (barney->type == 'k'){
-                        afficheEffet_v(rendu, "tex/k.png", x, y, largeurCase, hauteurCase);
-                        uneFois = 'o';
-                    }
-                    */
                 
                 etu = etu->next;
             }

@@ -28,10 +28,7 @@ void rafraichirJeu(Jeu* jeu){
         printf("Pas de vague.\n");
         return;
     }
-
-
-    /* Incrémentation du tour */
-    // printf("Incrémentation du tour\n");
+    /* Tour suivant */
     jeu->tour += 1;
 
 
@@ -46,7 +43,6 @@ void rafraichirJeu(Jeu* jeu){
         /* Ça sert pour afficher le sang s'il est touché */
         etu->touche = 'n';
 
-        //printf("etu->tour %d\n", etu->tour);
         if (etu->tour <= jeu->tour) {
             etu->position -= etu->vitesse;
             barney = jeu->tourelles;
@@ -58,7 +54,7 @@ void rafraichirJeu(Jeu* jeu){
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
                     if (etu->pointsDeVie <= 7 && etu->pointsDeVie >= 1) {
-                        //printf("heal");
+
                         if (etu->next && etu->next->pointsDeVie > 2 && etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                         etu->pointsDeVie += 1;
                         etu->type = 'N';
@@ -322,7 +318,7 @@ void rafraichirJeu(Jeu* jeu){
                                     Etudiant* etu_cancel = etu;
                                     etu = etu->next;
                                     free(etu_cancel);
-                                    continue; /* Prochain étudiant */
+                                    continue;
                                 }
                             }
                             etu_prec = etu;
@@ -337,10 +333,7 @@ void rafraichirJeu(Jeu* jeu){
                 while (etu != NULL && frappeTourelled == 'n'){
                     
                     if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position >= 0 && etu->tour <= jeu->tour){
-                    //if (etu->ligne == barney->ligne && etu->position >= barney->position && etu->tour <= jeu->tour){
-                    //if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position > 0 && etu->tour <= jeu->tour){
                         
-                        //printf("la");
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
@@ -402,7 +395,6 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
     barney->position = _position;
     barney->next = NULL;
 
-    // Gros changements apportés ici pour simplifier les cas
     /* Affectation des stats */
     switch (_type) {
         case 't': // Tourelle classique
