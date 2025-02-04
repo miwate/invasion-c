@@ -1,5 +1,7 @@
 # INVASION !! - Projet de C
 [Regarder l'annonce](https://youtu.be/na166qxViec)
+(Durée 20 secondes)
+
 ![Bannière](https://i.postimg.cc/B6Vbgjdd/HEADER-copy.webp)
 
 
