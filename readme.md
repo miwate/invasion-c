@@ -46,6 +46,10 @@ La prochaine étape est de lancer un niveau.
 ```bash
 make impossible
 ```
+- Ou alors lancer une DEMO. Des tourelles se placeront automatiquement.
+```bash
+make demo
+```
 
 ## 🧹 Nettoyage
 
