@@ -108,18 +108,34 @@ void rafraichirJeu(Jeu* jeu){
 
             /* Barney notre héros national bloque les étudiants */
             while (barney != NULL){
+
+                /* Même ligne */
                 if (barney->ligne == etu->ligne){
+
                     if (etu->position <= barney->position){
                         etu->position  = barney->position;
                         barney->pointsDeVie -= etu->degats;
 
-                        /* MIne? */
+                        /* MIne? La mine crée un mini incendie qui fait un peu mal */
                         if (barney->type == 'm'){
                             etu->pointsDeVie -= 5;
-                            barney->pointsDeVie = 0;
+                            barney->type = 'k';
+                            barney->pointsDeVie = 1;
+                            barney->degats = 1;
+                            /* Premier sang donc dialogue */
+                            if (jeu->premierSang == 'n') jeu->premierSang = 'o';
+                            break;
                         }
 
-                        if (barney->pointsDeVie <= 0){
+                        /* Explosion ?*/
+                        else if (barney->type == 'k'){
+                            barney->type = 'l';
+                            barney->pointsDeVie = 2;
+                            barney->degats = 0;
+                        }
+
+                        else if (barney->pointsDeVie <= 0){
+
                             /* SUpprimer barney*/
                             if (barney_avant == NULL){
                                 jeu->tourelles = barney->next;
@@ -172,6 +188,7 @@ void rafraichirJeu(Jeu* jeu){
 
         // Cas pour chacune des barney (tourelles)
         switch (barney->type){
+
             // Mine
             case 'm':
                 char explosion='n';
@@ -182,7 +199,7 @@ void rafraichirJeu(Jeu* jeu){
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         // Dégâts transférés à l'étudiant
                         
-                        printf("BOOM !\n");
+                        printf("BOOM !!\n");
                         etu->pointsDeVie -= 5;
                         etu->touche = 'o';
                         
@@ -320,7 +337,7 @@ void rafraichirJeu(Jeu* jeu){
                     //if (etu->ligne == barney->ligne && etu->position >= barney->position && etu->tour <= jeu->tour){
                     //if (etu->ligne == barney->ligne && etu->position <= SPAWN_DISTANCE && etu->position > 0 && etu->tour <= jeu->tour){
                         
-                        printf("la");
+                        //printf("la");
                         /* Ajoute le score dégâts infligés */
                         jeu->score += jeu->multiplicateurScore * abs(etu->pointsDeVie - barney->degats);
                         /* INflige les dégâts */
