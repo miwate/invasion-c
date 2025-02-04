@@ -249,11 +249,19 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             char uneFois = 'n';
 
             while (etu != NULL && uneFois == 'n'){
-                if (etu->ligne == barney->ligne){
-                    if (barney->type == 't' || barney->type == 's' || barney->type == 'x') {
+                if (barney->type == 't' || barney->type == 's'){
+                    if (etu->ligne == barney->ligne){
                         afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
                         uneFois = 'o';
                     }
+                }
+
+                else if (barney->type == 'x'){
+                    if (barney->ligne == etu->ligne || barney->ligne == etu->ligne +1 || barney->ligne == etu->ligne-1){
+                        afficheEffet_v(rendu, "tex/flash.png", x, y, largeurCase, hauteurCase);
+                        uneFois = 'o';
+                    }
+                }
 
                     /*Afficher l'explosion 
                     else if (barney->type == 'k'){
@@ -261,7 +269,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
                         uneFois = 'o';
                     }
                     */
-                }
+                
                 etu = etu->next;
             }
 
@@ -285,6 +293,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
 
             /* Selon le type, affichage des textures et des points de vie */
             char pvTex[32];
+            if (etu->pointsDeVie <0) etu->pointsDeVie = 0;
             snprintf(pvTex, sizeof(pvTex), "tex/default-%d.png", etu->pointsDeVie);
             SDL_Texture* pvTexture = chargerTexture(pvTex, rendu);
 
@@ -292,7 +301,7 @@ void renduActuelJeu_v(Jeu* jeu, SDL_Renderer* rendu) {
             snprintf(etuTex, sizeof(etuTex), "tex/%c.png", etu->type);
             SDL_Texture* etudiantTex = chargerTexture(etuTex, rendu);
 
-            if (etu->pointsDeVie <0) etu->pointsDeVie = 0;
+            
             afficherEtudiant(rendu, etudiantTex, pvTexture, x, y, largeurCase, hauteurCase, etu->pointsDeVie);
             
             /* Animation enfin presque */
