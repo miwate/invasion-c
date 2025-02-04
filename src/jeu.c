@@ -29,24 +29,6 @@ void rafraichirJeu(Jeu* jeu){
         return;
     }
 
-    Etudiant* etu = jeu->etudiants;
-    //int finTour = 1;
-    int nbEtudiantsTour = 0;
-
-    /* Les étudiants sont-ils tous éliminés ? */
-    while (etu != NULL){
-        // printf("%d - %d\n", etu->tour, jeu->tour);
-        if (etu->tour == jeu->tour){
-            nbEtudiantsTour += 1;
-
-            /*
-            if (etu->pointsDeVie > 0){
-                finTour = 0;
-            }
-            */
-        }
-        etu = etu->next;
-    }
 
     /* Incrémentation du tour */
     printf("Incrémentation du tour\n");
@@ -54,7 +36,8 @@ void rafraichirJeu(Jeu* jeu){
 
 
     /* Faire avancer les étudiants */
-    etu = jeu->etudiants;
+    Etudiant* etu = jeu->etudiants;
+
     Tourelle* barney = jeu->tourelles;
     Tourelle* barney_avant = NULL;
 
@@ -74,7 +57,7 @@ void rafraichirJeu(Jeu* jeu){
                 /* MEDIC */
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
-                    if (etu->pointsDeVie <= 5 && etu->pointsDeVie >= 1) {
+                    if (etu->pointsDeVie <= 7 && etu->pointsDeVie >= 1) {
                         //printf("heal");
                         if (etu->next && etu->next->pointsDeVie > 2 && etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                         etu->pointsDeVie += 1;
@@ -84,7 +67,7 @@ void rafraichirJeu(Jeu* jeu){
                 /* ALIEN */
                 case 'A':
                     /* Il devient invisible sauf ses mains et ses antennes quand PV <= 3*/
-                    if (etu->pointsDeVie <= 5) etu->type = 'H';
+                    if (etu->pointsDeVie <= 6) etu->type = 'H';
 
                 /* Colosse */
                 case 'C':
@@ -209,7 +192,7 @@ void rafraichirJeu(Jeu* jeu){
         switch (barney->type){
 
             // Mine
-            case 'm':
+            case 'm': {
                 char explosion='n';
                 // Etudiant sur la mine (même ligne et position)
                 while (etu != NULL){
@@ -259,6 +242,7 @@ void rafraichirJeu(Jeu* jeu){
                     continue;
                 }
                 break;
+            }
                 
             case 's': { // Tourelle de ralentissement adjacentes transperçantes
                 char frappeTourelles = 'n';
@@ -602,7 +586,7 @@ void ajoutEtudiant(Jeu* jeu, const int _tour, const int _ligne, const char _type
     }
     else if (_type == 'M'){ // M pour Medic
         etu->pointsDeVie = 8;
-        etu->vitesse = 3;
+        etu->vitesse = 2;
         etu->degats = 1;
     }
     else if (_type == 'R'){ // R pour Roi
