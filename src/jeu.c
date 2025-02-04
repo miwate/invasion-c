@@ -74,7 +74,7 @@ void rafraichirJeu(Jeu* jeu){
                 /* MEDIC */
                 case 'M':
                     /* Heal le suivant de 1pv et lui-même mais les max pv est 9 */
-                    if (etu->pointsDeVie < 5 && etu->pointsDeVie > 1) {
+                    if (etu->pointsDeVie <= 5 && etu->pointsDeVie >= 1) {
                         //printf("heal");
                         if (etu->next && etu->next->pointsDeVie > 2 && etu->next->pointsDeVie < 9) etu->next->pointsDeVie += 1;
                         etu->pointsDeVie += 1;
@@ -84,7 +84,7 @@ void rafraichirJeu(Jeu* jeu){
                 /* ALIEN */
                 case 'A':
                     /* Il devient invisible sauf ses mains et ses antennes quand PV <= 3*/
-                    if (etu->pointsDeVie <= 3) etu->type = 'E';
+                    if (etu->pointsDeVie <= 5) etu->type = 'H';
 
                 /* Colosse */
                 case 'C':
@@ -149,6 +149,11 @@ void rafraichirJeu(Jeu* jeu){
 
                         if (barney->pointsDeVie <= 0){
 
+                            /* On casse le combo */
+                            if (barney->type == 't' || barney->type == 's' || barney->type == 'x' ||barney->type == 'b'){
+                                jeu->combo = 0;
+                            } 
+
                             /* SUpprimer barney*/
                             if (barney_avant == NULL){
                                 jeu->tourelles = barney->next;
@@ -169,7 +174,7 @@ void rafraichirJeu(Jeu* jeu){
                 barney = barney->next;
             }
 
-            /* Eviter overlap des étu ou dépassement
+            /* Eviter overlap des étu ou dépassement */
             Etudiant* etuTemp = jeu->etudiants;
             while (etuTemp != NULL){
                 if (etuTemp!=etu && etuTemp->ligne==etu->ligne && etu->tour>etuTemp->tour) {
@@ -179,7 +184,7 @@ void rafraichirJeu(Jeu* jeu){
                 }
                 etuTemp = etuTemp->next;
             }
-            */
+            
             
             
         }
@@ -422,7 +427,7 @@ void ajoutTourelle(Jeu* jeu, const int _ligne, const int _position, const char _
             barney->prix = 150;
             break;
         case 'b': // Bouclier
-            barney->pointsDeVie = 6;
+            barney->pointsDeVie = 8;
             barney->degats = 0;
             barney->prix = 200;
             break;
