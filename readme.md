@@ -1,4 +1,7 @@
 # INVASION !! - Projet de C
+
+**En réalité**, l'étudiant dormait en cours car **il travaillait de nuit**.
+
 [Regarder l'annonce](https://youtu.be/na166qxViec)
 [Regarder l'annonce](https://youtu.be/na166qxViec)
 [Regarder l'annonce](https://youtu.be/na166qxViec)
