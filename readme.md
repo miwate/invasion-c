@@ -5,7 +5,7 @@
 
 # 🔗 Dépendances
 
-Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0)
+Installation des dépendances [SDL2](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0) :
 
 ```bash
 sudo apt-get install libsdl2-dev
@@ -14,7 +14,7 @@ sudo apt-get install libsdl2-mixer-dev
 sudo apt-get install libsdl2-ttf-dev
 ```
 
-En cas d'erreurs
+En cas d'erreurs, entrer :
 ```bash
 sudo apt update
 ```
@@ -28,10 +28,11 @@ sudo apt install -f
 # ⚙️ Compilation
 
 Compilation à l’aide de [GCC 13.3](https://gcc.gnu.org/gcc-13/), nous compilons à l’aide d’un Makefile.
+Placez-vous au préalable dans le dossier `invasion-c`.
 
 ## 📜 Makefile
 
-Permet de compiler tout à la fois, il suffit d’entrer la commande `make` .
+Permet de compiler tout à la fois, il suffit d’entrer la commande `make`.
 
 ```bash
 make
